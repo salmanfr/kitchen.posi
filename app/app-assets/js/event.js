@@ -186,21 +186,15 @@ $(document).ready(function(e) {
 
     //This For Ovelay Moore
     $('.btntutup').on('click', function() {
-        $('.overlayMore').hide();
-        $('body').css({
-            'overflow-y': 'auto'
-        });
-        clsMe(posVideo);
+        clsMe();
         // closeformEvent();
     });
 
     $('.btnedit').click(function() {
-        // var isDom = '.btnedit' + IdGlobal;
-        // $(".btnedit").addClass('.btnedit' + IdGlobal);
-        // openformEvent('.btnedit', 'Edit', IdGlobal, '')
+        getDataEvent(IdGlobal);
     });
 
-    $('.btnchat').click(function() {
+    $('.btnsoal').click(function() {
         $('.overlayMore .centers').html('<div class="chat">\
                                             <div class="cointainerMessage">\
                                                 <div class="messages" id="chat">\
@@ -258,6 +252,8 @@ $(document).ready(function(e) {
             showToast('Data belum lengkap');
         }
     });
+
+
 
 });
 
@@ -567,6 +563,22 @@ function closeView() {
 
 }
 
+
+function getDataEvent(Id_event) {
+    showLoad();
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var modals = xmlhttp.responseText;
+            hideLoad();
+            openformEvent('.btnedit', 'Edit', IdGlobal, modals);
+
+            auth(xmlhttp.responseText);
+        }
+    }
+    xmlhttp.open('GET', 'app-assets/js/scripts/engine/override.php?order=getdataevent&id_event=' + Id_event);
+    xmlhttp.send();
+}
 // ============ MULAI SCRIPT JQUERY FORMEVENT ====================
 var btnformEvent = '',
     statusformEvent = '',
@@ -635,12 +647,10 @@ function openformEvent(dom, status, pos, modal) {
         });
     }, 600);
     setTimeout(function() {
-        // var lbrCanvas = $('.frameVideo').width(),
-        //     tggCanvas = parseInt(lbrCanvas / 1.6);
-        // $('.frameVideo').css({
-        //     'height': tggCanvas + 'px'
-        // });
-    }, 700);
+        $('.form-body-formEvent').animate({
+            scrollTop: 0
+        }, 200);
+    }, 650);
     statusformEvent = status;
     $('#tanggalbeginid label').addClass('active');
     $('#jambeginid label').addClass('active');
@@ -650,12 +660,6 @@ function openformEvent(dom, status, pos, modal) {
 
     $('#tanggaleventid label').addClass('active');
     $('#statuseventid label').addClass('active');
-    setTimeout(function() {
-        $('.form-body-formEvent').animate({
-            scrollTop: 0
-        }, 200);
-    }, 650);
-
     if (status == 'New') {
         $('#inputmedia').val('');
         $('#inputmediaid label').removeClass('active');
@@ -675,8 +679,41 @@ function openformEvent(dom, status, pos, modal) {
         CKEDITOR.instances.deskripsi.setData('');
     } else {
         posformEvent = pos;
-        var isiDom = modal.split('A99');
-        //setValueDom(formEventElementArr, isiDom);
+        var modals = JSON.parse(modal);
+        $('#tema').val(modals.judul);
+        $('#temaid label').addClass('active');
+        var type = modals.type;
+        if (type == "image") {
+            dataUrl = "namlastcorp";
+            $('#inputmedia').val(modals.banner);
+            $('#inputmediaid label').addClass('active');
+            $('.frameVideo').html('<img src="' + getAssetsLink() + 'posiassets/fold/' + modals.banner + '" style="width:100%; height:100%;">')
+
+        } else {
+            dataUrl = modals.banner;
+            $('#inputmedia').val('https://www.youtube.com/watch?v=' + modals.banner);
+            $('#inputmediaid label').addClass('active');
+            $('.frameVideo').html('<iframe style="width:100%; height:100%;" src="https://www.youtube.com/embed/' + modals.banner + '" allow="autoplay; encrypted-media" allowfullscreen="" frameborder="0"></iframe>');
+        }
+        $('.daftarAkses').html('');
+        arr_daftar_subjek = JSON.parse(modals.subjek);
+        arr_daftar_subjek.forEach(function(item, i) {
+            $('.daftarAkses').prepend('<div class="listAkses" id="' + item.split(' ').join('').replace('(', '').replace(')', '').replace('.', '') + '">\
+                                            <span>' + item + '</span>\
+                                            <i class="material-icons" onclick="delAkses(\'' + item + '\') ">close</i>\
+                                        </div>');
+        });
+        CKEDITOR.instances.deskripsi.setData(modals.desk);
+        var begin = modals.begin.split(' ');
+        $('#tanggalbegin').val(begin[0]);
+        $('#jambegin').val(begin[1]);
+
+        var ends = modals.end.split(' ');
+        $('#tanggalend').val(ends[0]);
+        $('#jamend').val(ends[1]);
+
+        $('#tanggalevent').val(modals.event);
+        $('#statusevent').val((modals.status == '1' ? 'Publish' : 'Private'));
     }
 
 }
@@ -706,12 +743,12 @@ function closeformEvent() {
     setTimeout(function() {
         $('.overlayformEvent').hide();
         $('.form-formEvent').hide();
-    }, 400);
+        clsMe();
+    }, 450);
 }
 
 
 function simpanformEvent() {
-    showToast(JSON.stringify(arr_daftar_subjek));
     var formData = new FormData();
     var palang = true;
 
@@ -747,7 +784,7 @@ function simpanformEvent() {
             },
             success: function(response) {
                 showToast(response);
-                hideLoad();
+                dispTimeline();
             },
             error: function(xhr, ajaxOptions, thrownError) {
 
@@ -766,7 +803,6 @@ function simpanformEvent() {
 var modalVideo,
     posVideo;
 
-
 function openMore(idVideo) {
     $('body').css({
         'overflow-y': 'hidden'
@@ -774,13 +810,9 @@ function openMore(idVideo) {
     posVideo = idVideo;
     btnaddVideo = '.btnmore' + idVideo;
     IdGlobal = idVideo;
-
-
     var atas = $(btnaddVideo).offset().top - $(document).scrollTop();
     var kiri = $(btnaddVideo).offset().left;
-    var lebar = $(btnaddVideo).width();
-    var tinggi = $(btnaddVideo).height();
-    $('.btnedit, .btnnilai, .btnhapus, .btntutup, .btnchat').css({
+    $('.btnedit, .btnnilai, .btnhapus, .btntutup, .btnsoal').css({
         'top': atas - 2 + 'px',
         'left': kiri - 2 + 'px',
         'display': 'block'
@@ -798,7 +830,7 @@ function openMore(idVideo) {
             'left': kiri + 35 + 'px',
             'display': 'block'
         });
-        $('.btnchat').css({
+        $('.btnsoal').css({
             'top': atas + 3 + 'px',
             'left': kiri + 45 + 'px',
             'display': 'block'
@@ -808,14 +840,16 @@ function openMore(idVideo) {
             'left': kiri + 35 + 'px',
             'display': 'block'
         });
-
     }, 100);
 
 }
 
-function clsMe(pos) {
+function clsMe() {
+    $('.overlayMore').hide();
+    $('body').css({
+        'overflow-y': 'auto'
+    });
     $('.overlayMore .centers').css({
         'right': '-100%'
     });
-    posVideoTersorot = '';
 }
