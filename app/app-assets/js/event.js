@@ -185,13 +185,6 @@ $(document).ready(function (e) {
     });
 
 
-    //This For Ovelay Moore
-    $('.overlayMore').click(function (e) {
-        e.stopPropagation();
-    })
-
-
-
     $('.btntutup').on('click', function () {
         $('.overlayMore').hide();
         $('body').css({
@@ -223,9 +216,7 @@ $(document).ready(function (e) {
         posVideoTersorot = posVideo;
     });
 
-    $('.btnhapus').click(function () {
-        openDeleteItem('Hapus', IdGlobal, 'Data Event Berikut', 'saveformEvent')
-    });
+    $('.btnhapus').click(function () {});
 
     $('.btnnilai').click(function () {
         openformNilai('.btnnilai', posVideo);
@@ -817,7 +808,6 @@ function openMore(idVideo) {
         });
 
     }, 100);
-
 }
 
 function clsMe(pos) {
@@ -825,49 +815,4 @@ function clsMe(pos) {
         'right': '-100%'
     });
     posVideoTersorot = '';
-}
-
-
-
-
-
-
-
-var statusDelete, posDelete, subjectDelete;
-// Urutan Tombol Pada Tombol Delete adalah status, Id, conteks[untuk isian keterangan], serta subject[menu]
-function openDeleteItem(status, Id, contex, subject) {
-    statusDelete = status;
-    posDelete = Id;
-    forSubjectDelete = subject;
-
-    $('.overlayVerifikasi').show();
-    $('#strKontext').html('Apakah anda yakin menghapus ' + contex + ' ?');
-}
-
-function verifikasiDelete() {
-    var formData = new FormData();
-    formData.append('status', statusDelete);
-    formData.append('pos', posDelete);
-    $.ajax({
-        type: 'POST',
-        url: 'app-assets/js/scripts/engine/override.php?order=' + forSubjectDelete,
-        data: formData,
-        processData: false,
-        contentType: false,
-        beforeSend: function () {
-            $('.overlayVerifikasi').hide();
-            showLoad();
-        },
-        success: function (response) {
-            // console.log(response);
-            showToast(response);
-            if (forSubjectDelete == 'saveformEvent') {
-                dispTimeline();
-            }
-            // $("#barisData" + posDelete).remove();
-
-            hideLoad();
-        },
-        error: function (xhr, ajaxOptions, thrownError) {}
-    });
 }

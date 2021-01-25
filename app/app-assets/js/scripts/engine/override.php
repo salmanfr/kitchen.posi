@@ -63,16 +63,6 @@ if ($token == privateHashing(gettodayShort())) {
                                                              hari = '$explode[2]',
                                                             `status` = '$statusEvent'");
                 echo 'berhasil disimpan' . $subjek;
-            } else if ($status == 'Hapus') {
-                moveData($pos);
-
-                $query = "DELETE FROM `tb_event` WHERE `Id_event` = '$pos'";
-
-                if (ProsesData($query) > 0) {
-                    return "Data Berhasil Di Hapus";
-                } else {
-                    return "Proses Hapus Gagal";
-                }
             }
 
 
