@@ -100,19 +100,9 @@ $(document).ready(function (e) {
         var img = new Image();
         img.onload = function () {
             var canvas = document.getElementById('canvas'),
-                width = this.width,
-                height = this.height;
-            // if (width > height) {
-            //     if (width > max_size) {
-            //         height *= max_size / width;
-            //         width = max_size;
-            //     }
-            // } else {
-            //     if (height > max_size) {
-            //         width *= max_size / height;
-            //         height = max_size;
-            //     }
-            // }
+
+                width = $('.frameVideo').width(),
+                height = $('.frameVideo').width() / 1.6;
             canvas.width = width;
             canvas.height = height;
             var ctx = canvas.getContext('2d');
@@ -648,9 +638,6 @@ function openformEvent(dom, status, pos, modal) {
         var lbrCanvas = $('.frameVideo').width(),
             tggCanvas = parseInt(lbrCanvas / 1.6);
         $('.frameVideo').css({
-            'height': tggCanvas + 'px'
-        });
-        $('#canvas').css({
             'height': tggCanvas + 'px'
         });
     }, 700);
