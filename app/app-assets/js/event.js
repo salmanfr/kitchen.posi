@@ -6,24 +6,25 @@ var boolMedia = false,
     kontextCombos = '',
     listArr = [],
     mouse_combos = false,
+    IdGlobal,
     arr_daftar_subjek = [];
-$(document).ready(function(e) {
+$(document).ready(function (e) {
     selectMenu('menu0');
     initSample();
-    $('.genCombos').hover(function() {
+    $('.genCombos').hover(function () {
         mouse_combos = true
-    }, function() {
+    }, function () {
         mouse_combos = false;
     });
 
-    $('body').mouseup(function() {
+    $('body').mouseup(function () {
         if (!mouse_combos) {
             $('.genCombos').hide();
         }
     });
 
     $('body').on({
-        mouseenter: function() {
+        mouseenter: function () {
             $('.tooltips').show();
             var kontextLabel = $(this).attr('meta-data');
             $('.tooltips').html(kontextLabel);
@@ -35,14 +36,14 @@ $(document).ready(function(e) {
             });
 
         },
-        mouseleave: function() {
+        mouseleave: function () {
             $('.tooltips').hide(100);
         }
     }, '.addbtn');
 
     //.header-search-input 
     //#search
-    $('.header-search-input, #search').on('keyup', function(e) {
+    $('.header-search-input, #search').on('keyup', function (e) {
         if (e.key === 'Enter' || e.keyCode === 13) {
             var targ = $(this).val();
             if (fungsiPencarian == 'tabel') {
@@ -54,7 +55,7 @@ $(document).ready(function(e) {
     });
 
 
-    $('.header-search-input, #search').on('input', function() {
+    $('.header-search-input, #search').on('input', function () {
         var targ = $(this).val();
 
         if (fungsiPencarian == 'tabel') {
@@ -64,7 +65,7 @@ $(document).ready(function(e) {
         }
     });
 
-    $('#inputmedia').on('input', function(e) {
+    $('#inputmedia').on('input', function (e) {
         var arrLink = $(this).val().split('v='),
             link = arrLink[1];
         // cek apakah didalam link ada &=
@@ -88,7 +89,7 @@ $(document).ready(function(e) {
         $('.frameVideo').html('<iframe style="width:100%; height:100%;" src="https://www.youtube.com/embed/' + targlink + '" allow="autoplay; encrypted-media" allowfullscreen="" frameborder="0"></iframe>')
     });
 
-    $('#browsemedia').on('change', function() {
+    $('#browsemedia').on('change', function () {
         boolMedia = false;
         $('.frameVideo').html('<canvas id="canvas"></canvas>');
         console.log($(this)[0].files[0]);
@@ -98,7 +99,7 @@ $(document).ready(function(e) {
 
         var meta = $(this).attr('meta-data');
         var img = new Image();
-        img.onload = function() {
+        img.onload = function () {
             var canvas = document.getElementById('canvas'),
 
                 width = $('.frameVideo').width(),
@@ -113,13 +114,13 @@ $(document).ready(function(e) {
             typeBanner = 'image';
 
         }
-        img.onerror = function() {
+        img.onerror = function () {
             console.error("The provided file couldn't be loaded as an Image media");
         }
         img.src = URL.createObjectURL(this.files[0]);
     });
 
-    $('#subjek, #statusevent').on('click', function() {
+    $('#subjek, #statusevent').on('click', function () {
         var tinggi = $(this).height();
         var atas = $(this).offset().top - $(document).scrollTop() + tinggi;
         var kiri = $(this).offset().left;
@@ -185,7 +186,13 @@ $(document).ready(function(e) {
 
 
     //This For Ovelay Moore
-    $('.btntutup').on('click', function() {
+    $('.overlayMore').click(function (e) {
+        e.stopPropagation();
+    })
+
+
+
+    $('.btntutup').on('click', function () {
         $('.overlayMore').hide();
         $('body').css({
             'overflow-y': 'auto'
@@ -194,13 +201,13 @@ $(document).ready(function(e) {
         // closeformEvent();
     });
 
-    $('.btnedit').click(function() {
+    $('.btnedit').click(function () {
         // var isDom = '.btnedit' + IdGlobal;
         // $(".btnedit").addClass('.btnedit' + IdGlobal);
         // openformEvent('.btnedit', 'Edit', IdGlobal, '')
     });
 
-    $('.btnchat').click(function() {
+    $('.btnchat').click(function () {
         $('.overlayMore .centers').html('<div class="chat">\
                                             <div class="cointainerMessage">\
                                                 <div class="messages" id="chat">\
@@ -216,17 +223,15 @@ $(document).ready(function(e) {
         posVideoTersorot = posVideo;
     });
 
-    $('.btnhapus').click(function() {
-        openVerif('Tugas dan nilai siswa melekat pada video ini, menghapus video akan mengakibatkan mereka lenyap, Apakah anda yakin menghapus video ini? ');
-        kontextVerif = 'hapusVideo';
-
+    $('.btnhapus').click(function () {
+        openDeleteItem('Hapus', IdGlobal, 'Data Event Berikut', 'saveformEvent')
     });
 
-    $('.btnnilai').click(function() {
+    $('.btnnilai').click(function () {
         openformNilai('.btnnilai', posVideo);
     });
 
-    $('#btnUbah').click(function() {
+    $('#btnUbah').click(function () {
         var formData = new FormData();
         var palang = false;
         if ($('#pass1').val() == $('#pass2').val() && $('#pass1').val() != "") {
@@ -243,14 +248,14 @@ $(document).ready(function(e) {
                 data: formData,
                 processData: false,
                 contentType: false,
-                beforeSend: function() {
+                beforeSend: function () {
                     showLoad();
                 },
-                success: function(response) {
+                success: function (response) {
                     showToast(response);
                     setMyProfile();
                 },
-                error: function(xhr, ajaxOptions, thrownError) {
+                error: function (xhr, ajaxOptions, thrownError) {
 
                 }
             });
@@ -261,10 +266,12 @@ $(document).ready(function(e) {
 
 });
 
+
+
 function setToListBody(daftarArr) {
     // alert(daftarArr);
     $('.bodyCombos').html('');
-    daftarArr.forEach(function(item, i) {
+    daftarArr.forEach(function (item, i) {
         $('.bodyCombos').append('<div class="listItem" onclick="setItemCombos(\'' + item + '\')">' + item.toUpperCase() + '</div>');
     });
     $('.bodyCombos').animate({
@@ -292,7 +299,6 @@ function setItemCombos(item) {
     }
 }
 
-
 function delAkses(target) {
     var index = arr_daftar_subjek.indexOf(target);
     if (index > -1) {
@@ -306,7 +312,7 @@ function cariCombos(val, ev) {
     var prediksi = '',
         byk = 0;
     if (val.length > 1) {
-        listArr.forEach(function(item, i) {
+        listArr.forEach(function (item, i) {
             if (item.toUpperCase().indexOf(val.toUpperCase()) != -1) {
                 byk++;
                 if (byk == 1) {
@@ -316,7 +322,7 @@ function cariCombos(val, ev) {
             }
         });
     } else if (val == '') {
-        listArr.forEach(function(item, i) {
+        listArr.forEach(function (item, i) {
             byk++;
             if (byk == 1) {
                 prediksi = item;
@@ -343,26 +349,26 @@ function in_array(nilai, arr) {
 
 function searchDataTable(targ) {
     $('#paginattable').html('');
-    dataTabel.forEach(function(item, i) {
+    dataTabel.forEach(function (item, i) {
         if (item.toUpperCase().indexOf(targ.toUpperCase()) != -1) {
             // item = item.replace(targ, '<span style="color:red">' + targ + '</span>');
             $('#paginattable').append('<tr>' + item + '</tr>')
         }
     });
-    setTimeout(function() {
+    setTimeout(function () {
         setupTablePagination(rowtabledisp.value);
     }, 200)
 }
 
 function searchDataDiv(targ) {
     $('#paginattable').html('');
-    dataTabel.forEach(function(item, i) {
+    dataTabel.forEach(function (item, i) {
         if (item.toUpperCase().indexOf(targ.toUpperCase()) != -1) {
             // item = item.replace(targ, '<span style="color:red">' + targ + '</span>');
             $('#paginattable').append('<div class="col s12 m6 l4 card-width">' + item + '</div>')
         }
     });
-    setTimeout(function() {
+    setTimeout(function () {
         setupDivPagination(rowtabledisp.value);
     }, 200)
 }
@@ -370,7 +376,7 @@ function searchDataDiv(targ) {
 function dispDashboard() {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             $('.dispUtama').html(xmlhttp.responseText);
             var $el = $('.math-tex')
@@ -389,7 +395,7 @@ function dispDashboard() {
 function dispTimeline() {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             $('.dispUtama').html(xmlhttp.responseText);
             hideLoad();
@@ -402,7 +408,7 @@ function dispTimeline() {
 
 function showLoad() {
     $('.loadUtama').show();
-    setTimeout(function() {
+    setTimeout(function () {
         $('.loadUtama img').css({
             'transform': 'scale(1.0)'
         });
@@ -413,7 +419,7 @@ function hideLoad() {
     $('.loadUtama img').css({
         'transform': 'scale(0.0)'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.loadUtama').hide();
     }, 310);
 }
@@ -447,7 +453,6 @@ function formatMoney(amount, decimalCount = 0, decimal = ",", thousands = ".") {
         console.log(e)
     }
 };
-
 
 function setValueDom(arraydom, isidom) {
     for (i = 0; i < arraydom.length; i++) {
@@ -500,7 +505,7 @@ function openPreview(types, banner, idevent) {
         'border-radius': '10px',
         'display': 'block'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         if (layar > 762) {
             $('.form-View').css({
                 'margin-left': '-350px',
@@ -560,19 +565,21 @@ function closeView() {
         'left': kiri + 'px',
         'border-radius': '5px'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.overlayPreview').hide();
         $('.form-View').hide();
     }, 400);
 
 }
 
+
+
+
 // ============ MULAI SCRIPT JQUERY FORMEVENT ====================
 var btnformEvent = '',
     statusformEvent = '',
     posformEvent = '',
     formEventElementArr = ['tema', 'tanggalbegin', 'jambegin', 'tanggalend', 'jamend', 'tanggalevent', 'statusevent'];
-
 
 function openformEvent(dom, status, pos, modal) {
     btnformEvent = dom;
@@ -595,7 +602,7 @@ function openformEvent(dom, status, pos, modal) {
         'border-radius': '100%',
         'display': 'block'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         if (layar > 762) {
             $('.form-formEvent').css({
                 'margin-left': '-460px',
@@ -619,7 +626,7 @@ function openformEvent(dom, status, pos, modal) {
             });
         }
     }, 200);
-    setTimeout(function() {
+    setTimeout(function () {
         $('body').css({
             'overflow-y': 'hidden'
         });
@@ -634,7 +641,7 @@ function openformEvent(dom, status, pos, modal) {
             'height': hBody + 'px'
         });
     }, 600);
-    setTimeout(function() {
+    setTimeout(function () {
         // var lbrCanvas = $('.frameVideo').width(),
         //     tggCanvas = parseInt(lbrCanvas / 1.6);
         // $('.frameVideo').css({
@@ -650,7 +657,7 @@ function openformEvent(dom, status, pos, modal) {
 
     $('#tanggaleventid label').addClass('active');
     $('#statuseventid label').addClass('active');
-    setTimeout(function() {
+    setTimeout(function () {
         $('.form-body-formEvent').animate({
             scrollTop: 0
         }, 200);
@@ -703,19 +710,18 @@ function closeformEvent() {
         'left': kiri + 'px',
         'border-radius': '100%'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.overlayformEvent').hide();
         $('.form-formEvent').hide();
     }, 400);
 }
-
 
 function simpanformEvent() {
     showToast(JSON.stringify(arr_daftar_subjek));
     var formData = new FormData();
     var palang = true;
 
-    formEventElementArr.forEach(function(item, i) {
+    formEventElementArr.forEach(function (item, i) {
         if ($('#' + item).val() == "") {
             palang = false;
         }
@@ -741,15 +747,15 @@ function simpanformEvent() {
             data: formData,
             processData: false,
             contentType: false,
-            beforeSend: function() {
+            beforeSend: function () {
                 showLoad();
                 closeformEvent();
             },
-            success: function(response) {
+            success: function (response) {
                 showToast(response);
                 hideLoad();
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
 
             }
         });
@@ -762,10 +768,11 @@ function simpanformEvent() {
 
 
 
+
+
 // ============ AKHIR SCRIPT JQUERY ADDVIDEO ====================
 var modalVideo,
     posVideo;
-
 
 function openMore(idVideo) {
     $('body').css({
@@ -787,7 +794,7 @@ function openMore(idVideo) {
     });
 
     $('.overlayMore').show();
-    setTimeout(function() {
+    setTimeout(function () {
         $('.btnedit').css({
             'top': atas - 50 + 'px',
             'left': kiri + 'px',
@@ -818,4 +825,49 @@ function clsMe(pos) {
         'right': '-100%'
     });
     posVideoTersorot = '';
+}
+
+
+
+
+
+
+
+var statusDelete, posDelete, subjectDelete;
+// Urutan Tombol Pada Tombol Delete adalah status, Id, conteks[untuk isian keterangan], serta subject[menu]
+function openDeleteItem(status, Id, contex, subject) {
+    statusDelete = status;
+    posDelete = Id;
+    forSubjectDelete = subject;
+
+    $('.overlayVerifikasi').show();
+    $('#strKontext').html('Apakah anda yakin menghapus ' + contex + ' ?');
+}
+
+function verifikasiDelete() {
+    var formData = new FormData();
+    formData.append('status', statusDelete);
+    formData.append('pos', posDelete);
+    $.ajax({
+        type: 'POST',
+        url: 'app-assets/js/scripts/engine/override.php?order=' + forSubjectDelete,
+        data: formData,
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            $('.overlayVerifikasi').hide();
+            showLoad();
+        },
+        success: function (response) {
+            // console.log(response);
+            showToast(response);
+            if (forSubjectDelete == 'saveformEvent') {
+                dispTimeline();
+            }
+            // $("#barisData" + posDelete).remove();
+
+            hideLoad();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {}
+    });
 }
