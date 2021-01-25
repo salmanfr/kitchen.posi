@@ -10,7 +10,6 @@ var boolMedia = false,
 $(document).ready(function(e) {
     selectMenu('menu0');
     initSample();
-
     $('.genCombos').hover(function() {
         mouse_combos = true
     }, function() {
@@ -100,21 +99,20 @@ $(document).ready(function(e) {
         var meta = $(this).attr('meta-data');
         var img = new Image();
         img.onload = function() {
-            var canvas = document.getElementById('canvas');
-            var max_size = 430,
+            var canvas = document.getElementById('canvas'),
                 width = this.width,
                 height = this.height;
-            if (width > height) {
-                if (width > max_size) {
-                    height *= max_size / width;
-                    width = max_size;
-                }
-            } else {
-                if (height > max_size) {
-                    width *= max_size / height;
-                    height = max_size;
-                }
-            }
+            // if (width > height) {
+            //     if (width > max_size) {
+            //         height *= max_size / width;
+            //         width = max_size;
+            //     }
+            // } else {
+            //     if (height > max_size) {
+            //         width *= max_size / height;
+            //         height = max_size;
+            //     }
+            // }
             canvas.width = width;
             canvas.height = height;
             var ctx = canvas.getContext('2d');
@@ -396,6 +394,9 @@ function setValueDom(arraydom, isidom) {
     }
 }
 
+function getAssetsLink() {
+    return 'http://localhost/';
+}
 
 var domView = '',
     bannerType = '',
@@ -407,7 +408,7 @@ function openPreview(types, banner, idevent) {
     banners = banner;
 
     if (types == "image") {
-        $('.form-View').html('<img src="app-assets/images/event/' + banner + '" style="width:100%; height:100%;">');
+        $('.form-View').html('<img src="' + getAssetsLink() + 'posiassets/fold/' + banner + '" style="width:100%; height:100%;">');
     } else {
         $('.form-View').html('<iframe style="width:100%; height:100%;" src="https://www.youtube.com/embed/' + banner + '" allow="autoplay; encrypted-media" allowfullscreen="" frameborder="0"></iframe>');
     }
@@ -472,7 +473,7 @@ function closeView() {
     window.location.href = "javascript:;";
     var dom = domView;
     $('body').css({ 'overflow-y': 'auto' });
-    $('.form-View').html((bannerType == 'video') ? '<img style="width:100%; height:100%" src="https://img.youtube.com/vi/' + banners + '/hqdefault.jpg">' : '<img src="app-assets/images/event/' + banners + '" style="width:100%; height:100%;">');
+    $('.form-View').html((bannerType == 'video') ? '<img style="width:100%; height:100%" src="https://img.youtube.com/vi/' + banners + '/hqdefault.jpg">' : '<img src="' + getAssetsLink() + 'posiassets/fold/' + banners + '" style="width:100%; height:100%;">');
     var atas = $(dom).offset().top - $(document).scrollTop();
     var kiri = $(dom).offset().left;
     var lebar = $(dom).width();
@@ -558,6 +559,16 @@ function openformEvent(dom, status, pos, modal) {
             'height': hBody + 'px'
         });
     }, 600);
+    setTimeout(function() {
+        var lbrCanvas = $('.frameVideo').width(),
+            tggCanvas = parseInt(lbrCanvas / 1.6);
+        $('.frameVideo').css({
+            'height': tggCanvas + 'px'
+        });
+        $('#canvas').css({
+            'height': tggCanvas + 'px'
+        });
+    }, 700);
     statusformEvent = status;
     $('#tanggalbeginid label').addClass('active');
     $('#jambeginid label').addClass('active');
