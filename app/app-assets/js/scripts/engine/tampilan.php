@@ -308,7 +308,7 @@ function timeLine($conn, $subjek, $tahun, $Id_member)
                                         </a>
                                     </div> 
                                     <div class="card-panel hoverable border-radius-6 m-0 card-animation-1">
-                                        <img onclick="openPreview(\'' . $r['banner_type'] . '\',\'' . $r['banner'] . '\',\'' . $r['Id_event'] . '\')" class="responsive-img border-radius-4 z-depth-4 image-n-margin evView' . $r['Id_event'] . '" src="' . $banner . '" alt="">
+                                        <img onclick="openPreview(\'' . $r['banner_type'] . '\',\'' . $r['banner'] . '\',\'' . $r['Id_event'] . '\')" class="responsive-img border-radius-4 z-depth-4 image-n-margin evView' . $r['Id_event'] . '" src="' . $banner . '" alt="" style="width:100%;">
                                         <h6><a href="#" class="mt-5">' . $r['judul'] . '</a></h6>
                                         <p>' . $r['deskripsi'] . '</p>
                                         <div class="row mt-4">
@@ -339,7 +339,7 @@ function timeLine($conn, $subjek, $tahun, $Id_member)
                                     </a>
                                 </div> 
                                 <div class="card-panel hoverable border-radius-6 m-0 card-animation-1">
-                                    <img onclick="openPreview(\'' . $r['banner_type'] . '\',\'' . $r['banner'] . '\',\'' . $r['Id_event'] . '\')" class="responsive-img border-radius-4 z-depth-4 image-n-margin evView' . $r['Id_event'] . '" src="' . $banner . '" alt="">
+                                    <img onclick="openPreview(\'' . $r['banner_type'] . '\',\'' . $r['banner'] . '\',\'' . $r['Id_event'] . '\')" class="responsive-img border-radius-4 z-depth-4 image-n-margin evView' . $r['Id_event'] . '" src="' . $banner . '" alt="" style="width:100%;">
                                     <h6><a href="#" class="mt-5">' . $r['judul'] . '</a></h6>
                                     <p>' . $r['deskripsi'] . '</p>
                                     <div class="row mt-4">
