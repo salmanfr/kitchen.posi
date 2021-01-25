@@ -28,7 +28,7 @@
 .dataTables_paginate .current {
     padding-left: 10px;
     padding-right: 10px;
-    color: #fff!important;
+    color: #fff !important;
     border: 1px solid #2196f3;
     border-radius: 6px;
     background: #2196f3;
@@ -104,7 +104,7 @@
     margin-left: -60px;
     /* background: #fff; */
     border-radius: 100%;
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
     transition: 0.3s;
     transform: scale(1.0)
 }
@@ -236,6 +236,7 @@
 }
 
 @media only screen and (max-width: 765px) {
+
     .overlayVoucher .vouch1,
     .vouch2,
     .vouch3,
@@ -281,7 +282,7 @@
     width: 20px;
     height: 20px;
     background: red;
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
     color: #fff;
     left: 50%;
     top: 10%;
@@ -312,7 +313,7 @@
     height: 20px;
     color: #fff;
     background: red;
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
     right: 25px;
     top: 50%;
     margin-top: -13px;
@@ -330,15 +331,17 @@
         margin-left: 0;
         top: 5%;
     }
+
     .overlayVoucher .invoiceTransfer .logoposiinv {
         height: 30px;
     }
+
     .overlayVoucher .invoiceClose {
         position: absolute;
         width: 20px;
         height: 20px;
         background: red;
-        box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2)!important;
+        box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
         color: #fff;
         left: 98%;
         top: 5%;
@@ -365,7 +368,7 @@
 }
 
 .overlayformCart .form-formCart {
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
     border-radius: 5px;
     background: #fafbfc;
     transition: 0.3s;
@@ -383,7 +386,7 @@
 .overlayformCart .form-formCart .form-header-formCart {
     width: 100%;
     height: 60px;
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1) !important;
     display: none;
 }
 
@@ -452,7 +455,7 @@
 }
 
 .overlayRiwayatTransaksi .form-RiwayatTransaksi {
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
     border-radius: 5px;
     background: #fafbfc;
     transition: 0.3s;
@@ -470,7 +473,7 @@
 .overlayRiwayatTransaksi .form-RiwayatTransaksi .form-header-RiwayatTransaksi {
     width: 100%;
     height: 60px;
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1) !important;
     display: none;
 }
 
@@ -551,7 +554,7 @@
 }
 
 .overlayPreview .form-View {
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
     border-radius: 0px;
     background: #fafbfc;
     transition: 0.3s;
@@ -636,7 +639,7 @@
     margin-top: 0px;
     width: 40px;
     height: 40px;
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1) !important;
     text-align: center;
     margin-top: -55px;
 }
@@ -676,6 +679,7 @@
         top: 8px;
         left: 50px;
     }
+
     .logoposis .imglogo {
         width: 80px;
         height: 40px;
@@ -708,7 +712,7 @@
 }
 
 .overlayformEvent .form-formEvent {
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
     border-radius: 5px;
     background: #fafbfc;
     transition: 0.3s;
@@ -726,7 +730,7 @@
 .overlayformEvent .form-formEvent .form-header-formEvent {
     width: 100%;
     height: 60px;
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1) !important;
     display: none;
 }
 
@@ -780,7 +784,7 @@
     background: #f5f1f1;
     width: 100%;
     height: 430px;
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1) !important;
 }
 
 .overlayformEvent .form-formEvent .form-body-formEvent .daftarAkses {
@@ -830,4 +834,89 @@
 .overlayformEvent .form-formEvent .form-footer-formEvent a {
     float: right;
     margin-right: 10px;
+}
+
+
+
+
+
+
+
+* // For Ovarlay Button Melayang Edit, Delete, Soal, Bidang Studi  */
+
+.overlayMore {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .52);
+    display: none;
+}
+
+.overlayMore .btnedit {
+    position: fixed;
+    z-index: 100001;
+    display: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    line-height: 10px;
+    transition: 0.3s;
+}
+
+.overlayMore .btnnilai {
+    position: fixed;
+    z-index: 100001;
+    display: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    line-height: 10px;
+    transition: 0.3s;
+}
+
+.overlayMore .btnhapus {
+    position: fixed;
+    z-index: 100001;
+    display: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    line-height: 10px;
+    transition: 0.3s;
+}
+
+.overlayMore .btntutup {
+    position: fixed;
+    z-index: 100001;
+    display: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    line-height: 10px;
+    transition: 0.3s;
+}
+
+.overlayMore .btnchat {
+    position: fixed;
+    z-index: 100001;
+    display: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    line-height: 10px;
+    transition: 0.3s;
+}
+
+.clsv {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.overlayMore i {
+    font-size: 15px;
+    margin-top: -5px;
 }
