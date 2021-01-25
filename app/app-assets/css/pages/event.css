@@ -1,0 +1,918 @@
+.dataTables_info {
+    display: inline-flex;
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.dataTables_paginate {
+    display: inline-flex;
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.dataTables_paginate a {
+    margin: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dataTables_paginate span a {
+    display: inline-flex;
+    transition: 0.3s;
+}
+
+.dataTables_paginate span a:hover,
+.dataTables_paginate a:hover,
+.dataTables_paginate .current {
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #fff !important;
+    border: 1px solid #2196f3;
+    border-radius: 6px;
+    background: #2196f3;
+    box-shadow: 0 0 8px 0 #2196f3
+}
+
+.current {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.dataTables_paginate span a:hover {
+    display: inline-flex;
+    transition: 0.3s;
+}
+
+.dataTables_paginate .paginate_button {
+    padding: 5px;
+}
+
+.scrollTable {
+    overflow-y: auto;
+}
+
+.tooltips {
+    display: none;
+    height: 40px;
+    color: #fff;
+    position: fixed;
+    z-index: 100000000;
+    border-radius: 3px;
+    padding: 10px;
+    background: black;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .12), 0 1px 5px 0 rgba(0, 0, 0, .2)
+}
+
+.tooltips:after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    right: 10%;
+    z-index: 100000001;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #000;
+}
+
+.addbtn {
+    margin: 3px;
+    display: inline-flex
+}
+
+.loadUtama {
+    position: fixed;
+    z-index: 1000000000000000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+
+.loadUtama img {
+    position: fixed;
+    z-index: 100001;
+    width: 120px;
+    height: 120px;
+    top: 50%;
+    margin-top: -60px;
+    left: 50%;
+    margin-left: -60px;
+    /* background: #fff; */
+    border-radius: 100%;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
+    transition: 0.3s;
+    transform: scale(1.0)
+}
+
+.genCombos {
+    position: fixed;
+    z-index: 10000000;
+    width: 300px;
+    height: 350px;
+    left: 50%;
+    top: 50%;
+    background: #fff;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, .52);
+    display: none;
+    transition: 0.3s;
+}
+
+.genCombos .headerCombos {
+    height: 50px;
+}
+
+.genCombos .headerCombos #panelCaris {
+    height: 30px;
+    width: 290px;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    transition: 0.3s;
+    z-index: 100000000000000000;
+}
+
+.genCombos .bodyCombos {
+    height: 300px;
+    overflow-y: auto;
+}
+
+.genCombos .bodyCombos .listItem {
+    width: 100%;
+    min-height: 30px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    transition: 0.3s;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 16px;
+    padding-top: 7px;
+    position: relative;
+}
+
+.genCombos .bodyCombos .listItem:hover {
+    background: #37179e;
+    color: #fff;
+}
+
+.inpCombo {
+    background: url('../../images/gallery/arrow_bottom.png') no-repeat center center;
+    background-size: 15px 10px;
+    background-position-x: 98%;
+    background-position-y: 20px
+}
+
+.logodisp {
+    display: flex;
+    width: 100%;
+    height: 50px;
+}
+
+.logodisp .logo {
+    width: 50px;
+    height: 50px;
+}
+
+.logodisp .logo .logoposi {
+    height: 50px;
+    margin-top: 10px;
+}
+
+.logodisp .deskjudul {
+    height: 70px;
+    margin-left: 10px;
+}
+
+.card-content .coins {
+    display: inline-flex;
+}
+
+.card-content .coins .coin {
+    width: 30px;
+    height: 30px;
+    justify-items: center;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.btnHapusVideo .btnHapusVideo {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    z-index: 100;
+    margin-left: -20px;
+    margin-top: 20px;
+}
+
+.overlayVoucher {
+    display: none;
+    position: fixed;
+    z-index: 100010;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .62);
+}
+
+.overlayVoucher .vouch1,
+.vouch2,
+.vouch3,
+.vouch4 {
+    position: fixed;
+    z-index: 10001;
+    left: 50%;
+    width: 600px;
+    margin-left: -300px;
+    top: 50%;
+    margin-top: -200px;
+    height: 400px;
+    display: none;
+    transition: 0.3s;
+}
+
+@media only screen and (max-width: 765px) {
+
+    .overlayVoucher .vouch1,
+    .vouch2,
+    .vouch3,
+    .vouch4 {
+        position: fixed;
+        z-index: 10001;
+        left: 5%;
+        width: 90%;
+        margin-left: 0;
+        top: 50%;
+        margin-top: -200px;
+        height: 400px;
+        display: none;
+        transition: 0.3s;
+    }
+}
+
+.overlayVoucher .invoiceTransfer {
+    position: absolute;
+    z-index: 100001;
+    width: 600px;
+    left: 50%;
+    margin-left: -300px;
+    top: 10%;
+    transition: 0.3s;
+    background: #fff;
+    transform: scale(0.0);
+}
+
+.overlayVoucher .invoiceTransfer .logoposi {
+    position: absolute;
+    height: 30px;
+    top: 30px;
+    right: 30px;
+}
+
+.overlayVoucher .invoiceTransfer .logoposiinv {
+    height: 70px;
+}
+
+.overlayVoucher .invoiceClose {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
+    color: #fff;
+    left: 50%;
+    top: 10%;
+    margin-left: 290px;
+    text-align: center;
+    line-height: 20px;
+    z-index: 100003;
+    cursor: pointer;
+    padding-top: 0.2px;
+    transition: 0.3s;
+    border-radius: 1px;
+    display: none;
+}
+
+.overlayVoucher .invoiceClose:hover {
+    transform: rotate(180deg);
+}
+
+.overlayVoucher .invoiceClose i {
+    color: #fff;
+    font-size: 12px;
+}
+
+.numberCart {
+    position: fixed;
+    z-index: 1000;
+    width: 20px;
+    height: 20px;
+    color: #fff;
+    background: red;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
+    right: 25px;
+    top: 50%;
+    margin-top: -13px;
+    border-radius: 100px;
+    text-align: center;
+    font-size: 11px;
+}
+
+@media only screen and (max-width: 765px) {
+    .overlayVoucher .invoiceTransfer {
+        position: absolute;
+        z-index: 100001;
+        width: 96%;
+        left: 2%;
+        margin-left: 0;
+        top: 5%;
+    }
+
+    .overlayVoucher .invoiceTransfer .logoposiinv {
+        height: 30px;
+    }
+
+    .overlayVoucher .invoiceClose {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: red;
+        box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
+        color: #fff;
+        left: 98%;
+        top: 5%;
+        margin-left: -10px;
+        text-align: center;
+        line-height: 20px;
+        z-index: 100003;
+        cursor: pointer;
+        padding-top: 1px;
+        transition: 0.3s;
+        display: none;
+    }
+}
+
+.overlayformCart {
+    position: fixed;
+    z-index: 100000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .52);
+    display: none;
+}
+
+.overlayformCart .form-formCart {
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
+    border-radius: 5px;
+    background: #fafbfc;
+    transition: 0.3s;
+    position: fixed;
+    z-index: 100001;
+    width: 900px;
+    height: 550px;
+    margin-top: -275px;
+    margin-left: -450px;
+    left: 50%;
+    top: 50%;
+    display: none;
+}
+
+.overlayformCart .form-formCart .form-header-formCart {
+    width: 100%;
+    height: 60px;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1) !important;
+    display: none;
+}
+
+.overlayformCart .form-formCart .form-header-formCart h5 {
+    color: black;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+    margin-left: 20px;
+    line-height: 16px;
+    padding-top: 10px;
+    display: inline-block;
+}
+
+.overlayformCart .form-formCart .form-header-formCart .btnclose {
+    /* float: right; */
+    margin-right: 10px;
+    height: 60px;
+    width: 60px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+
+.overlayformCart .form-formCart .form-header-formCart .btnclose i {
+    line-height: 25px;
+    font-size: 25px;
+    padding-top: 18px;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+}
+
+.overlayformCart .form-formCart .form-header-formCart .btnclose i:hover {
+    color: red;
+}
+
+.overlayformCart .form-formCart .form-body-formCart {
+    width: 100%;
+    background: transparent;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 10px;
+    height: 420px;
+    display: none;
+}
+
+.overlayformCart .form-formCart .form-footer-formCart {
+    position: absolute;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    display: none;
+}
+
+.overlayformCart .form-formCart .form-footer-formCart a {
+    float: right;
+    margin-right: 10px;
+}
+
+.overlayRiwayatTransaksi {
+    position: fixed;
+    z-index: 100000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .52);
+    display: none;
+}
+
+.overlayRiwayatTransaksi .form-RiwayatTransaksi {
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
+    border-radius: 5px;
+    background: #fafbfc;
+    transition: 0.3s;
+    position: fixed;
+    z-index: 100001;
+    width: 1000px;
+    height: 500px;
+    margin-top: -250px;
+    margin-left: -500px;
+    left: 50%;
+    top: 50%;
+    display: none;
+}
+
+.overlayRiwayatTransaksi .form-RiwayatTransaksi .form-header-RiwayatTransaksi {
+    width: 100%;
+    height: 60px;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1) !important;
+    display: none;
+}
+
+.overlayRiwayatTransaksi .form-RiwayatTransaksi .form-header-RiwayatTransaksi h5 {
+    color: black;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+    margin-left: 20px;
+    line-height: 16px;
+    padding-top: 10px;
+    display: inline-block;
+}
+
+.overlayRiwayatTransaksi .form-RiwayatTransaksi .form-header-RiwayatTransaksi .btnclose {
+    /* float: right; */
+    margin-right: 10px;
+    height: 60px;
+    width: 60px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+
+.overlayRiwayatTransaksi .form-RiwayatTransaksi .form-header-RiwayatTransaksi .btnclose i {
+    line-height: 25px;
+    font-size: 25px;
+    padding-top: 18px;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+}
+
+.overlayRiwayatTransaksi .form-RiwayatTransaksi .form-header-RiwayatTransaksi .btnclose i:hover {
+    color: red;
+}
+
+.overlayRiwayatTransaksi .form-RiwayatTransaksi .form-body-RiwayatTransaksi {
+    width: 100%;
+    background: transparent;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 10px;
+    height: 370px;
+    display: none;
+}
+
+.overlayRiwayatTransaksi .form-RiwayatTransaksi .form-footer-RiwayatTransaksi {
+    position: absolute;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    display: none;
+}
+
+.overlayRiwayatTransaksi .form-RiwayatTransaksi .form-footer-RiwayatTransaksi a {
+    float: right;
+    margin-right: 10px;
+}
+
+.tut i {
+    font-size: 12px;
+}
+
+.tut .gr {
+    color: green;
+}
+
+.tut .rd {
+    color: #fc0000;
+}
+
+.overlayPreview {
+    position: fixed;
+    z-index: 100000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .52);
+    display: none;
+}
+
+.overlayPreview .form-View {
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
+    border-radius: 0px;
+    background: #fafbfc;
+    transition: 0.3s;
+    position: fixed;
+    z-index: 100001;
+    width: 700px;
+    height: 500px;
+    margin-top: -250px;
+    margin-left: -350px;
+    left: 50%;
+    top: 50%;
+    display: none;
+}
+
+.overlayPreview .btncloses {
+    position: fixed;
+    z-index: 100002;
+    height: 30px;
+    width: 30px;
+    border-radius: 100px;
+    background-color: red;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    left: 50%;
+    margin-left: 335px;
+    top: 50%;
+    margin-top: -265px;
+    transition: 0.3s;
+    display: none;
+}
+
+.overlayPreview .btncloses i {
+    line-height: 25px;
+    font-size: 25px;
+    padding-top: 2px;
+    color: #fff;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+}
+
+.overlayPreview .btncloses i:hover {
+    color: fff;
+}
+
+.overlayVideo .btncloses:hover {
+    transform: rotate(180deg);
+    border-radius: 0px;
+}
+
+.timeline-panel .btnHapusVideo {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    z-index: 100;
+    margin-left: -20px;
+    margin-top: -20px;
+}
+
+.clsv {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.clsv i {
+    font-size: 22px;
+    margin-top: -5px;
+}
+
+#iconids {
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.textupl {
+    width: 80%;
+    margin-left: 30px;
+}
+
+#inputmediaids .btnUpl {
+    margin-top: 0px;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1) !important;
+    text-align: center;
+    margin-top: -55px;
+}
+
+#browsemedia {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    margin: 0;
+    left: 0;
+    opacity: 0;
+}
+
+#inputmediaids .btnUpl i {
+    color: #fff;
+    font-size: 1.4rem;
+    line-height: 1.5rem;
+    padding-top: 7px;
+}
+
+.resendotp {
+    display: none;
+    cursor: pointer;
+}
+
+.logoposis {
+    display: none;
+}
+
+@media only screen and (max-width: 765px) {
+    .logoposis {
+        display: block;
+        width: 80px;
+        height: 50px;
+        position: fixed;
+        z-index: 103;
+        top: 8px;
+        left: 50px;
+    }
+
+    .logoposis .imglogo {
+        width: 80px;
+        height: 40px;
+    }
+}
+
+.kananvisible {
+    float: right;
+    text-align: right;
+    position: absolute;
+    right: 18px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: absolute;
+    top: .5rem;
+    width: 3rem;
+    -webkit-transition: color .2s;
+    transition: color .2s
+}
+
+.overlayformEvent {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .52);
+    display: none;
+    z-index: 10000000000000000000000;
+}
+
+.overlayformEvent .form-formEvent {
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
+    border-radius: 5px;
+    background: #fafbfc;
+    transition: 0.3s;
+    position: fixed;
+    z-index: 1001;
+    width: 900px;
+    height: 700px;
+    margin-top: -350px;
+    margin-left: -450px;
+    left: 50%;
+    top: 50%;
+    display: none;
+}
+
+.overlayformEvent .form-formEvent .form-header-formEvent {
+    width: 100%;
+    height: 60px;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1) !important;
+    display: none;
+}
+
+.overlayformEvent .form-formEvent .form-header-formEvent h5 {
+    color: black;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+    margin-left: 20px;
+    line-height: 16px;
+    padding-top: 10px;
+    display: inline-block;
+}
+
+.overlayformEvent .form-formEvent .form-header-formEvent .btnclose {
+    float: right;
+    margin-right: 10px;
+    height: 60px;
+    width: 60px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+
+.overlayformEvent .form-formEvent .form-header-formEvent .btnclose i {
+    line-height: 25px;
+    font-size: 25px;
+    padding-top: 18px;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+}
+
+.overlayformEvent .form-formEvent .form-header-formEvent .btnclose i:hover {
+    color: red;
+}
+
+.overlayformEvent .form-formEvent .form-body-formEvent {
+    width: 100%;
+    background: transparent;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 10px;
+    height: 570px;
+    display: none;
+}
+
+.overlayformEvent .form-formEvent .form-body-formEvent .frameVideo {
+    height: 430px;
+    width: 100%;
+    background: #f5f1f1;
+}
+
+.overlayformEvent .form-formEvent .form-body-formEvent .frameVideo #canvas {
+    background: #f5f1f1;
+    width: 100%;
+    height: 430px;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1) !important;
+}
+
+.overlayformEvent .form-formEvent .form-body-formEvent .daftarAkses {
+    width: calc(100%-40px);
+    height: 60px;
+    box-shadow: 2px 2px 4px rgba(83, 81, 81, 0.37), -2px -2px 4px rgb(245, 245, 245);
+    margin-left: 20px;
+    margin-right: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.overlayformEvent .form-formEvent .form-body-formEvent .daftarAkses .listAkses {
+    display: inline-block;
+    padding: 4px;
+    background: blue;
+    margin: 2px;
+    box-shadow: 2px 2px 4px rgba(83, 81, 81, 0.37), -2px -2px 4px rgb(245, 245, 245);
+    border-radius: 5px;
+}
+
+.overlayformEvent .form-formEvent .form-body-formEvent .daftarAkses .listAkses span {
+    color: #fff;
+}
+
+.overlayformEvent .form-formEvent .form-body-formEvent .daftarAkses .listAkses i {
+    color: #fff;
+    cursor: pointer;
+}
+
+.overlayformEvent .form-formEvent .form-body-formEvent .daftarAkses .listAkses:hover span {
+    color: #f5e504;
+    transform: scale(1.1);
+}
+
+.overlayformEvent .form-formEvent .form-footer-formEvent {
+    position: absolute;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    display: none;
+}
+
+.overlayformEvent .form-formEvent .form-footer-formEvent a {
+    float: right;
+    margin-right: 10px;
+}
+
+
+
+/* // For Ovarlay Button Melayang Edit, Delete, Soal, Bidang Studi  */
+.overlayMore {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .52);
+    display: none;
+}
+
+.overlayMore .btnedit {
+    position: fixed;
+    z-index: 100001;
+    display: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    line-height: 10px;
+    transition: 0.3s;
+}
+
+.overlayMore .btnnilai {
+    position: fixed;
+    z-index: 100001;
+    display: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    line-height: 10px;
+    transition: 0.3s;
+}
+
+.overlayMore .btnhapus {
+    position: fixed;
+    z-index: 100001;
+    display: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    line-height: 10px;
+    transition: 0.3s;
+}
+
+.overlayMore .btntutup {
+    position: fixed;
+    z-index: 100001;
+    display: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    line-height: 10px;
+    transition: 0.3s;
+}
+
+.overlayMore .btnchat {
+    position: fixed;
+    z-index: 100001;
+    display: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    line-height: 10px;
+    transition: 0.3s;
+}
+
+.clsv {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.overlayMore i {
+    font-size: 15px;
+    margin-top: -5px;
+}
