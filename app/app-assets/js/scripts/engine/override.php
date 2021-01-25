@@ -25,6 +25,21 @@ if ($token == privateHashing(gettodayShort())) {
             $tahun = getTahun();
             echo timeLine($conn,$subjek,$tahun,$Id_member);
             break;
+        case 'getdataevent':
+            $Id_event = anti_Injection($_REQUEST['id_event']);
+            $res = mysqli_query($conn,"SELECT * FROM tb_event WHERE Id_event = '$Id_event'");
+            $r = mysqli_fetch_assoc($res);
+            echo json_encode(array('type'=>$r['banner_type'],
+                                    'banner'=>$r['banner'],
+                                    'judul'=>$r['judul'],
+                                    'desk'=>$r['deskripsi'],
+                                    'subjek'=>$r['subjek'],
+                                    'begin'=>$r['tanggal_mulai'],
+                                    'end'=>$r['tanggal_akhir'],
+                                    'event'=>$r['tahun'].'-'.$r['bulan'].'-'.$r['hari'],
+                                    'status'=>$r['status']
+                                    ));
+            break;    
         case 'saveformEvent':
 
             $judul = anti_Injection($_POST['tema']);
@@ -63,9 +78,15 @@ if ($token == privateHashing(gettodayShort())) {
                                                              hari = '$explode[2]',
                                                             `status` = '$statusEvent'");
                 echo 'berhasil disimpan' . $subjek;
+            } else if ($status == 'Hapus') {
+                moveData($pos);
+                $query = "DELETE FROM `tb_event` WHERE `Id_event` = '$pos'";
+                if (ProsesData($query) > 0) {
+                    return "Data Berhasil Di Hapus";
+                } else {
+                    return "Proses Hapus Gagal";
+                }
             }
-
-
             break;
     }
 } else {

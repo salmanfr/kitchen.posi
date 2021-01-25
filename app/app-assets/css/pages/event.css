@@ -236,7 +236,6 @@
 }
 
 @media only screen and (max-width: 765px) {
-
     .overlayVoucher .vouch1,
     .vouch2,
     .vouch3,
@@ -331,11 +330,9 @@
         margin-left: 0;
         top: 5%;
     }
-
     .overlayVoucher .invoiceTransfer .logoposiinv {
         height: 30px;
     }
-
     .overlayVoucher .invoiceClose {
         position: absolute;
         width: 20px;
@@ -679,7 +676,6 @@
         top: 8px;
         left: 50px;
     }
-
     .logoposis .imglogo {
         width: 80px;
         height: 40px;
@@ -837,12 +833,8 @@
 }
 
 
-
-
-
-
-
 /* * // For Ovarlay Button Melayang Edit, Delete, Soal, Bidang Studi  */
+
 */ .overlayMore {
     position: fixed;
     z-index: 1000;
@@ -856,7 +848,7 @@
 
 .overlayMore .btnedit {
     position: fixed;
-    z-index: 100001;
+    z-index: 101;
     display: none;
     cursor: pointer;
     width: 30px;
@@ -867,7 +859,7 @@
 
 .overlayMore .btnnilai {
     position: fixed;
-    z-index: 100001;
+    z-index: 101;
     display: none;
     cursor: pointer;
     width: 30px;
@@ -878,7 +870,7 @@
 
 .overlayMore .btnhapus {
     position: fixed;
-    z-index: 100001;
+    z-index: 101;
     display: none;
     cursor: pointer;
     width: 30px;
@@ -889,7 +881,7 @@
 
 .overlayMore .btntutup {
     position: fixed;
-    z-index: 100001;
+    z-index: 101;
     display: none;
     cursor: pointer;
     width: 30px;
@@ -898,9 +890,9 @@
     transition: 0.3s;
 }
 
-.overlayMore .btnchat {
+.overlayMore .btnsoal {
     position: fixed;
-    z-index: 100001;
+    z-index: 101;
     display: none;
     cursor: pointer;
     width: 30px;
@@ -919,3 +911,55 @@
     font-size: 15px;
     margin-top: -5px;
 }
+
+
+/* For CSS Overlay Tombol Hapus / Verifikasi */
+
+.overlayVerifikasi {
+    position: fixed;
+    z-index: 100000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .22);
+    display: none;
+}
+
+.overlayVerifikasi .card-alert {
+    width: 600px;
+    height: 180px;
+    z-index: 100001;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
+    position: fixed;
+    margin-left: -300px;
+    margin-top: -90px;
+    left: 50%;
+    top: 50%;
+    border-radius: 5px;
+    background: #fff;
+}
+
+.logodisp {
+    display: flex;
+    width: 100%;
+    height: 100px;
+}
+
+.logodisp .logo {
+    width: 50px;
+    height: 50px;
+}
+
+.logodisp .logo .logoposi {
+    height: 50px;
+    margin-top: 10px;
+}
+
+.logodisp .deskjudul {
+    height: 70px;
+    margin-left: 10px;
+}
+
+
+/* END For CSS Overlay Tombol Hapus / Verifikasi */

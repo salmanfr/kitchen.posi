@@ -187,21 +187,13 @@ $(document).ready(function(e) {
 
     //This For Ovelay Moore
     $('.btntutup').on('click', function() {
-        $('.overlayMore').hide();
-        $('body').css({
-            'overflow-y': 'auto'
-        });
-        clsMe(posVideo);
-        // closeformEvent();
+        clsMe();
     });
 
     $('.btnedit').click(function() {
-        // var isDom = '.btnedit' + IdGlobal;
-        // $(".btnedit").addClass('.btnedit' + IdGlobal);
-        // openformEvent('.btnedit', 'Edit', IdGlobal, '')
+        getDataEvent(IdGlobal);
     });
-
-    $('.btnchat').click(function() {
+    $('.btnsoal').click(function() {
         $('.overlayMore .centers').html('<div class="chat">\
                                             <div class="cointainerMessage">\
                                                 <div class="messages" id="chat">\
@@ -217,7 +209,10 @@ $(document).ready(function(e) {
         posVideoTersorot = posVideo;
     });
 
-    $('.btnhapus').click(function() {});
+
+    $('.btnhapus').click(function() {
+        openDeleteItem('Hapus', IdGlobal, 'Data Event Berikut', 'saveformEvent');
+    });
 
     $('.btnnilai').click(function() {
         openformNilai('.btnnilai', posVideo);
@@ -562,7 +557,21 @@ function closeView() {
 
 }
 
+function getDataEvent(Id_event) {
+    showLoad();
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var modals = xmlhttp.responseText;
+            hideLoad();
+            openformEvent('.btnedit', 'Edit', IdGlobal, modals);
 
+            auth(xmlhttp.responseText);
+        }
+    }
+    xmlhttp.open('GET', 'app-assets/js/scripts/engine/override.php?order=getdataevent&id_event=' + Id_event);
+    xmlhttp.send();
+}
 
 
 // ============ MULAI SCRIPT JQUERY FORMEVENT ====================
@@ -674,6 +683,41 @@ function openformEvent(dom, status, pos, modal) {
         posformEvent = pos;
         var isiDom = modal.split('A99');
         //setValueDom(formEventElementArr, isiDom);
+        var modals = JSON.parse(modal);
+        $('#tema').val(modals.judul);
+        $('#temaid label').addClass('active');
+        var type = modals.type;
+        if (type == "image") {
+            dataUrl = "namlastcorp";
+            $('#inputmedia').val(modals.banner);
+            $('#inputmediaid label').addClass('active');
+            $('.frameVideo').html('<img src="' + getAssetsLink() + 'posiassets/fold/' + modals.banner + '" style="width:100%; height:100%;">')
+
+        } else {
+            dataUrl = modals.banner;
+            $('#inputmedia').val('https://www.youtube.com/watch?v=' + modals.banner);
+            $('#inputmediaid label').addClass('active');
+            $('.frameVideo').html('<iframe style="width:100%; height:100%;" src="https://www.youtube.com/embed/' + modals.banner + '" allow="autoplay; encrypted-media" allowfullscreen="" frameborder="0"></iframe>');
+        }
+        $('.daftarAkses').html('');
+        arr_daftar_subjek = JSON.parse(modals.subjek);
+        arr_daftar_subjek.forEach(function(item, i) {
+            $('.daftarAkses').prepend('<div class="listAkses" id="' + item.split(' ').join('').replace('(', '').replace(')', '').replace('.', '') + '">\
+                                            <span>' + item + '</span>\
+                                            <i class="material-icons" onclick="delAkses(\'' + item + '\') ">close</i>\
+                                        </div>');
+        });
+        CKEDITOR.instances.deskripsi.setData(modals.desk);
+        var begin = modals.begin.split(' ');
+        $('#tanggalbegin').val(begin[0]);
+        $('#jambegin').val(begin[1]);
+
+        var ends = modals.end.split(' ');
+        $('#tanggalend').val(ends[0]);
+        $('#jamend').val(ends[1]);
+
+        $('#tanggalevent').val(modals.event);
+        $('#statusevent').val((modals.status == '1' ? 'Publish' : 'Private'));
     }
 
 }
@@ -703,7 +747,9 @@ function closeformEvent() {
     setTimeout(function() {
         $('.overlayformEvent').hide();
         $('.form-formEvent').hide();
-    }, 400);
+        clsMe();
+        showToast('hi');
+    }, 450);
 }
 
 function simpanformEvent() {
@@ -778,7 +824,7 @@ function openMore(idVideo) {
     var kiri = $(btnaddVideo).offset().left;
     var lebar = $(btnaddVideo).width();
     var tinggi = $(btnaddVideo).height();
-    $('.btnedit, .btnnilai, .btnhapus, .btntutup, .btnchat').css({
+    $('.btnedit, .btnnilai, .btnhapus, .btntutup, .btnsoal').css({
         'top': atas - 2 + 'px',
         'left': kiri - 2 + 'px',
         'display': 'block'
@@ -796,7 +842,7 @@ function openMore(idVideo) {
             'left': kiri + 35 + 'px',
             'display': 'block'
         });
-        $('.btnchat').css({
+        $('.btnsoal').css({
             'top': atas + 3 + 'px',
             'left': kiri + 45 + 'px',
             'display': 'block'
@@ -810,9 +856,53 @@ function openMore(idVideo) {
     }, 100);
 }
 
-function clsMe(pos) {
+function clsMe() {
+    $('.overlayMore').hide();
+    $('body').css({
+        'overflow-y': 'auto'
+    });
     $('.overlayMore .centers').css({
         'right': '-100%'
     });
-    posVideoTersorot = '';
+}
+
+
+
+var statusDelete, posDelete, subjectDelete;
+// Urutan Tombol Pada Tombol Delete adalah status, Id, conteks[untuk isian keterangan], serta subject[menu]
+function openDeleteItem(status, Id, contex, subject) {
+    statusDelete = status;
+    posDelete = Id;
+    forSubjectDelete = subject;
+
+    $('.overlayVerifikasi').show();
+    $('#strKontext').html('Apakah anda yakin menghapus ' + contex + ' ?');
+}
+
+function verifikasiDelete() {
+    var formData = new FormData();
+    formData.append('status', statusDelete);
+    formData.append('pos', posDelete);
+    $.ajax({
+        type: 'POST',
+        url: 'app-assets/js/scripts/engine/override.php?order=' + forSubjectDelete,
+        data: formData,
+        processData: false,
+        contentType: false,
+        beforeSend: function() {
+            $('.overlayVerifikasi').hide();
+            showLoad();
+        },
+        success: function(response) {
+            // console.log(response);
+            showToast(response);
+            if (forSubjectDelete == 'saveformEvent') {
+                dispTimeline();
+            }
+            // $("#barisData" + posDelete).remove();
+
+            hideLoad();
+        },
+        error: function(xhr, ajaxOptions, thrownError) {}
+    });
 }

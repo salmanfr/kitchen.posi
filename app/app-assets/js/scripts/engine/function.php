@@ -390,3 +390,56 @@ function uploadMyImageString($name, $file)
   // do anything you want with your response
   return $response;
 }
+
+
+
+function query($query)
+{
+  global $conn;
+
+  $result = mysqli_query($conn, $query);
+  $rows = [];
+
+  while ($row = mysqli_fetch_assoc($result)) {
+    $rows[] = $row;
+  }
+
+  return $rows;
+}
+
+function ProsesData($query)
+{
+    global $conn;
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}
+
+
+function moveData($id)
+{
+
+  $moveData = query("SELECT * FROM `tb_event` WHERE `Id_event` = '$id'")[0];
+
+  $data1 = $moveData["Id_event"];
+  $data2 = $moveData["banner_type"];
+  $data3 = $moveData["banner"];
+  $data4 = $moveData["judul"];
+  $data5 = $moveData["deskripsi"];
+  $data6 = $moveData["subjek"];
+  $data7 = $moveData["tanggal_mulai"];
+  $data8 = $moveData["tanggal_akhir"];
+  $data9 = $moveData["love"];
+  $data10 = $moveData["komentar"];
+  $data11 = $moveData["tahun"];
+  $data12 = $moveData["bulan"];
+  $data13 = $moveData["hari"];
+  $data14 = $moveData["status"];
+
+
+  $query = "INSERT INTO `tb_event_hapus`
+            VALUES
+            (NULL, '$data1', '$data2', '$data3', '$data4', '$data5', '$data6', '$data7', 
+             '$data8', '$data9', '$data10', '$data11', '$data12', '$data13', '$data14')
+           ";
+  ProsesData($query);
+}

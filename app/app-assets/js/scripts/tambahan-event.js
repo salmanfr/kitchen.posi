@@ -24,6 +24,7 @@ function selectMenu(idmenu) {
     //navigationButtom(idmenu);
 }
 
+
 // function navigationButtom(idmenu) {
 //     // gradient-45deg-amber-amber
 //     var lbl = ['dashboard', 'event', 'kompetisi', 'produk', 'merchandise'];
