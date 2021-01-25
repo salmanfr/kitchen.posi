@@ -1,11 +1,10 @@
 <?php
-function dispDashboard($conn)
-{
-    $guru  = getJlhMemberKontext($conn, 'Guru');
-    $siswa = getJlhMemberKontext($conn, 'Siswa');
-    $mahasiswa = getJlhMemberKontext($conn, 'Mahasiswa');
-    $total = $guru + $siswa + $mahasiswa;
-    return '  <div class="section">
+function dispDashboard($conn){
+  $guru  = getJlhMemberKontext($conn,'Guru');
+  $siswa = getJlhMemberKontext($conn,'Siswa');
+  $mahasiswa = getJlhMemberKontext($conn,'Mahasiswa');
+  $total = $guru + $siswa + $mahasiswa;
+  return '  <div class="section">
   <!-- card stats start -->
   <div id="card-stats" class="pt-0">
       <div class="row">
@@ -13,7 +12,7 @@ function dispDashboard($conn)
                 <div class="card animate fadeLeft">
                     <div class="card-content cyan white-text">
                         <p class="card-stats-title"><i class="material-icons">group</i>All Member</p>
-                        <h4 class="card-stats-number white-text">' . $total . '</h4>
+                        <h4 class="card-stats-number white-text">'.$total.'</h4>
                         
                     </div>
                     <div class="card-action cyan darken-1">
@@ -26,7 +25,7 @@ function dispDashboard($conn)
                   <div class="card-content red accent-2 white-text">
                       <p class="card-stats-title"><i class="material-icons">people</i> Siswa
                       </p>
-                      <h4 class="card-stats-number white-text">' . $siswa . '</h4>
+                      <h4 class="card-stats-number white-text">'.$siswa.'</h4>
 
                   </div>
                   <div class="card-action red">
@@ -39,7 +38,7 @@ function dispDashboard($conn)
                   <div class="card-content orange lighten-1 white-text">
                       <p class="card-stats-title"><i class="material-icons">people_alt</i> Mahasiswa
                       </p>
-                      <h4 class="card-stats-number white-text">' . $mahasiswa . '</h4>
+                      <h4 class="card-stats-number white-text">'.$mahasiswa.'</h4>
 
                   </div>
                   <div class="card-action orange">
@@ -52,7 +51,7 @@ function dispDashboard($conn)
                   <div class="card-content green lighten-1 white-text">
                       <p class="card-stats-title"><i class="material-icons">people_outline</i> Guru
                       </p>
-                      <h4 class="card-stats-number white-text">' . $guru . '</h4>
+                      <h4 class="card-stats-number white-text">'.$guru.'</h4>
 
                   </div>
                   <div class="card-action green">
@@ -286,31 +285,29 @@ function dispDashboard($conn)
 </div>';
 }
 
-function timeLine($conn, $subjek, $tahun, $Id_member)
-{
-    $res = mysqli_query($conn, "SELECT * FROM tb_event WHERE tahun = '$tahun'");
+function timeLine($conn,$subjek,$tahun,$Id_member){
+    $res = mysqli_query($conn,"SELECT * FROM tb_event WHERE tahun = '$tahun'");
     $k = 0;
-    $disp = '';
-    while ($r = mysqli_fetch_array($res)) {
+    while($r = mysqli_fetch_array($res)){
         $subj = json_decode($r['subjek'], false);
-        if (in_array($subjek, $subj)) {
+        if(in_array($subjek,$subj)){
             $k++;
-            $banner = ($r['banner_type'] == 'video' ? 'https://img.youtube.com/vi/' . $r['banner'] . '/hqdefault.jpg' : 'app-assets/images/event/' . $r['banner']);
-            if ($k % 2 == 0) {
+            $banner =($r['banner_type']=='video'?'https://img.youtube.com/vi/'.$r['banner'].'/hqdefault.jpg':getAssetslLink().'posiassets/fold/'.$r['banner']);
+            if($k%2==0){
                 $disp .= '<li class="timeline-inverted">
                                 <div class="timeline-badge green">
                                     <a class="tooltipped" data-position="top" data-tooltip="Aug 19 2019"> <i class="material-icons white-text">event</i></a>
                                 </div>
                                 <div class="timeline-panel  mb-4">
                                     <div class="btnHapusVideo">
-                                        <a onclick="openMore(\'' . $r["Id_event"] . '\')" class="btnmore' . $r["Id_event"] . ' mb-6 btn-floating waves-effect waves-light gradient-45deg-purple-deep-orange clsv">
-                                            <i class="material-icons">more_horiz</i>
+                                        <a onclick="openMore(\''.$r[Id_video].'\')" class="btnmore'.$r[Id_video].' mb-6 btn-floating waves-effect waves-light gradient-45deg-purple-deep-orange clsv">
+                                            <i class="material-icons">more_vert</i>
                                         </a>
                                     </div> 
                                     <div class="card-panel hoverable border-radius-6 m-0 card-animation-1">
-                                        <img onclick="openPreview(\'' . $r['banner_type'] . '\',\'' . $r['banner'] . '\',\'' . $r['Id_event'] . '\')" class="responsive-img border-radius-4 z-depth-4 image-n-margin evView' . $r['Id_event'] . '" src="' . $banner . '" alt="">
-                                        <h6><a href="#" class="mt-5">' . $r['judul'] . '</a></h6>
-                                        <p>' . $r['deskripsi'] . '</p>
+                                        <img onclick="openPreview(\''.$r['banner_type'].'\',\''.$r['banner'].'\',\''.$r['Id_event'].'\')" class="responsive-img border-radius-4 z-depth-4 image-n-margin evView'.$r['Id_event'].'" src="'.$banner.'" alt="">
+                                        <h6><a href="#" class="mt-5">'.$r['judul'].'</a></h6>
+                                        <p>'.$r['deskripsi'].'</p>
                                         <div class="row mt-4">
                                         <div class="col s2">
                                             
@@ -318,30 +315,31 @@ function timeLine($conn, $subjek, $tahun, $Id_member)
                                         <div class="col s3 p-0 mt-1"><span class="pt-2"></span></div>
                                             <div class="col s7 mt-1 right-align">
                                                 <a><span class="material-icons">favorite_border</span></a>
-                                                <span class="ml-3 vertical-align-top numlove' . $r['Id_event'] . '">' . COUNT(json_decode($r['love'], false)) . '</span>
+                                                <span class="ml-3 vertical-align-top numlove'.$r['Id_event'].'">'.COUNT(json_decode($r['love'],false)).'</span>
                                                 <a href="#"><span class="material-icons ml-10">groups</span></a>
-                                                <span class="ml-3 vertical-align-top">' . getJumPeserta($conn, $r['Id_event']) . '</span>
+                                                <span class="ml-3 vertical-align-top">'.getJumPeserta($conn,$r['Id_event']).'</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </li>';
-            } else {
-
-                $disp .= ' <li>
+            }   
+            else{
+                
+                $disp .=' <li>
                             <div class="timeline-badge yellow">
                                 <a class="tooltipped" data-position="top" data-tooltip="May 10 2019"><i class="material-icons white-text">event</i></a>
                             </div>
                             <div class="timeline-panel mb-4">
                                 <div class="btnHapusVideo">
-                                    <a onclick="openMore(\'' . $r["Id_event"] . '\')" class="btnmore' . $r["Id_event"] . ' mb-6 btn-floating waves-effect waves-light gradient-45deg-purple-deep-orange clsv">
-                                        <i class="material-icons">more_horiz</i>
+                                    <a onclick="openMore(\''.$r[Id_video].'\')" class="btnmore'.$r[Id_video].' mb-6 btn-floating waves-effect waves-light gradient-45deg-purple-deep-orange clsv">
+                                        <i class="material-icons">more_vert</i>
                                     </a>
                                 </div> 
                                 <div class="card-panel hoverable border-radius-6 m-0 card-animation-1">
-                                    <img onclick="openPreview(\'' . $r['banner_type'] . '\',\'' . $r['banner'] . '\',\'' . $r['Id_event'] . '\')" class="responsive-img border-radius-4 z-depth-4 image-n-margin evView' . $r['Id_event'] . '" src="' . $banner . '" alt="">
-                                    <h6><a href="#" class="mt-5">' . $r['judul'] . '</a></h6>
-                                    <p>' . $r['deskripsi'] . '</p>
+                                    <img onclick="openPreview(\''.$r['banner_type'].'\',\''.$r['banner'].'\',\''.$r['Id_event'].'\')" class="responsive-img border-radius-4 z-depth-4 image-n-margin evView'.$r['Id_event'].'" src="'.$banner.'" alt="">
+                                    <h6><a href="#" class="mt-5">'.$r['judul'].'</a></h6>
+                                    <p>'.$r['deskripsi'].'</p>
                                     <div class="row mt-4">
                                         <div class="col s2">
                                        
@@ -349,9 +347,9 @@ function timeLine($conn, $subjek, $tahun, $Id_member)
                                         <div class="col s3 p-0 mt-1"><span class="pt-2"></span></div>
                                         <div class="col s7 mt-1 right-align">
                                             <a><span class="material-icons">favorite_border</span></a>
-                                            <span class="ml-3 vertical-align-top numlove' . $r['Id_event'] . '">' . COUNT(json_decode($r['love'], false)) . '</span>
+                                            <span class="ml-3 vertical-align-top numlove'.$r['Id_event'].'">'.COUNT(json_decode($r['love'],false)).'</span>
                                             <a href="#"><span class="material-icons ml-10">groups</span></a>
-                                            <span class="ml-3 vertical-align-top">' . getJumPeserta($conn, $r['Id_event']) . '</span>
+                                            <span class="ml-3 vertical-align-top">'.getJumPeserta($conn,$r['Id_event']).'</span>
                                         </div>
                                     </div>
                                 </div>
@@ -359,6 +357,7 @@ function timeLine($conn, $subjek, $tahun, $Id_member)
                         </li>';
             }
         }
+
     }
 
     return '<div class="breadcrumbs-inline pt-3 pb-1" id="breadcrumbs-wrapper">
@@ -372,7 +371,7 @@ function timeLine($conn, $subjek, $tahun, $Id_member)
                             </ol>
                         </div>
                         <div class="col s5 m6 l6">
-                           <a meta-data="+ new Event" onclick="openformEvent(\'' . '.btnformEvent' . '\',\'' . 'New' . '\',\'' . '' . '\', \'' . '' . '\')" class="btnformEvent addbtn btn btn-floating dropdown-settings waves-effect waves-light breadcrumbs-btn right" href="#!" data-target="dropdown1">
+                           <a meta-data="+ new Event" onclick="openformEvent(\''.'.btnformEvent'.'\',\''.'New'.'\',\''.''.'\', \''.''.'\')" class="btnformEvent addbtn btn btn-floating dropdown-settings waves-effect waves-light breadcrumbs-btn right" href="#!" data-target="dropdown1">
                                     <i class="material-icons">add</i>
                             </a>
                         </div>
@@ -383,7 +382,7 @@ function timeLine($conn, $subjek, $tahun, $Id_member)
                 <div class="section">
                     <!-- timeline -->
                     <ul class="timeline">
-                       ' . $disp . '
+                       '.$disp.'
                         <li class="clearfix" style="float: none;"></li>
                     </ul>
                     <!-- / timeline -->
@@ -391,49 +390,13 @@ function timeLine($conn, $subjek, $tahun, $Id_member)
                 
             </div>';
 }
-
-function showResultParameterKonten($data)
-{
-    $id = $data["dataID"];
-    $res = query("SELECT * FROM `tb_event` WHERE `Id_event` = '$id'")[0];
-
-    $waktuAwal = $res["tanggal_mulai"];
-    $waktuAwal = explode(" ", $waktuAwal);
-    $dateAwal = $waktuAwal[0];
-    $hourAwal = $waktuAwal[1];
-
-    $waktuAkhir = $res["tanggal_akhir"];
-    $waktuAkhir = explode(" ", $waktuAkhir);
-    $dateAkhir = $waktuAkhir[0];
-    $hourAkhir = $waktuAkhir[1];
-    $tanggalEvent = $res["tahun"] . '-' . $res["bulan"] . '-' . $res["hari"];
-
-    $arrayData = array(
-        'banner_type' => $res["banner_type"],
-        'banner' => $res["banner"],
-        'judul'  => $res["judul"],
-        'deskripsi' => $res["deskripsi"],
-        'subjek' => $res["subjek"],
-        'tanggal_mulai'  => $dateAwal,
-        'waktu_mulai'  => $hourAwal,
-        'tanggal_akhir' => $dateAkhir,
-        'waktu_akhir' => $hourAkhir,
-        'tanggal_event' => $tanggalEvent,
-        'status' => $res["status"]
-    );
-
-    echo json_encode($arrayData);
-}
-
-
-function dispVideo($conn, $idsekolah, $idguru)
-{
-    $res = mysqli_query($conn, "SELECT * FROM tb_video WHERE Id_sekolah = '$idsekolah' AND Id_guru = '$idsekolah' ORDER BY Id_video DESC");
+function dispVideo($conn, $idsekolah, $idguru){
+    $res = mysqli_query($conn,"SELECT * FROM tb_video WHERE Id_sekolah = '$idsekolah' AND Id_guru = '$idsekolah' ORDER BY Id_video DESC");
     $disp = '';
-    $data = getNameAndGbr($conn, $idguru);
-    while ($r = mysqli_fetch_array($res)) {
-        $komentar = json_decode($r[komentar], false);
-        $love = json_decode($r[love], false);
+    $data = getNameAndGbr($conn,$idguru);
+    while($r=mysqli_fetch_array($res)){
+        $komentar = json_decode($r[komentar],false);
+        $love = json_decode($r[love],false);
         $disp .= '<div class="col s12 m6 l4 card-width">
         <div class="btnHapusVideo">
             <a class="mb-6 btn-floating waves-effect waves-light gradient-45deg-purple-deep-orange clsv">
@@ -441,28 +404,28 @@ function dispVideo($conn, $idsekolah, $idguru)
             </a>
         </div> 
         <div class="card-panel border-radius-6 mt-10 card-animation-1">    
-            <img onclick=openVideo(\'' . $r[Id_video] . '\',\'' . $r[link] . '\') class="responsive-img border-radius-8 z-depth-4 image-n-margin ytb' . $r[Id_video] . ' ukuranVid" src="http://img.youtube.com/vi/' . $r[link] . '/hqdefault.jpg" alt="images">
-            <h6><a href="#" class="mt-5">' . $r[bidang_studi] . '</a></h6>
-            <p style="height:60px">' . substr($r[judul], 0, 120) . '</p>
+            <img onclick=openVideo(\''.$r[Id_video].'\',\''.$r[link].'\') class="responsive-img border-radius-8 z-depth-4 image-n-margin ytb'.$r[Id_video].' ukuranVid" src="http://img.youtube.com/vi/'.$r[link].'/hqdefault.jpg" alt="images">
+            <h6><a href="#" class="mt-5">'.$r[bidang_studi].'</a></h6>
+            <p style="height:60px">'.substr($r[judul],0,120).'</p>
             <div class="row mt-4">
                 <div class="col s2">
-                    <a href="#"><img src="app-assets/images/user/' . $data[1] . '" alt="fashion" class="circle responsive-img mr-3" width="40"></a>
+                    <a href="#"><img src="app-assets/images/user/'.$data[1].'" alt="fashion" class="circle responsive-img mr-3" width="40"></a>
                 </div>
                 <a href="#">
-                    <div class="col s3 p-0 mt-1"><span class="pt-2">' . substr($data[0], 0, 8) . '</span></div>
+                    <div class="col s3 p-0 mt-1"><span class="pt-2">'.substr($data[0],0,8).'</span></div>
                 </a>
                 <div class="col s7 mt-1 right-align">
                     <a href="#"><span class="material-icons">favorite_border</span></a>
-                    <span class="ml-3 vertical-align-top">' . COUNT($love) . '</span>
+                    <span class="ml-3 vertical-align-top">'.COUNT($love).'</span>
                     <a href="#"><span class="material-icons ml-10">chat_bubble_outline</span></a>
-                    <span class="ml-3 vertical-align-top">' . COUNT($komentar) . '</span>
+                    <span class="ml-3 vertical-align-top">'.COUNT($komentar).'</span>
                 </div>
             </div>
         </div>
       </div>';
     }
 
-    return '<div class="breadcrumbs-inline pt-3 pb-1" id="breadcrumbs-wrapper">
+  return '<div class="breadcrumbs-inline pt-3 pb-1" id="breadcrumbs-wrapper">
             <div class="container">
                 <div class="row">
                 <div class="col s7 m6 l6 breadcrumbs-left">
@@ -473,7 +436,7 @@ function dispVideo($conn, $idsekolah, $idguru)
                     </ol>
                 </div>
                 <div class="col s5 m6 l6">
-                    <a meta-data="add Video" onclick="openaddVideo(\'' . '.btnaddVideo' . '\',\'' . 'New' . '\',\'' . '' . '\', \'' . '' . '\')" class="btnaddVideo addbtn btn btn-floating dropdown-settings waves-effect waves-light breadcrumbs-btn right" href="#!" data-target="dropdown1">
+                    <a meta-data="add Video" onclick="openaddVideo(\''.'.btnaddVideo'.'\',\''.'New'.'\',\''.''.'\', \''.''.'\')" class="btnaddVideo addbtn btn btn-floating dropdown-settings waves-effect waves-light breadcrumbs-btn right" href="#!" data-target="dropdown1">
                     <i class="material-icons">add</i>
                     </a>
                 </div>
@@ -481,7 +444,7 @@ function dispVideo($conn, $idsekolah, $idguru)
             </div>
          </div>
         <div class="row mt-2" id="paginattable" >
-               ' . $disp . '
+               '.$disp.'
         </div>
         <div style="margin-bottom:70px" id="pageBar">
                 <div class="dataTables_info" id="page-length-option_info" role="status" aria-live="polite">Showing 11 to 20 of 57 entries</div>
@@ -492,22 +455,22 @@ function dispVideo($conn, $idsekolah, $idguru)
                     </div>
                 </div>
         </div>';
+            
 }
 
-function dispKompetisi($conn, $Id_member)
-{
+function dispKompetisi($conn,$Id_member){
 
-    $res = mysqli_query($conn, "SELECT * FROM tb_kompetisi WHERE Id_member = '$Id_member' ORDER BY mulai_pelaksanaan DESC");
+    $res = mysqli_query($conn,"SELECT * FROM tb_kompetisi WHERE Id_member = '$Id_member' ORDER BY mulai_pelaksanaan DESC");
     $disp = '';
     $no = 1;
-    while ($r = mysqli_fetch_array($res)) {
-        $disp .= '<tr>
-                    <th>' . ($no++) . '</th>
-                    <th>' . getEventFromId($conn, $r['Id_event']) . '</th>
-                    <th>' . getBidangStudiFromId($conn, $r['Id_subjek']) . '</th>
-                    <th>' . beautyDate($r['mulai_pelaksanaan']) . '</th>
-                    <th>' . beautyDate($r['akhir_pelaksanaan']) . '</th>
-                    <th><a href="' . getGrupChat($conn, $r['Id_subjek']) . '" target="_blank" class="mb-6 btn-floating waves-effect waves-light gradient-45deg-light-blue-cyan">
+    while($r = mysqli_fetch_array($res)){
+         $disp .='<tr>
+                    <th>'.($no++).'</th>
+                    <th>'.getEventFromId($conn,$r['Id_event']).'</th>
+                    <th>'.getBidangStudiFromId($conn,$r['Id_subjek']).'</th>
+                    <th>'.beautyDate($r['mulai_pelaksanaan']).'</th>
+                    <th>'.beautyDate($r['akhir_pelaksanaan']).'</th>
+                    <th><a href="'.getGrupChat($conn,$r['Id_subjek']).'" target="_blank" class="mb-6 btn-floating waves-effect waves-light gradient-45deg-light-blue-cyan">
                             <i class="material-icons">near_me</i>
                         </a></th>
                     <th>menunggu</th>
@@ -548,7 +511,7 @@ function dispKompetisi($conn, $Id_member)
                             </tr>
                             </thead>
                             <tbody id="paginattable">
-                                ' . $disp . '
+                                '.$disp.'
                             </tbody>
                         </table>
                         </div>
@@ -564,3 +527,4 @@ function dispKompetisi($conn, $Id_member)
                 </div>
             </div>';
 }
+?>
