@@ -842,9 +842,8 @@
 
 
 
-* // For Ovarlay Button Melayang Edit, Delete, Soal, Bidang Studi  */
-
-.overlayMore {
+/* * // For Ovarlay Button Melayang Edit, Delete, Soal, Bidang Studi  */
+*/ .overlayMore {
     position: fixed;
     z-index: 1000;
     top: 0;
