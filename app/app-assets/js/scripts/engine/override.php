@@ -10,20 +10,20 @@ $email = $_SESSION['email'];
 $kontak = $_SESSION['kontak'];
 $bentuk = $_SESSION['bentuk'];
 $usernameig = $_SESSION['username_ig'];
-$token = $_SESSION['token'];
+$token = $_SESSION['token']; 
 $Id_sekolah = $_SESSION['id_sekolah'];
 $Id_member = $_SESSION['id_member'];
-if ($token == privateHashing(gettodayShort())) {
-    switch ($order) {
+if($token == privateHashing(gettodayShort())){
+    switch($order){
         case 'ceklogin':
-            echo 1;
+            echo 1;   
             break;
         case 'dashboard':
             echo dispDashboard($conn);
             break;
         case 'timeline':
             $tahun = getTahun();
-            echo timeLine($conn, $subjek, $tahun, $Id_member);
+            echo timeLine($conn,$subjek,$tahun,$Id_member);
             break;
         case 'getdataevent':
             $Id_event = anti_Injection($_REQUEST['id_event']);
@@ -46,25 +46,25 @@ if ($token == privateHashing(gettodayShort())) {
             $type = anti_Injection($_POST['type']);
             $banner = anti_Injection($_POST['data']);
             $desk = $_POST['deskripsi'];
-            $subjek = $_POST['subjek'];
+            $subjek =$_POST['subjek'];
             $tglbegin = anti_Injection($_POST['tanggalbegin']);
             $jambegin = anti_Injection($_POST['jambegin']);
             $tglend = anti_Injection($_POST['tanggalend']);
             $jamend = anti_Injection($_POST['jamend']);
             $tglevent = anti_Injection($_POST['tanggalevent']);
-            $statusEvent = (anti_Injection($_POST['statusevent']) == 'Private' ? '0' : '1');
+            $statusEvent = (anti_Injection($_POST['statusevent'])=='Private'?'0':'1');
             $status = anti_Injection($_POST['status']);
             $pos = anti_Injection($_POST['pos']);
-            $token =  md5(gettoday() . rand(0, 1000)) . '.jpg';
-            $explode = explode('-', $tglevent);
-            if ($type == 'image') {
-                $banner = uploadMyImageString($token, $banner);
+            $token =  md5(gettoday().rand(0,1000)).'.jpg';
+            $explode = explode('-',$tglevent);
+            if($type == 'image'){
+                $banner = uploadMyImageString($token,$banner);
             }
-            $begin = $tglbegin . ' ' . $jambegin . ':00';
-            $end = $tglend . ' ' . $jamend . ':00';
-            if ($status == 'New') {
-
-                mysqli_query($conn, "INSERT INTO tb_event SET banner_type = '$type',
+            $begin = $tglbegin.' '.$jambegin.':00';
+            $end = $tglend.' '.$jamend.':00';
+            if($status == 'New'){
+               
+                mysqli_query($conn,"INSERT INTO tb_event SET banner_type = '$type',
                                                              banner = '$banner',
                                                              judul = '$judul',
                                                              deskripsi = '$desk',
@@ -77,26 +77,14 @@ if ($token == privateHashing(gettodayShort())) {
                                                              bulan = '$explode[1]',
                                                              hari = '$explode[2]',
                                                             `status` = '$statusEvent'");
-<<<<<<< HEAD
-                echo 'berhasil disimpan' . $subjek;
-            } else if ($status == 'Hapus') {
-                moveData($pos);
-
-                $query = "DELETE FROM `tb_event` WHERE `Id_event` = '$pos'";
-
-                if (ProsesData($query) > 0) {
-                    return "Data Berhasil Di Hapus";
-                } else {
-                    return "Proses Hapus Gagal";
-                }
-=======
                 echo 'berhasil disimpan';
->>>>>>> 31e107a103365ce639d2ef7001841b5ec0701b28
             }
 
-
+           
             break;
-    }
-} else {
+      }
+}
+else{
     echo 0;
 }
+?>
