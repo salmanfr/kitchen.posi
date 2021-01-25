@@ -207,7 +207,7 @@ $(document).ready(function (e) {
     $('.btnedit').click(function () {
         // var isDom = '.btnedit' + IdGlobal;
         // $(".btnedit").addClass('.btnedit' + IdGlobal);
-        openformEvent('.btnedit', 'Edit', IdGlobal, '')
+        // openformEvent('.btnedit', 'Edit', IdGlobal, '')
     });
 
     $('.btnchat').click(function () {
@@ -772,3 +772,63 @@ function simpanformEvent() {
 
 }
 // ============ AKHIR SCRIPT JQUERY FORMEVENT ====================
+
+
+
+// ============ AKHIR SCRIPT JQUERY ADDVIDEO ====================
+var modalVideo,
+    posVideo;
+
+
+function openMore(idVideo) {
+    $('body').css({
+        'overflow-y': 'hidden'
+    });
+    posVideo = idVideo;
+    btnaddVideo = '.btnmore' + idVideo;
+    IdGlobal = idVideo;
+
+
+    var atas = $(btnaddVideo).offset().top - $(document).scrollTop();
+    var kiri = $(btnaddVideo).offset().left;
+    var lebar = $(btnaddVideo).width();
+    var tinggi = $(btnaddVideo).height();
+    $('.btnedit, .btnnilai, .btnhapus, .btntutup, .btnchat').css({
+        'top': atas - 2 + 'px',
+        'left': kiri - 2 + 'px',
+        'display': 'block'
+    });
+
+    $('.overlayMore').show();
+    setTimeout(function () {
+        $('.btnedit').css({
+            'top': atas - 50 + 'px',
+            'left': kiri + 'px',
+            'display': 'block'
+        });
+        $('.btnnilai').css({
+            'top': atas - 35 + 'px',
+            'left': kiri + 35 + 'px',
+            'display': 'block'
+        });
+        $('.btnchat').css({
+            'top': atas + 3 + 'px',
+            'left': kiri + 45 + 'px',
+            'display': 'block'
+        });
+        $('.btnhapus').css({
+            'top': atas + 40 + 'px',
+            'left': kiri + 35 + 'px',
+            'display': 'block'
+        });
+
+    }, 100);
+
+}
+
+function clsMe(pos) {
+    $('.overlayMore .centers').css({
+        'right': '-100%'
+    });
+    posVideoTersorot = '';
+}
