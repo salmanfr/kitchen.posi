@@ -303,7 +303,7 @@ function timeLine($conn, $subjek, $tahun, $Id_member)
                                 </div>
                                 <div class="timeline-panel  mb-4">
                                     <div class="btnHapusVideo">
-                                        <a onclick="openMore(\'' . $r["Id_video"] . '\')" class="btnmore' . $r["Id_video"] . ' mb-6 btn-floating waves-effect waves-light gradient-45deg-purple-deep-orange clsv">
+                                        <a onclick="openMore(\'' . $r["Id_event"] . '\')" class="btnmore' . $r["Id_event"] . ' mb-6 btn-floating waves-effect waves-light gradient-45deg-purple-deep-orange clsv">
                                             <i class="material-icons">more_vert</i>
                                         </a>
                                     </div> 
@@ -334,7 +334,7 @@ function timeLine($conn, $subjek, $tahun, $Id_member)
                             </div>
                             <div class="timeline-panel mb-4">
                                 <div class="btnHapusVideo">
-                                    <a onclick="openMore(\'' . $r["Id_video"] . '\')" class="btnmore' . $r["Id_video"] . ' mb-6 btn-floating waves-effect waves-light gradient-45deg-purple-deep-orange clsv">
+                                    <a onclick="openMore(\'' . $r["Id_event"] . '\')" class="btnmore' . $r["Id_event"] . ' mb-6 btn-floating waves-effect waves-light gradient-45deg-purple-deep-orange clsv">
                                         <i class="material-icons">more_vert</i>
                                     </a>
                                 </div> 
