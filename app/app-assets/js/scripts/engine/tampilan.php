@@ -288,7 +288,7 @@ function dispDashboard($conn)
 
 function timeLine($conn, $subjek, $tahun, $Id_member)
 {
-    $res = mysqli_query($conn, "SELECT * FROM tb_event WHERE tahun = '$tahun' ORDER BY Id_event DESC");
+    $res = mysqli_query($conn, "SELECT * FROM tb_event WHERE tahun = '$tahun'");
     $k = 0;
     $disp = "";
     while ($r = mysqli_fetch_array($res)) {

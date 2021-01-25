@@ -23,7 +23,7 @@ if ($token == privateHashing(gettodayShort())) {
             break;
         case 'timeline':
             $tahun = getTahun();
-            echo timeLine($conn, $subjek, $tahun, $Id_member);
+            echo timeLine($conn,$subjek,$tahun,$Id_member);
             break;
         case 'saveformEvent':
 
