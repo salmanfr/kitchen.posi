@@ -82,9 +82,9 @@ if ($token == privateHashing(gettodayShort())) {
                 moveData($pos);
                 $query = "DELETE FROM `tb_event` WHERE `Id_event` = '$pos'";
                 if (ProsesData($query) > 0) {
-                    return "Data Berhasil Di Hapus";
+                    echo  "Data Berhasil Di Hapus";
                 } else {
-                    return "Proses Hapus Gagal";
+                    echo "Proses Hapus Gagal";
                 }
             }
             break;

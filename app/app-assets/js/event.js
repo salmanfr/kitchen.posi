@@ -748,7 +748,6 @@ function closeformEvent() {
         $('.overlayformEvent').hide();
         $('.form-formEvent').hide();
         clsMe();
-        showToast('hi');
     }, 450);
 }
 
@@ -898,6 +897,7 @@ function verifikasiDelete() {
             showToast(response);
             if (forSubjectDelete == 'saveformEvent') {
                 dispTimeline();
+                clsMe();
             }
             // $("#barisData" + posDelete).remove();
 
