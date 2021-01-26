@@ -59,14 +59,14 @@ if ($token == privateHashing(gettodayShort())) {
             $token =  md5(gettoday() . rand(0, 1000)) . '.jpg';
             $explode = explode('-', $tglevent);
             if ($type == 'image') {
-                if($banner!='namlastcorp'){
+                if ($banner != 'namlastcorp') {
                     $banner = uploadMyImageString($token, $banner);
                 }
             }
             $begin = $tglbegin . ' ' . $jambegin . ':00';
             $end = $tglend . ' ' . $jamend . ':00';
-            if ($status == 'New') 
-                    mysqli_query($conn, "INSERT INTO tb_event SET banner_type = '$type',
+            if ($status == 'New') {
+                mysqli_query($conn, "INSERT INTO tb_event SET banner_type = '$type',
                                                                 banner = '$banner',
                                                                 judul = '$judul',
                                                                 deskripsi = '$desk',
@@ -79,11 +79,10 @@ if ($token == privateHashing(gettodayShort())) {
                                                                 bulan = '$explode[1]',
                                                                 hari = '$explode[2]',
                                                                 `status` = '$statusEvent'");
-                }
+
                 echo 'berhasil disimpan';
-            }
-            else If($status=='Edit'){
-                if($banner!="namlastcorp"){
+            } else if ($status == 'Edit') {
+                if ($banner != "namlastcorp") {
                     $query = "UPDATE tb_event SET banner_type = '$type',
                                                                 banner = '$banner',
                                                                 judul = '$judul',
@@ -97,9 +96,7 @@ if ($token == privateHashing(gettodayShort())) {
                                                                 bulan = '$explode[1]',
                                                                 hari = '$explode[2]',
                                                                 `status` = '$statusEvent' WHERE Id_event = ''";
-                    
-                }
-                else{
+                } else {
                     $query = "UPDATE tb_event SET banner_type = '$type',
                                                   judul = '$judul',
                                                   deskripsi = '$desk',
@@ -112,7 +109,6 @@ if ($token == privateHashing(gettodayShort())) {
                                                   bulan = '$explode[1]',
                                                   hari = '$explode[2]',
                                                   `status` = '$statusEvent' WHERE Id_event = ''";
-                  
                 }
                 if (ProsesData($query) > 0) {
                     echo  "Data Berhasil Di Hapus";
