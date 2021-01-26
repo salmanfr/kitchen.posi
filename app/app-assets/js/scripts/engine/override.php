@@ -152,7 +152,7 @@ if ($token == privateHashing(gettodayShort())) {
                             <td>' . $r['bidang_studi'] . '</td>
                             <td class="right-align">' . $r['mulai_pelaksanaan'] . '</td>
                             <td class="right-align">' . $r['akhir_pelaksanaan'] . '</td>
-                            <td onclick="openoverlayListOfAllDataMember(\'' . '.BtnListOfAllMember' . $r["Id_subjek"] . '\',\'' . $Id_event . '\')"
+                            <td onclick="openoverlayListOfAllDataMember(\'' . '.BtnListOfAllMember' . $r["Id_subjek"] . '\',\'' . $r["Id_subjek"] . '\',\'' . $Id_event . '\')"
                                 class="right-align BtnListOfAllMember' . $r["Id_subjek"] . '">
                             ' . getFollower($conn, $r['Id_subjek']) . '
                             </td>

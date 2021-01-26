@@ -580,7 +580,7 @@ function getDataEvent(Id_event) {
 var btnoverlayListOfAllDataMember = '',
     posoverlayListOfAllDataMember = '';
 
-function openoverlayListOfAllDataMember(dom, PosId) {
+function openoverlayListOfAllDataMember(dom, IdSubject, IdEvent) {
     btnoverlayListOfAllDataMember = dom;
     $('.form-header-overlayListOfAllDataMember #judul').html('List Of All Data Kompetisi');
     var atas = $(dom).offset().top - $(document).scrollTop();
@@ -638,7 +638,7 @@ function openoverlayListOfAllDataMember(dom, PosId) {
         });
     }, 600);
 
-    ListAllDataOfMember(PosId);
+    ListAllDataOfMember(IdSubject, IdEvent);
 }
 
 
@@ -672,7 +672,7 @@ function closeoverlayListOfAllDataMember() {
 
 
 //For List All Data Of Member
-function ListAllDataOfMember(isID) {
+function ListAllDataOfMember(isIdSubject, isIdEvent) {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
@@ -682,7 +682,7 @@ function ListAllDataOfMember(isID) {
             auth(xmlhttp.responseText);
         }
     }
-    xmlhttp.open('GET', 'app-assets/js/scripts/engine/override.php?order=getListOfAllDataMember&idInSelect=' + isID);
+    xmlhttp.open('GET', 'app-assets/js/scripts/engine/override.php?order=getListOfAllDataMember&InSelectSubject=' + isIdSubject + '&InSelectEvent=' + isIdEvent);
     xmlhttp.send();
 }
 
