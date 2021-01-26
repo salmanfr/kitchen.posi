@@ -20,7 +20,6 @@ function selectMenu(idmenu) {
     } else if (idmenu == 'menu2') {
         dispSubject();
     }
-
     //navigationButtom(idmenu);
 }
 
