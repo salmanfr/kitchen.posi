@@ -63,8 +63,8 @@ if ($token == privateHashing(gettodayShort())) {
                     $banner = uploadMyImageString($token, $banner);
                 }
             }
-            $begin = $tglbegin . ' ' . $jambegin . ':00';
-            $end = $tglend . ' ' . $jamend . ':00';
+            $begin = $tglbegin . ' ' . $jambegin;
+            $end = $tglend . ' ' . $jamend;
             if ($status == 'New') {
                 mysqli_query($conn, "INSERT INTO tb_event SET banner_type = '$type',
                                                                 banner = '$banner',
@@ -95,7 +95,7 @@ if ($token == privateHashing(gettodayShort())) {
                                                                 tahun = '$explode[0]',
                                                                 bulan = '$explode[1]',
                                                                 hari = '$explode[2]',
-                                                                `status` = '$statusEvent' WHERE Id_event = ''";
+                                                                `status` = '$statusEvent' WHERE Id_event = '$pos'";
                 } else {
                     $query = "UPDATE tb_event SET banner_type = '$type',
                                                   judul = '$judul',
@@ -108,20 +108,20 @@ if ($token == privateHashing(gettodayShort())) {
                                                   tahun = '$explode[0]',
                                                   bulan = '$explode[1]',
                                                   hari = '$explode[2]',
-                                                  `status` = '$statusEvent' WHERE Id_event = ''";
+                                                  `status` = '$statusEvent' WHERE Id_event = '$pos'";
                 }
                 if (ProsesData($query) > 0) {
-                    echo  "Data Berhasil Di Hapus";
+                    echo  "Data berhasil diedit";
                 } else {
-                    echo "Proses Hapus Gagal";
+                    echo "Gagal edit, tidak ada perubahan apapun";
                 }
             } else if ($status == 'Hapus') {
                 moveData($pos);
                 $query = "DELETE FROM `tb_event` WHERE `Id_event` = '$pos'";
                 if (ProsesData($query) > 0) {
-                    echo  "Data Berhasil Di Hapus";
+                    echo  "Data berhasil dihapis";
                 } else {
-                    echo "Proses Hapus Gagal";
+                    echo "Gagal hapus data";
                 }
             }
             break;
