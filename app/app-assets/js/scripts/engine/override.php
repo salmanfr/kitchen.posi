@@ -128,7 +128,43 @@ if ($token == privateHashing(gettodayShort())) {
                 }
             }
             break;
-    }
+        case 'getdatasubjek':
+            $Id_event = anti_Injection($_REQUEST['id_event']);
+            $res = mysqli_query($conn,"SELECT * FROM tb_subjek WHERE Id_event = '$Id_event'");
+            $disp = '<table class="responsive-table">
+                        <thead>
+                            <tr>
+                                <th data-field="id">No</th>
+                                <th data-field="month">Subjek</th>
+                                <th data-field="month">Jenjang</th>
+                                <th data-field="month">Bidang</th>
+                                <th data-field="item-sold" class="right-align">Mulai</th>
+                                <th data-field="item-sold" class="right-align">Selesai</th>
+                                <th data-field="item-sold" class="right-align">Peserta</th>
+                                <th data-field="item-sold" class="right-align">Edit</th>
+                                <th data-field="item-sold" class="right-align">Hapus</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listHist">';
+            $no = 1;
+            while($r = mysqli_fetch_array($res)){
+                $disp .='<tr>
+                            <td>'.($no++).'</td>
+                            <td>'.$r['subjek'].'</td>
+                            <td>'.listNumberArray(json_decode($r['jenjang'],false)).'</td>
+                            <td>'.$r['bidang_studi'].'</td>
+                            <td class="right-align">'.$r['mulai_pelaksanaan'].'</td>
+                            <td class="right-align">'.$r['akhir_pelaksanaan'].'</td>
+                            <td class="right-align">'.getFollower($conn,$r['Id_subjek']).'</td>
+                            <td class="right-align"></td>
+                            <td class="right-align"></td>
+                        </tr>';
+            }
+            echo $disp.'</tbody>
+                </table>';
+            break;
+    
+        }
 } else {
     echo 0;
 }

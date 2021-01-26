@@ -215,7 +215,7 @@ $(document).ready(function(e) {
     });
 
     $('.btnnilai').click(function() {
-        openformNilai('.btnnilai', posVideo);
+        opendispSubjek('.btnnilai', IdGlobal);
     });
 
     $('#btnUbah').click(function() {
@@ -906,3 +906,146 @@ function verifikasiDelete() {
         error: function(xhr, ajaxOptions, thrownError) {}
     });
 }
+
+// ============ MULAI SCRIPT JQUERY DISPSUBJEK ====================
+var btndispSubjek = '';
+
+function opendispSubjek(dom, id_event) {
+    btndispSubjek = dom;
+    $('.form-header-dispSubjek #judul').html('SUBJEK DAN BIDANG');
+    var atas = $(dom).offset().top - $(document).scrollTop();
+    var kiri = $(dom).offset().left;
+    var lebar = $(dom).width();
+    var tinggi = $(dom).height();
+    var layar = $('body').width();
+    var tinggiLayar = $('body').height() - 20;
+
+    $('.overlaydispSubjek').show();
+    $('.form-dispSubjek').css({
+        'margin-left': '0px',
+        'margin-top': '0px',
+        'width': lebar + 'px',
+        'height': tinggi + 'px',
+        'top': atas + 'px',
+        'left': kiri + 'px',
+        'border-radius': '100%',
+        'display': 'block'
+    });
+    setTimeout(function() {
+        if (layar > 762) {
+            $('.form-dispSubjek').css({
+                'margin-left': '-500px',
+                'margin-top': (tinggiLayar < 700 ? -tinggiLayar / 2 + 'px' : '-350px'),
+                'width': '1000px',
+                'height': (tinggiLayar < 700 ? tinggiLayar + 'px' : '700px'),
+                'top': '50%',
+                'left': '50%',
+                'border-radius': '5px'
+            });
+        } else {
+            // layar hape
+            $('.form-dispSubjek').css({
+                'margin-left': '-50vw',
+                'margin-top': '-50vh',
+                'width': '100vw',
+                'height': '100vh',
+                'top': '50%',
+                'left': '50%',
+                'border-radius': '5px'
+            });
+        }
+    }, 200);
+    setTimeout(function() {
+        $('body').css({ 'overflow-y': 'hidden' });
+        $('.form-header-dispSubjek').show();
+        $('.form-body-dispSubjek').show();
+        $('.form-footer-dispSubjek').show();
+
+        // setup tinggi body form
+        var hForm = $('.form-dispSubjek').height(),
+            hBody = hForm - 103;
+        $('.form-body-dispSubjek').css({
+            'height': hBody + 'px'
+        });
+    }, 600);
+    getDataSubjekBidang(id_event);
+}
+
+function getDataSubjekBidang(Id_event) {
+    showLoad();
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            $('.form-body-dispSubjek').html(xmlhttp.responseText);
+            hideLoad();
+            auth(xmlhttp.responseText);
+        }
+    }
+    xmlhttp.open('GET', 'app-assets/js/scripts/engine/override.php?order=getdatasubjek&id_event=' + Id_event);
+    xmlhttp.send();
+}
+
+
+function closedispSubjek() {
+    var dom = btndispSubjek;
+    $('body').css({ 'overflow-y': 'auto' });
+    var atas = $(dom).offset().top - $(document).scrollTop();
+    var kiri = $(dom).offset().left;
+    var lebar = $(dom).width();
+    var tinggi = $(dom).height();
+    $('.form-header-dispSubjek').hide();
+    $('.form-body-dispSubjek').hide();
+    $('.form-footer-dispSubjek').hide();
+    $('.form-dispSubjek').css({
+        'margin-left': '0px',
+        'margin-top': '0px',
+        'width': lebar + 'px',
+        'height': tinggi + 'px',
+        'top': atas + 'px',
+        'left': kiri + 'px',
+        'border-radius': '100%'
+    });
+    setTimeout(function() {
+        $('.overlaydispSubjek').hide();
+        $('.form-dispSubjek').hide();
+        clsMe();
+    }, 400);
+}
+
+
+function simpandispSubjek() {
+    var formData = new FormData();
+    var palang = true;
+    dispSubjekElementArr.forEach(function(item, i) {
+        if ($('#' + item).val() == "") {
+            palang = false;
+        }
+        formData.append(item, $('#' + item).val());
+    });
+    formData.append('status', statusdispSubjek);
+    formData.append('pos', posdispSubjek);
+    if (palang) {
+        $.ajax({
+            type: 'POST',
+            url: 'app-assets/js/scripts/engine/override.php?order=savedispSubjek',
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function() {
+                showLoad();
+                closedispSubjek();
+            },
+            success: function(response) {
+                showToast(response);
+                hideLoad();
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+
+            }
+        });
+    } else {
+        showToast('Data belum lengkap');
+    }
+
+}
+// ============ AKHIR SCRIPT JQUERY DISPSUBJEK ====================

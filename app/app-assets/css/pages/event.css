@@ -963,3 +963,83 @@
 
 
 /* END For CSS Overlay Tombol Hapus / Verifikasi */
+.overlaydispSubjek {
+    position: fixed;
+    z-index: 100000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .52);
+       display:none;  
+}
+.overlaydispSubjek .form-dispSubjek {
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2)!important;
+    border-radius: 5px;
+    background: #fafbfc;
+    transition: 0.3s;
+    position: fixed;
+    z-index: 100001;
+    width:700px;
+    height: 700px;
+    margin-top: -350px;
+    margin-left:-350px;
+    left:50%;
+    top:50%;
+     display:none;  
+}
+.overlaydispSubjek .form-dispSubjek .form-header-dispSubjek {
+    width: 100%;
+    height: 60px;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1)!important;
+      display:none;  
+}
+.overlaydispSubjek .form-dispSubjek .form-header-dispSubjek h5 {
+    color: black;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+    margin-left: 20px;
+    line-height: 16px;
+    padding-top: 10px;
+    display: inline-block;
+}
+.overlaydispSubjek .form-dispSubjek .form-header-dispSubjek .btnclose {
+    float: right;
+    margin-right: 10px;
+    height: 60px;
+    width: 60px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+
+.overlaydispSubjek .form-dispSubjek .form-header-dispSubjek .btnclose i {
+    line-height: 25px;
+    font-size: 25px;
+    padding-top: 18px;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+}
+
+.overlaydispSubjek .form-dispSubjek .form-header-dispSubjek .btnclose i:hover {
+    color: red;
+}
+.overlaydispSubjek .form-dispSubjek .form-body-dispSubjek {
+    width: 100%;
+    background: transparent;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 10px;
+     height: 570px;
+       display:none;  
+}
+.overlaydispSubjek .form-dispSubjek .form-footer-dispSubjek {
+    position: absolute;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+     display: none; 
+}
+
+.overlaydispSubjek .form-dispSubjek .form-footer-dispSubjek a {
+    float: right;
+    margin-right: 10px;
+}
