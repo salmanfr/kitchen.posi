@@ -236,6 +236,7 @@
 }
 
 @media only screen and (max-width: 765px) {
+
     .overlayVoucher .vouch1,
     .vouch2,
     .vouch3,
@@ -330,9 +331,11 @@
         margin-left: 0;
         top: 5%;
     }
+
     .overlayVoucher .invoiceTransfer .logoposiinv {
         height: 30px;
     }
+
     .overlayVoucher .invoiceClose {
         position: absolute;
         width: 20px;
@@ -676,6 +679,7 @@
         top: 8px;
         left: 50px;
     }
+
     .logoposis .imglogo {
         width: 80px;
         height: 40px;
@@ -976,7 +980,7 @@
 }
 
 .overlaydispSubjek .form-dispSubjek {
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
     border-radius: 5px;
     background: #fafbfc;
     transition: 0.3s;
@@ -994,7 +998,7 @@
 .overlaydispSubjek .form-dispSubjek .form-header-dispSubjek {
     width: 100%;
     height: 60px;
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1) !important;
     display: none;
 }
 
@@ -1050,3 +1054,96 @@
     float: right;
     margin-right: 10px;
 }
+
+
+
+/* For CSS Overlay Tombol Subject / Verifikasi */
+
+.overlaySubjectEvent {
+    position: fixed;
+    z-index: 100000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .52);
+    display: none;
+}
+
+.overlaySubjectEvent .form-SubjectEvent {
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
+    border-radius: 5px;
+    background: #fafbfc;
+    transition: 0.3s;
+    position: fixed;
+    z-index: 100001;
+    width: 600px;
+    height: 250px;
+    margin-top: -125px;
+    margin-left: -300px;
+    left: 50%;
+    top: 50%;
+    display: none;
+}
+
+.overlaySubjectEvent .form-SubjectEvent .form-header-SubjectEvent {
+    width: 100%;
+    height: 60px;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1) !important;
+    display: none;
+}
+
+.overlaySubjectEvent .form-SubjectEvent .form-header-SubjectEvent h5 {
+    color: black;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+    margin-left: 20px;
+    line-height: 16px;
+    padding-top: 10px;
+    display: inline-block;
+}
+
+.overlaySubjectEvent .form-SubjectEvent .form-header-SubjectEvent .btnclose {
+    float: right;
+    margin-right: 10px;
+    height: 60px;
+    width: 60px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+
+.overlaySubjectEvent .form-SubjectEvent .form-header-SubjectEvent .btnclose i {
+    line-height: 25px;
+    font-size: 25px;
+    padding-top: 18px;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+}
+
+.overlaySubjectEvent .form-SubjectEvent .form-header-SubjectEvent .btnclose i:hover {
+    color: red;
+}
+
+.overlaySubjectEvent .form-SubjectEvent .form-body-SubjectEvent {
+    width: 100%;
+    background: transparent;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 10px;
+    height: 570px;
+    display: none;
+}
+
+.overlaySubjectEvent .form-SubjectEvent .form-footer-SubjectEvent {
+    position: absolute;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    display: none;
+}
+
+.overlaySubjectEvent .form-SubjectEvent .form-footer-SubjectEvent a {
+    float: right;
+    margin-right: 10px;
+}
+
+/* END For CSS Overlay Tombol Subject / Verifikasi */

@@ -898,6 +898,8 @@ function verifikasiDelete() {
             if (forSubjectDelete == 'saveformEvent') {
                 dispTimeline();
                 clsMe();
+            } else if (forSubjectDelete == 'saveSubjectEvent') {
+                dispSubject()
             }
             // $("#barisData" + posDelete).remove();
 
@@ -956,7 +958,9 @@ function opendispSubjek(dom, id_event) {
         }
     }, 200);
     setTimeout(function() {
-        $('body').css({ 'overflow-y': 'hidden' });
+        $('body').css({
+            'overflow-y': 'hidden'
+        });
         $('.form-header-dispSubjek').show();
         $('.form-body-dispSubjek').show();
         $('.form-footer-dispSubjek').show();
@@ -988,7 +992,9 @@ function getDataSubjekBidang(Id_event) {
 
 function closedispSubjek() {
     var dom = btndispSubjek;
-    $('body').css({ 'overflow-y': 'auto' });
+    $('body').css({
+        'overflow-y': 'auto'
+    });
     var atas = $(dom).offset().top - $(document).scrollTop();
     var kiri = $(dom).offset().left;
     var lebar = $(dom).width();
@@ -1049,3 +1055,174 @@ function simpandispSubjek() {
 
 }
 // ============ AKHIR SCRIPT JQUERY DISPSUBJEK ====================
+
+
+
+
+//For Menu 2 Display Subject
+function dispSubject() {
+    showLoad();
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            $('.dispUtama').html(xmlhttp.responseText);
+            hideLoad();
+            auth(xmlhttp.responseText);
+            dataTabel = [];
+            var targ = $('#paginattable').children('tr');
+            for (i = 0; i < targ.length; i++) {
+                dataTabel.push(targ.eq(i).html());
+            }
+            setupTablePagination(rowtabledisp.value);
+        }
+    }
+    xmlhttp.open('GET', 'app-assets/js/scripts/engine/override.php?order=subject');
+    xmlhttp.send();
+}
+
+
+
+// ============ MULAI SCRIPT JQUERY SUBJECTEVENT ====================
+var btnSubjectEvent = '',
+    statusSubjectEvent = '',
+    posSubjectEvent = '',
+    SubjectEventElementArr = ['nama_subject'];
+
+function openSubjectEvent(dom, status, pos, modal) {
+    btnSubjectEvent = dom;
+    $('.form-header-SubjectEvent #judul').html(status + " " + 'Subject Event');
+    var atas = $(dom).offset().top - $(document).scrollTop();
+    var kiri = $(dom).offset().left;
+    var lebar = $(dom).width();
+    var tinggi = $(dom).height();
+    var layar = $('body').width();
+    var tinggiLayar = $('body').height() - 20;
+
+    $('.overlaySubjectEvent').show();
+    $('.form-SubjectEvent').css({
+        'margin-left': '0px',
+        'margin-top': '0px',
+        'width': lebar + 'px',
+        'height': tinggi + 'px',
+        'top': atas + 'px',
+        'left': kiri + 'px',
+        'border-radius': '100%',
+        'display': 'block'
+    });
+    setTimeout(function() {
+        if (layar > 762) {
+            $('.form-SubjectEvent').css({
+                'margin-left': '-300px',
+                'margin-top': (tinggiLayar < 700 ? -tinggiLayar / 2 + 'px' : '-125px'),
+                'width': '600px',
+                'height': (tinggiLayar < 700 ? tinggiLayar + 'px' : '250px'),
+                'top': '50%',
+                'left': '50%',
+                'border-radius': '5px'
+            });
+        } else {
+            // layar hape
+            $('.form-SubjectEvent').css({
+                'margin-left': '-50vw',
+                'margin-top': '-50vh',
+                'width': '100vw',
+                'height': '100vh',
+                'top': '50%',
+                'left': '50%',
+                'border-radius': '5px'
+            });
+        }
+    }, 200);
+    setTimeout(function() {
+        $('body').css({
+            'overflow-y': 'hidden'
+        });
+        $('.form-header-SubjectEvent').show();
+        $('.form-body-SubjectEvent').show();
+        $('.form-footer-SubjectEvent').show();
+
+        // setup tinggi body form
+        var hForm = $('.form-SubjectEvent').height(),
+            hBody = hForm - 103;
+        $('.form-body-SubjectEvent').css({
+            'height': hBody + 'px'
+        });
+    }, 600);
+    statusSubjectEvent = status;
+    if (status == 'New') {
+        var isiDom = [''];
+        setValueDom(SubjectEventElementArr, isiDom);
+    } else {
+        posSubjectEvent = pos;
+        var isiDom = modal.split('A99');
+        setValueDom(SubjectEventElementArr, isiDom);
+    }
+
+}
+
+
+function closeSubjectEvent() {
+    var dom = btnSubjectEvent;
+    $('body').css({
+        'overflow-y': 'auto'
+    });
+    var atas = $(dom).offset().top - $(document).scrollTop();
+    var kiri = $(dom).offset().left;
+    var lebar = $(dom).width();
+    var tinggi = $(dom).height();
+    $('.form-header-SubjectEvent').hide();
+    $('.form-body-SubjectEvent').hide();
+    $('.form-footer-SubjectEvent').hide();
+    $('.form-SubjectEvent').css({
+        'margin-left': '0px',
+        'margin-top': '0px',
+        'width': lebar + 'px',
+        'height': tinggi + 'px',
+        'top': atas + 'px',
+        'left': kiri + 'px',
+        'border-radius': '100%'
+    });
+    setTimeout(function() {
+        $('.overlaySubjectEvent').hide();
+        $('.form-SubjectEvent').hide();
+    }, 400);
+}
+
+
+function simpanSubjectEvent() {
+    var formData = new FormData();
+    var palang = true;
+    SubjectEventElementArr.forEach(function(item, i) {
+        if ($('#' + item).val() == "") {
+            palang = false;
+        }
+        formData.append(item, $('#' + item).val());
+    });
+    formData.append('status', statusSubjectEvent);
+    formData.append('pos', posSubjectEvent);
+    if (palang) {
+        $.ajax({
+            type: 'POST',
+            url: 'app-assets/js/scripts/engine/override.php?order=saveSubjectEvent',
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function() {
+                showLoad();
+                closeSubjectEvent();
+            },
+            success: function(response) {
+                showToast(response);
+                dispSubject();
+                hideLoad();
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+
+            }
+        });
+    } else {
+        showToast('Data belum lengkap');
+    }
+
+}
+// ============ AKHIR SCRIPT JQUERY SUBJECTEVENT ====================
