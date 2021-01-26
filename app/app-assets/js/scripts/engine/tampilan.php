@@ -934,21 +934,81 @@ function ResultDataJenjang($data)
 function ResultDataListOfAllDataMember($data)
 {
     global $conn;
-    $id = anti_Injection($data["idInSelect"]);
-    $dataFind = "";
-    $nomor = 1;
+    $idSubject = anti_Injection($data["InSelectSubject"]);
+    $idEvent = anti_Injection($data["InSelectEvent"]);
+    $nomor = 0;
     $result = '';
-    $res = mysqli_query($conn, "SELECT * FROM `tb_kompetisi` WHERE `Id_event` = '$id'");
+
+    $res = mysqli_query(
+        $conn,
+        "SELECT *
+         FROM `tb_kompetisi` 
+         WHERE `Id_subjek` = '$idSubject' 
+         AND `Id_event` = '$idEvent'
+         --  AND `nilai` != NULL || `nilai` != ''
+         ORDER BY `nilai` DESC
+         "
+    );
+
+    $total = mysqli_num_rows($res);
+    $dataStatus = query("SELECT gold, silver, bronze FROM tb_subjek WHERE `Id_subjek` = '$idSubject' AND `Id_event` = '$idEvent'")[0];
+    $gold = $dataStatus["gold"];
+    $gold = ceil($gold / 100 * $total);
+
+    $silver = $dataStatus["silver"];
+    $silver = ceil($silver / 100 * $total);
+
+    $bronze = $dataStatus["bronze"];
+    $bronze = ceil($bronze / 100 * $total);
+    // $putaran = 1;
+
+
+
     while ($r = mysqli_fetch_array($res)) {
+        $nomor++;
         $info =  getDataByIdMember($conn, $r['Id_member']);
-        $result .= '<tr>
-                  <td width="8%">' . ($nomor++) . '</td>
-                  <td width="30%">' . $info['nama'] . '</td>
-                  <td width="27%">' . $info['provinsi_sekolah'] . '</td>
-                  <td width="30%">' . $info['sekolah'] . '</td>
-                  <td width="5%">' . $r['nilai'] . '</td>
-                  </td>
-               </tr>';
+
+        if ($nomor <= $gold) {
+            $result .= '<tr>
+                        <td width="5%">' . ($nomor) . '</td>
+                        <td width="30%">' . $info['nama'] . '</td>
+                        <td width="20%">' . $info['provinsi_sekolah'] . '</td>
+                        <td width="30%">' . $info['sekolah'] . '</td>
+                        <td width="5%">' . $r['nilai'] . '</td>
+                        <td width="5%"> Gold </td>
+                        </td>
+                    </tr>';
+        } else if ($nomor > $gold && $nomor <= ($silver + $gold)) {
+            $result .= '<tr>
+                        <td width="5%">' . ($nomor) . '</td>
+                        <td width="30%">' . $info['nama'] . '</td>
+                        <td width="20%">' . $info['provinsi_sekolah'] . '</td>
+                        <td width="30%">' . $info['sekolah'] . '</td>
+                        <td width="5%">' . $r['nilai'] . '</td>
+                        <td width="5%"> Silver </td>
+                        </td>
+                    </tr>';
+        } else if ($nomor > ($silver + $gold) && $nomor <= ($silver + $gold + $bronze)) {
+            $result .= '<tr>
+                        <td width="5%">' . ($nomor) . '</td>
+                        <td width="30%">' . $info['nama'] . '</td>
+                        <td width="20%">' . $info['provinsi_sekolah'] . '</td>
+                        <td width="30%">' . $info['sekolah'] . '</td>
+                        <td width="5%">' . $r['nilai'] . '</td>
+                        <td width="5%"> Bronze </td>
+                        </td>
+                    </tr>';
+        } else if ($nomor > $bronze) {
+            $result .= '<tr>
+                            <td width="5%">' . ($nomor) . '</td>
+                            <td width="30%">' . $info['nama'] . '</td>
+                            <td width="20%">' . $info['provinsi_sekolah'] . '</td>
+                            <td width="30%">' . $info['sekolah'] . '</td>
+                            <td width="5%">' . $r['nilai'] . '</td>
+                            <td width="5%"> </td>
+                            </td>
+                        </tr>';
+        }
     }
 
 
@@ -960,6 +1020,7 @@ function ResultDataListOfAllDataMember($data)
                     <th>Provinsi</th>
                     <th>Sekolah</th>
                     <th>Nilai</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody id="listHist">' . $result . '</tbody>

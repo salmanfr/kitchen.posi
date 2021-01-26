@@ -855,7 +855,7 @@ function openMore(idVideo) {
     var kiri = $(btnaddVideo).offset().left;
     var lebar = $(btnaddVideo).width();
     var tinggi = $(btnaddVideo).height();
-    $('.btnedit, .btnnilai, .btnhapus, .btntutup, .btnsoal').css({
+    $('.btnedit, .btnnilai, .btnhapus, .btntutup').css({
         'top': atas - 2 + 'px',
         'left': kiri - 2 + 'px',
         'display': 'block'
