@@ -59,26 +59,66 @@ if ($token == privateHashing(gettodayShort())) {
             $token =  md5(gettoday() . rand(0, 1000)) . '.jpg';
             $explode = explode('-', $tglevent);
             if ($type == 'image') {
-                $banner = uploadMyImageString($token, $banner);
+                if($banner!='namlastcorp'){
+                    $banner = uploadMyImageString($token, $banner);
+                }
             }
             $begin = $tglbegin . ' ' . $jambegin . ':00';
             $end = $tglend . ' ' . $jamend . ':00';
-            if ($status == 'New') {
-
-                mysqli_query($conn, "INSERT INTO tb_event SET banner_type = '$type',
-                                                             banner = '$banner',
-                                                             judul = '$judul',
-                                                             deskripsi = '$desk',
-                                                             subjek = '$subjek',
-                                                             tanggal_mulai = '$begin',
-                                                             tanggal_akhir = '$end',
-                                                             love = '[]',
-                                                             komentar = '[]',
-                                                             tahun = '$explode[0]',
-                                                             bulan = '$explode[1]',
-                                                             hari = '$explode[2]',
-                                                            `status` = '$statusEvent'");
-                echo 'berhasil disimpan' . $subjek;
+            if ($status == 'New') 
+                    mysqli_query($conn, "INSERT INTO tb_event SET banner_type = '$type',
+                                                                banner = '$banner',
+                                                                judul = '$judul',
+                                                                deskripsi = '$desk',
+                                                                subjek = '$subjek',
+                                                                tanggal_mulai = '$begin',
+                                                                tanggal_akhir = '$end',
+                                                                love = '[]',
+                                                                komentar = '[]',
+                                                                tahun = '$explode[0]',
+                                                                bulan = '$explode[1]',
+                                                                hari = '$explode[2]',
+                                                                `status` = '$statusEvent'");
+                }
+                echo 'berhasil disimpan';
+            }
+            else If($status=='Edit'){
+                if($banner!="namlastcorp"){
+                    $query = "UPDATE tb_event SET banner_type = '$type',
+                                                                banner = '$banner',
+                                                                judul = '$judul',
+                                                                deskripsi = '$desk',
+                                                                subjek = '$subjek',
+                                                                tanggal_mulai = '$begin',
+                                                                tanggal_akhir = '$end',
+                                                                love = '[]',
+                                                                komentar = '[]',
+                                                                tahun = '$explode[0]',
+                                                                bulan = '$explode[1]',
+                                                                hari = '$explode[2]',
+                                                                `status` = '$statusEvent' WHERE Id_event = ''";
+                    
+                }
+                else{
+                    $query = "UPDATE tb_event SET banner_type = '$type',
+                                                  judul = '$judul',
+                                                  deskripsi = '$desk',
+                                                  subjek = '$subjek',
+                                                  tanggal_mulai = '$begin',
+                                                  tanggal_akhir = '$end',
+                                                  love = '[]',
+                                                  komentar = '[]',
+                                                  tahun = '$explode[0]',
+                                                  bulan = '$explode[1]',
+                                                  hari = '$explode[2]',
+                                                  `status` = '$statusEvent' WHERE Id_event = ''";
+                  
+                }
+                if (ProsesData($query) > 0) {
+                    echo  "Data Berhasil Di Hapus";
+                } else {
+                    echo "Proses Hapus Gagal";
+                }
             } else if ($status == 'Hapus') {
                 moveData($pos);
                 $query = "DELETE FROM `tb_event` WHERE `Id_event` = '$pos'";

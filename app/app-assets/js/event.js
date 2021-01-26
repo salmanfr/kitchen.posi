@@ -752,7 +752,6 @@ function closeformEvent() {
 }
 
 function simpanformEvent() {
-    showToast(JSON.stringify(arr_daftar_subjek));
     var formData = new FormData();
     var palang = true;
 
@@ -789,6 +788,7 @@ function simpanformEvent() {
             success: function(response) {
                 showToast(response);
                 hideLoad();
+                dispTimeline();
             },
             error: function(xhr, ajaxOptions, thrownError) {
 
