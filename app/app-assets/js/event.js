@@ -681,11 +681,11 @@ function openformEvent(dom, status, pos, modal) {
         CKEDITOR.instances.deskripsi.setData('');
     } else {
         posformEvent = pos;
-        var isiDom = modal.split('A99');
         //setValueDom(formEventElementArr, isiDom);
         var modals = JSON.parse(modal);
         $('#tema').val(modals.judul);
         $('#temaid label').addClass('active');
+        typeBanner = modals.type;
         var type = modals.type;
         if (type == "image") {
             dataUrl = "namlastcorp";
