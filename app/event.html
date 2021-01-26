@@ -278,14 +278,14 @@
             </li>
             <li class="bold video" id="menu3" onclick="selectMenu('menu3')">
                 <a class="waves-effect waves-cyan">
-                    <i class="material-icons">emoji_events</i>
-                    <span class="menu-title" data-i18n="">Soal</span>
+                    <i class="material-icons">view_list</i>
+                    <span class="menu-title" data-i18n="">Bidang</span>
                 </a>
             </li>
             <li class="bold video" id="menu4" onclick="selectMenu('menu4')">
                 <a class="waves-effect waves-cyan">
                     <i class="material-icons">local_mall</i>
-                    <span class="menu-title" data-i18n="">Perangkingan</span>
+                    <span class="menu-title" data-i18n="">Jenjang</span>
                 </a>
             </li>
         </ul>
@@ -883,9 +883,7 @@
             <i class="material-icons">library_books</i>
         </a>
 
-        <a meta-data="soal" data-parent="iniID" class="addbtn btnsoal mb-6 btn-floating waves-effect waves-light cyan">
-            <i class="material-icons">assignment</i>
-        </a>
+
 
         <a meta-data="tutup" data-parent="iniID" class="addbtn btntutup mb-6 btn-floating waves-effect waves-light red darken-1">
             <i class="material-icons">clear</i>
@@ -954,10 +952,6 @@
             </div>
         </div>
     </div>
-    <!-- END For Overlay Tombol Subject -->
-
-
-
 
     <!-- Start Combo -->
     <div class="genCombos">
@@ -1020,7 +1014,7 @@
                     <div class="input-field col m6 s6 tglev1" id="tglev1id">
                         <i class="material-icons prefix">today</i>
                         <input id="tglev1" type="date" class="validate">
-                        <label for="tglev1" class="">Tanggal Event</label>
+                        <label for="tglev1" class="">Tanggal Mulai Ujian</label>
                     </div>
                     <div class="input-field col m6 s6 jammulai" id="jammulaiid">
                         <i class="material-icons prefix">access_time</i>
@@ -1032,9 +1026,9 @@
                     <div class="input-field col m6 s6 tglev2" id="tglev2id">
                         <i class="material-icons prefix">today</i>
                         <input id="tglev2" type="date" class="validate">
-                        <label for="tglev2" class="">Tanggal Event</label>
+                        <label for="tglev2" class="">Tanggal Akhir Ujian</label>
                     </div>
-                    <div class="input-field col m6 s6 jamakhir" id="jamakhirnid">
+                    <div class="input-field col m6 s6 jamakhir" id="jamakhirid">
                         <i class="material-icons prefix">access_time</i>
                         <input id="jamakhir" type="time" class="validate">
                         <label for="jamakhir" class="active">Jam Akhir Ujian</label>
@@ -1110,7 +1104,7 @@
     <div class="tooltips">
         <span></span>
     </div>
-    <div class="loadUtama ">
+    <div class="loadUtama">
         <img src="app-assets/coolloading.gif ">
     </div>
 </body>

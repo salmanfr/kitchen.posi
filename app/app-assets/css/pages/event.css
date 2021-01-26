@@ -890,17 +890,6 @@
     transition: 0.3s;
 }
 
-.overlayMore .btnsoal {
-    position: fixed;
-    z-index: 101;
-    display: none;
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    line-height: 10px;
-    transition: 0.3s;
-}
-
 .clsv {
     width: 30px;
     height: 30px;
@@ -959,6 +948,10 @@
 .logodisp .deskjudul {
     height: 70px;
     margin-left: 10px;
+}
+
+.colorNotifDel {
+    color: #FFFFFF !important;
 }
 
 
@@ -1051,10 +1044,13 @@
     margin-right: 10px;
 }
 
-
+<<<<<<< HEAD
 /* For CSS Overlay Tombol Subject / Verifikasi */
 
-.overlaySubjectEvent {
+=======
+/* For CSS Overlay Tombol Subject */
+
+>>>>>>>b44abc332603895a08f2f7efe1c7069a90390e2c .overlaySubjectEvent {
     position: fixed;
     z-index: 100000;
     top: 0;

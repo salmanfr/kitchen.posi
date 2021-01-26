@@ -207,22 +207,6 @@ $(document).ready(function(e) {
     $('.btnedit').click(function() {
         getDataEvent(IdGlobal);
     });
-    $('.btnsoal').click(function() {
-        $('.overlayMore .centers').html('<div class="chat">\
-                                            <div class="cointainerMessage">\
-                                                <div class="messages" id="chat">\
-                                                </div>\
-                                            </div>\
-                                            <div class="input">\
-                                                <i class="material-icons" onclick="clsMe(\'' + posVideo + '\')">close</i><input id="txtchat" placeholder="Type your message here!" type="text"><i class="material-icons" onclick="sendchat()">near_me</i>\
-                                            </div>\
-                                        </div>');
-        $('.overlayMore .centers').css({
-            'right': '0%'
-        });
-        posVideoTersorot = posVideo;
-    });
-
 
     $('.btnhapus').click(function() {
         openDeleteItem('Hapus', IdGlobal, 'Data Event Berikut', 'saveformEvent');
@@ -889,16 +873,12 @@ function openMore(idVideo) {
             'left': kiri + 35 + 'px',
             'display': 'block'
         });
-        $('.btnsoal').css({
+        $('.btnhapus').css({
             'top': atas + 3 + 'px',
             'left': kiri + 45 + 'px',
             'display': 'block'
         });
-        $('.btnhapus').css({
-            'top': atas + 40 + 'px',
-            'left': kiri + 35 + 'px',
-            'display': 'block'
-        });
+
 
     }, 100);
 }
@@ -1310,14 +1290,15 @@ function simpanSubjectEvent() {
 // ============ MULAI SCRIPT JQUERY FORMBIDANG ====================
 var btnformBidang = '',
     statusformBidang = '',
-    posformBidang = '';
+    posformBidang = '',
+    formBidangElementArr = ['subjbidang', 'bidang', 'tglev1', 'jammulai', 'tglev2', 'jamakhir', 'linktg', 'price', 'gold', 'silver', 'bronze'];
 
 function openformBidang(dom, status, pos, modal) {
     btnformBidang = dom;
     $('.form-header-formBidang #judul').html(status + " " + ' Bidang Ujian');
     var atas = $(dom).offset().top - $(document).scrollTop();
     var kiri = $(dom).offset().left;
-    var lebar = $(dom).width() + 56;
+    var lebar = $(dom).width() + (status == 'New' ? 56 : 0);
     var tinggi = $(dom).height();
     var layar = $('body').width();
     var tinggiLayar = $('body').height() - 20;
@@ -1330,7 +1311,7 @@ function openformBidang(dom, status, pos, modal) {
         'height': tinggi + 'px',
         'top': atas + 'px',
         'left': kiri + 'px',
-        'border-radius': '3px',
+        'border-radius': (status == 'New' ? '3px' : '100%'),
         'display': 'block'
     });
     setTimeout(function() {
@@ -1377,11 +1358,35 @@ function openformBidang(dom, status, pos, modal) {
     }, 650);
     statusformBidang = status;
     if (status == 'New') {
-        var isiDom = [];
+        var isiDom = ['', '', '', '', '', '', '', '', '', '', ''];
         setValueDom(formBidangElementArr, isiDom);
+        $('#tglev1').val(tglEvent);
+        $('#tglev1id label').addClass('active');
+
+        $('#tglev2').val(tglEvent);
+        $('#tglev2id label').addClass('active');
+
+        $('#jammulaiid label').addClass('active');
+        $('#jamakhirid label').addClass('active');
+        arr_daftar_subjek = [];
+        $('.form-body-formBidang .daftarAkses').html('');
     } else {
         posformBidang = pos;
-        var isiDom = modal.split('A99');
+        var isiDom = JSON.parse(rekontruksiJson(modal));
+        jjgterpilih = [];
+        for (var i = 0; i < jjgSubjek.length; i++) {
+            if (isiDom[0] == jjgSubjek[i]) {
+                jjgterpilih.push(Unlateral(jjgEvent[i]));
+            }
+        }
+        $('.form-body-formBidang .daftarAkses').html('');
+        arr_daftar_subjek = JSON.parse(rekontruksiSiku(isiDom[11]));
+        for (var i = 0; i < arr_daftar_subjek.length; i++) {
+            $('.form-body-formBidang .daftarAkses').prepend('<div class="listAkses" id="' + arr_daftar_subjek[i].split(' ').join('').replace('(', '').replace(')', '').replace('.', '') + '">\
+                                                <span>' + arr_daftar_subjek[i] + '</span>\
+                                                <i class="material-icons" onclick="delAkses(\'' + arr_daftar_subjek[i] + '\') ">close</i>\
+                                            </div>');
+        }
         setValueDom(formBidangElementArr, isiDom);
     }
 
@@ -1393,7 +1398,7 @@ function closeformBidang() {
     $('body').css({ 'overflow-y': 'auto' });
     var atas = $(dom).offset().top - $(document).scrollTop();
     var kiri = $(dom).offset().left;
-    var lebar = $(dom).width() + 55;
+    var lebar = $(dom).width() + (statusformBidang == 'New' ? 56 : 0);
     var tinggi = $(dom).height();
     $('.form-header-formBidang').hide();
     $('.form-body-formBidang').hide();
@@ -1405,14 +1410,13 @@ function closeformBidang() {
         'height': tinggi + 'px',
         'top': atas + 'px',
         'left': kiri + 'px',
-        'border-radius': '3px'
+        'border-radius': (statusformBidang == 'New' ? '3px' : '100%')
     });
     setTimeout(function() {
         $('.overlayformBidang').hide();
         $('.form-formBidang').hide();
     }, 400);
 }
-
 
 function simpanformBidang() {
     var formData = new FormData();
@@ -1423,8 +1427,13 @@ function simpanformBidang() {
         }
         formData.append(item, $('#' + item).val());
     });
+    if (arr_daftar_subjek.length == 0) {
+        palang = false;
+    }
+    formData.append('jenjang', JSON.stringify(arr_daftar_subjek));
     formData.append('status', statusformBidang);
     formData.append('pos', posformBidang);
+    formData.append('id_event', IdGlobal);
     if (palang) {
         $.ajax({
             type: 'POST',
@@ -1435,10 +1444,12 @@ function simpanformBidang() {
             beforeSend: function() {
                 showLoad();
                 closeformBidang();
+
             },
             success: function(response) {
                 showToast(response);
                 hideLoad();
+                getDataSubjekBidang(IdGlobal);
             },
             error: function(xhr, ajaxOptions, thrownError) {
 
@@ -1450,3 +1461,12 @@ function simpanformBidang() {
 
 }
 // ============ AKHIR SCRIPT JQUERY FORMBIDANG ====================
+// ============ AKHIR SCRIPT JQUERY FORMBIDANG ====================
+
+function rekontruksiJson(modal) {
+    return modal.split('Q212Q').join('"').split('A212A').join('{').split('F212F').join('}');
+}
+
+function rekontruksiSiku(targ) {
+    return targ.split('FRG').join(']').split('FLG').join('[').split('KMA').join('"');
+}

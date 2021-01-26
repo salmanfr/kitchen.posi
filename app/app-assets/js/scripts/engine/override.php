@@ -144,17 +144,24 @@ if ($token == privateHashing(gettodayShort())) {
                         </thead>
                         <tbody id="listHist">';
             $no = 1;
-            while($r = mysqli_fetch_array($res)){
-                $disp .='<tr>
-                            <td>'.($no++).'</td>
-                            <td>'.$r['subjek'].'</td>
-                            <td>'.listNumberArray(json_decode($r['jenjang'],false)).'</td>
-                            <td>'.$r['bidang_studi'].'</td>
-                            <td class="right-align">'.$r['mulai_pelaksanaan'].'</td>
-                            <td class="right-align">'.$r['akhir_pelaksanaan'].'</td>
-                            <td class="right-align">'.getFollower($conn,$r['Id_subjek']).'</td>
+            while ($r = mysqli_fetch_array($res)) {
+                
+                $mulai = explode(' ',$r['mulai_pelaksanaan']);
+                $akhir = explode(' ',$r['akhir_pelaksanaan']);
+                $modal = array($r['subjek'],$r['bidang_studi'],$mulai[0],$mulai[1],$akhir[0],$akhir[1],$r['chat_group'],$r['atom'],$r['gold'],$r['silver'],$r['bronze'],str_replace('"', 'KMA',str_replace('[', 'FLG',str_replace(']', "FRG",$r['jenjang']))));
+                $disp .= '<tr>
+                            <td>' . ($no++) . '</td>
+                            <td>' . $r['subjek'] . '</td>
+                            <td>' . listNumberArray(json_decode($r['jenjang'], false)) . '</td>
+                            <td>' . $r['bidang_studi'] . '</td>
+                            <td class="right-align">' . $r['mulai_pelaksanaan'] . '</td>
+                            <td class="right-align">' . $r['akhir_pelaksanaan'] . '</td>
+                            <td onclick="openoverlayListOfAllDataMember(\'' . '.BtnListOfAllMember' . $r["Id_subjek"] . '\',\'' . $Id_event . '\')"
+                                class="right-align BtnListOfAllMember' . $r["Id_subjek"] . '">
+                            ' . getFollower($conn, $r['Id_subjek']) . '
+                            </td>
                             <td class="right-align">
-                                <a class="mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber">
+                                <a class="mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber btnformBidang'.$r['Id_subjek'].'" onclick="openformBidang(\''.'.btnformBidang'.$r['Id_subjek'].'\',\''.'Edit'.'\',\''.$r['Id_subjek'].'\',\''.murnikanJson($modal).'\')">
                                     <i class="material-icons">edit</i>
                                 </a>
                             </td>
@@ -206,6 +213,37 @@ if ($token == privateHashing(gettodayShort())) {
 
             echo json_encode($arrResp);
             
+            break;
+        case 'saveformBidang':
+            $subjek = anti_Injection($_POST['subjbidang']);
+            $bidang = anti_Injection($_POST['bidang']);
+            $mulai = $_POST['tglev1'].' '.$_POST['jammulai'];
+            $akhir = $_POST['tglev2'].' '.$_POST['jamakhir'];
+            $link = anti_Injection($_POST['linktg']);
+            $price = anti_Injection($_POST['price']);
+            $gold = anti_Injection($_POST['gold']);
+            $silver = anti_Injection($_POST['silver']);
+            $bronze = anti_Injection($_POST['bronze']);
+            $jenjang = $_POST['jenjang'];
+            $pos = anti_Injection($_POST['pos']);
+            $status = anti_Injection($_POST['status']);
+            $id_event = anti_Injection($_POST['id_event']);
+
+            if($status=='New'){
+                mysqli_query($conn,"INSERT INTO `tb_subjek` SET `Id_event` = '$id_event',
+                                                                 `subjek` = '$subjek',
+                                                                 `jenjang` = '$jenjang',
+                                                                 `bidang_studi` = '$bidang',
+                                                                 `mulai_pelaksanaan`  = '$mulai',
+                                                                 `akhir_pelaksanaan`  = '$akhir',
+                                                                 `kisi` = '',
+                                                                 `chat_group` = '$link',
+                                                                 `atom` = '$price',
+                                                                 `gold` = '$gold',
+                                                                 `silver` = '$silver',
+                                                                 `bronze` = '$silver'");
+                echo 'Berhasil di tambahkan';
+            }
             break;
     }
 } else {

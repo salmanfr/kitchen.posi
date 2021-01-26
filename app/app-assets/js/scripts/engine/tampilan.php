@@ -391,6 +391,8 @@ function timeLine($conn, $subjek, $tahun, $Id_member)
                 
             </div>';
 }
+
+
 function dispVideo($conn, $idsekolah, $idguru)
 {
     $res = mysqli_query($conn, "SELECT * FROM tb_video WHERE Id_sekolah = '$idsekolah' AND Id_guru = '$idsekolah' ORDER BY Id_video DESC");
@@ -660,4 +662,306 @@ function ResultDataSubject($data)
             echo "Proses Gagal";
         }
     }
+}
+
+
+
+
+//For Display Bidang Event ==> Menu 3
+function BidangEvent()
+{
+    $nomor = 1;
+    $result = "";
+    $dataBidangEvent = query("SELECT * FROM dft_bidang_studi");
+
+    foreach ($dataBidangEvent as $row) {
+        $ParameterData = $row["bidang_studi"] . "A99";
+        $contex = "Data Bidang " . $row["bidang_studi"];
+        $result .= '
+                  <tr id="barisData' . $row["Id_bidang_studi"] . '">
+                    <td width="5%">' . $nomor++ . '</td>
+                    <td width="85%">' . $row["bidang_studi"] . '</td>
+                    <td style="display: flex; justify-content: space-around;">
+                        <a style="cursor: pointer" meta-data="+ Edit entry"
+                        onclick="openoverlayBidangEvent(\'' . '.btnoverlayBidangEvent' . $row["Id_bidang_studi"] . '\',\'' . 'Edit' . '\',\'' . $row["Id_bidang_studi"] . '\', \'' . $ParameterData . '\')" 
+                            class="btnoverlayBidangEvent' . $row["Id_bidang_studi"] . ' invoice-action-edit btn btn-floating waves-effect waves-light gradient-45deg-purple-deep-orange breadcrumbs-btn right">
+                                <i class="material-icons">edit</i>
+                          </a>
+                          <a style="cursor: pointer" meta-data="+ Delete entry"
+                            onclick="openDeleteItem(\'' . 'Hapus' . '\',\'' . $row["Id_bidang_studi"] . '\',\'' . $contex . '\',\'' . 'saveoverlayBidangEvent' . '\')"
+                              class="invoice-action-edit btn btn-floating waves-effect waves-light pink accent-2 breadcrumbs-btn right">
+                                <i class="material-icons">delete</i>
+                          </a>
+                    </td>
+                  </tr>';
+    }
+
+
+    return '
+            <div class="breadcrumbs-inline pt-3 pb-1" id="breadcrumbs-wrapper">
+              <div class="container">
+                <div class="row">
+                  <div class="col s7 m6 l6 breadcrumbs-left">
+                    <h5 class="breadcrumbs-title mt-0 mb-0 display-inline hide-on-small-and-down"><span>POSI App</span></h5>
+                    <ol class="breadcrumbs mb-0">
+                      <li class="breadcrumb-item active">Bidang
+                      </li>
+                    </ol>
+                  </div>
+                  <div class="col s5 m6 l6">
+                    <a meta-data="+ new entry" onclick="openoverlayBidangEvent(\'' . '.btnoverlayBidangEvent' . '\',\'' . 'New' . '\',\'' . '' . '\', \'' . '' . '\')" class="btnoverlayBidangEvent addbtn btn btn-floating dropdown-settings waves-effect waves-light breadcrumbs-btn right"  data-target="dropdown1">
+                        <i class="material-icons">add</i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+                
+            <div class="row">
+              <div class="col s12">
+                <div class="card">
+                  <div class="card-content">
+                  
+                    <div class="row toolPagination">
+                      <div class="col s12 scrollTable">
+                        <table id="page-length-option" class="display striped">
+                          <thead>
+                            <tr>
+                              <th>No</th>
+                              <th>Bidang</th>
+                              <th colspan="2" style="text-align:center;">Action</th>
+                            </tr>
+                          </thead>
+                          
+                          <tbody id="paginattable">
+                          ' . $result . '
+                          </tbody>
+                          <tfoot>
+                           
+                          </tfoot>
+                        </table>
+                      </div>
+                        <div class="dataTables_info" id="page-length-option_info" role="status" aria-live="polite">Showing 11 to 20 of 57 entries</div>
+                        <div class="dataTables_paginate paging_simple_numbers" id="page-length-option_paginate">
+                                        <a class="paginate_button previous" aria-controls="page-length-option" data-dt-idx="0" tabindex="0" id="page-length-option_previous" onclick="prev()">Previous</a>
+                                        <span></span>
+                                        <a class="paginate_button next" aria-controls="page-length-option" data-dt-idx="7" tabindex="0" id="page-length-option_next" onclick="next()">Next</a>
+                        </div>
+                    </div>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            </div>';
+}
+
+function ResultDataOverlayBidangEvent($data)
+{
+    $pos = anti_Injection($data['pos']);
+    $status = anti_Injection($data['status']);
+    $nama_bidang_event = anti_Injection($data['nama_bidang_event']);
+
+    if ($status == "New") {
+
+        $query = "INSERT INTO `dft_bidang_studi`
+                  VALUES 
+                  (NULL, '$nama_bidang_event', '')
+                 ";
+
+        if (ProsesData($query) > 0) {
+            echo "Data Berhasil Ditambah";
+        } else {
+            echo "Proses Gagal";
+        }
+    } else if ($status == "Edit") {
+
+        $query = "UPDATE `dft_bidang_studi` SET
+                  `bidang_studi` = '$nama_bidang_event'
+                  WHERE `Id_bidang_studi` = '$pos'
+                 ";
+
+        if (ProsesData($query) > 0) {
+            echo "Data Berhasil Diubah";
+        } else {
+            echo "Proses Gagal";
+        }
+    } else if ($status == 'Hapus') {
+
+        $query = "DELETE FROM `dft_bidang_studi` WHERE `Id_bidang_studi` = '$pos'";
+
+        if (ProsesData($query) > 0) {
+            echo "Data Berhasil Dihapus";
+        } else {
+            echo "Proses Gagal";
+        }
+    }
+}
+
+
+
+
+
+
+//For Display Jenjang ==> Menu 4
+function Jenjang()
+{
+    $nomor = 1;
+    $result = "";
+    $dataJenjang = query("SELECT * FROM `dft_jenjang`");
+
+    foreach ($dataJenjang as $row) {
+        $ParameterData = listNumberArray(json_decode($row["jenjang"], false));
+        $contex = "Data Jenjang ";
+        $result .= '
+                  <tr id="barisData' . $row["Id_jenjang"] . '">
+                    <td width="5%">' . $nomor++ . '</td>
+                    <td width="85%">' . listNumberArray(json_decode($row["jenjang"], false)) . '</td>
+                    <td style="display: flex; justify-content: space-around;">
+                          <a style="cursor: pointer" meta-data="+ Delete entry"
+                            onclick="openDeleteItem(\'' . 'Hapus' . '\',\'' . $row["Id_jenjang"] . '\',\'' . $contex . '\',\'' . 'saveOverlayJenjang' . '\')"
+                              class="invoice-action-edit btn btn-floating waves-effect waves-light pink accent-2 breadcrumbs-btn right">
+                                <i class="material-icons">delete</i>
+                          </a>
+                    </td>
+                  </tr>';
+    }
+
+    return '
+            <div class="breadcrumbs-inline pt-3 pb-1" id="breadcrumbs-wrapper">
+              <div class="container">
+                <div class="row">
+                  <div class="col s7 m6 l6 breadcrumbs-left">
+                    <h5 class="breadcrumbs-title mt-0 mb-0 display-inline hide-on-small-and-down"><span>POSI App</span></h5>
+                    <ol class="breadcrumbs mb-0">
+                      <li class="breadcrumb-item active">Jenjang
+                      </li>
+                    </ol>
+                  </div>
+                  <div class="col s5 m6 l6">
+                    <a meta-data="+ new entry" onclick="openOverlayJenjang(\'' . '.btnOverlayJenjang' . '\',\'' . 'New' . '\',\'' . '' . '\', \'' . '' . '\')" class="btnOverlayJenjang addbtn btn btn-floating dropdown-settings waves-effect waves-light breadcrumbs-btn right" data-target="dropdown1">
+                        <i class="material-icons">add</i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+                
+            <div class="row">
+              <div class="col s12">
+                <div class="card">
+                  <div class="card-content">
+                  
+                    <div class="row toolPagination">
+                      <div class="col s12 scrollTable">
+                        <table id="page-length-option" class="display striped">
+                          <thead>
+                            <tr>
+                              <th>No</th>
+                              <th style="position: relative; left: 21px;">Bidang</th>
+                              <th colspan="2" style="text-align:center;">Action</th>
+                            </tr>
+                          </thead>
+                          
+                          <tbody id="paginattable">
+                          ' . $result . '
+                          </tbody>
+                          <tfoot>
+                           
+                          </tfoot>
+                        </table>
+                      </div>
+                        <div class="dataTables_info" id="page-length-option_info" role="status" aria-live="polite">Showing 11 to 20 of 57 entries</div>
+                        <div class="dataTables_paginate paging_simple_numbers" id="page-length-option_paginate">
+                                        <a class="paginate_button previous" aria-controls="page-length-option" data-dt-idx="0" tabindex="0" id="page-length-option_previous" onclick="prev()">Previous</a>
+                                        <span></span>
+                                        <a class="paginate_button next" aria-controls="page-length-option" data-dt-idx="7" tabindex="0" id="page-length-option_next" onclick="next()">Next</a>
+                        </div>
+                    </div>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            </div>';
+}
+
+function ResultDataJenjang($data)
+{
+    $pos = anti_Injection($data['pos']);
+    $status = anti_Injection($data['status']);
+    $nama_jenjang = $data['JenjangDong'];
+
+    if ($status == "New") {
+
+        $query = "INSERT INTO `dft_jenjang`
+                  VALUES 
+                  (NULL, '$nama_jenjang')
+                 ";
+
+        if (ProsesData($query) > 0) {
+            echo "Data Berhasil Ditambah";
+        } else {
+            echo "Proses Gagal";
+        }
+    } else if ($status == "Edit") {
+
+        $query = "UPDATE `dft_jenjang` SET
+                  `jenjang` = '$nama_jenjang'
+                  WHERE `Id_jenjang` = '$pos'
+                 ";
+
+        if (ProsesData($query) > 0) {
+            echo "Data Berhasil Diubah";
+        } else {
+            echo "Proses Gagal";
+        }
+    } else if ($status == 'Hapus') {
+
+        $query = "DELETE FROM `dft_jenjang` WHERE `Id_jenjang` = '$pos'";
+
+        if (ProsesData($query) > 0) {
+            echo "Data Berhasil Dihapus";
+        } else {
+            echo "Proses Gagal";
+        }
+    }
+}
+
+
+
+//Display Overlay List Of All Data Member
+function ResultDataListOfAllDataMember($data)
+{
+    global $conn;
+    $id = anti_Injection($data["idInSelect"]);
+    $dataFind = "";
+    $nomor = 1;
+    $result = '';
+    $res = mysqli_query($conn, "SELECT * FROM `tb_kompetisi` WHERE `Id_event` = '$id'");
+    while ($r = mysqli_fetch_array($res)) {
+        $info =  getDataByIdMember($conn, $r['Id_member']);
+        $result .= '<tr>
+                  <td width="8%">' . ($nomor++) . '</td>
+                  <td width="30%">' . $info['nama'] . '</td>
+                  <td width="27%">' . $info['provinsi_sekolah'] . '</td>
+                  <td width="30%">' . $info['sekolah'] . '</td>
+                  <td width="5%">' . $r['nilai'] . '</td>
+                  </td>
+               </tr>';
+    }
+
+
+    echo '<table class="responsive-table display striped">
+            <thead>
+                <tr>
+                    <th>Nomor</th>
+                    <th>Nama</th>
+                    <th>Provinsi</th>
+                    <th>Sekolah</th>
+                    <th>Nilai</th>
+                </tr>
+            </thead>
+            <tbody id="listHist">' . $result . '</tbody>
+          </table>';
 }
