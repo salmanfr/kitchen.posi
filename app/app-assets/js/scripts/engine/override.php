@@ -241,8 +241,23 @@ if ($token == privateHashing(gettodayShort())) {
                                                                  `atom` = '$price',
                                                                  `gold` = '$gold',
                                                                  `silver` = '$silver',
-                                                                 `bronze` = '$silver'");
+                                                                 `bronze` = '$bronze'");
                 echo 'Berhasil di tambahkan';
+            }
+            else {
+                mysqli_query($conn,"UPDATE `tb_subjek` SET `Id_event` = '$id_event',
+                                                                `subjek` = '$subjek',
+                                                                `jenjang` = '$jenjang',
+                                                                `bidang_studi` = '$bidang',
+                                                                `mulai_pelaksanaan`  = '$mulai',
+                                                                `akhir_pelaksanaan`  = '$akhir',
+                                                                `kisi` = '',
+                                                                `chat_group` = '$link',
+                                                                `atom` = '$price',
+                                                                `gold` = '$gold',
+                                                                `silver` = '$silver',
+                                                                `bronze` = '$bronze' WHERE Id_subjek = '$pos'");
+                echo 'berhasil diedit';
             }
             break;
     }
