@@ -18,7 +18,7 @@ function selectMenu(idmenu) {
     } else if (idmenu == 'menu1') {
         dispTimeline();
     } else if (idmenu == 'menu2') {
-        dispKompetisi();
+        dispSubject();
     }
 
     //navigationButtom(idmenu);
@@ -134,7 +134,7 @@ function justSelectMenu(idmenu) {
 
 function openMyProfile() {
     $('.overlayProfile').show();
-    setTimeout(function() {
+    setTimeout(function () {
         $('.formProfile').css({
             'top': '50%'
         });
@@ -145,7 +145,7 @@ function closeMyProfile() {
     $('.formProfile').css({
         'top': '250%'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.overlayProfile').hide();
     }, 300);
 }

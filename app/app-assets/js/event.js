@@ -934,9 +934,9 @@ function opendispSubjek(dom, id_event) {
     setTimeout(function() {
         if (layar > 762) {
             $('.form-dispSubjek').css({
-                'margin-left': '-500px',
+                'margin-left': '-450px',
                 'margin-top': (tinggiLayar < 700 ? -tinggiLayar / 2 + 'px' : '-350px'),
-                'width': '1000px',
+                'width': '900px',
                 'height': (tinggiLayar < 700 ? tinggiLayar + 'px' : '700px'),
                 'top': '50%',
                 'left': '50%',

@@ -272,8 +272,8 @@
             </li>
             <li class="bold video" id="menu2" onclick="selectMenu('menu2')">
                 <a class="waves-effect waves-cyan">
-                    <i class="material-icons">event_available</i>
-                    <span class="menu-title" data-i18n="">Bidang Ujian</span>
+                    <i class="material-icons">widgets</i>
+                    <span class="menu-title" data-i18n="">Subject</span>
                 </a>
             </li>
             <li class="bold video" id="menu3" onclick="selectMenu('menu3')">
@@ -926,6 +926,35 @@
         </div>
     </div>
     <!-- END For Overlay Tombol Hapus -->
+
+
+
+    <!-- For Overlay Tombol Subject -->
+
+    <div class="overlaySubjectEvent">
+        <div class="form-SubjectEvent">
+            <div class="form-header-SubjectEvent">
+                <h5 id="judul">SubjectEvent </h5>
+                <div class="btnclose" onclick="closeSubjectEvent()">
+                    <i class="material-icons">close</i>
+                </div>
+            </div>
+            <div class="form-body-SubjectEvent">
+                <div class="row" id="nama_subjectids">
+                    <div class="input-field col s12" id="nama_subjectid">
+                        <i class="material-icons prefix">widgets</i>
+                        <input id="nama_subject" type="text" autocomplete="off">
+                        <label for="nama_subject">Nama subject</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-footer-SubjectEvent">
+                <a class="mb-6 btn waves-effect waves-light gradient-45Deg-amber-amber kanan" onclick="simpanSubjectEvent()"> Simpan</a>
+            </div>
+        </div>
+    </div>
+    <!-- END For Overlay Tombol Subject -->
 
 
 
