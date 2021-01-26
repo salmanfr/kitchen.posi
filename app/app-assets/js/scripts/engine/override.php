@@ -144,15 +144,18 @@ if ($token == privateHashing(gettodayShort())) {
                         </thead>
                         <tbody id="listHist">';
             $no = 1;
-            while($r = mysqli_fetch_array($res)){
-                $disp .='<tr>
-                            <td>'.($no++).'</td>
-                            <td>'.$r['subjek'].'</td>
-                            <td>'.listNumberArray(json_decode($r['jenjang'],false)).'</td>
-                            <td>'.$r['bidang_studi'].'</td>
-                            <td class="right-align">'.$r['mulai_pelaksanaan'].'</td>
-                            <td class="right-align">'.$r['akhir_pelaksanaan'].'</td>
-                            <td class="right-align">'.getFollower($conn,$r['Id_subjek']).'</td>
+            while ($r = mysqli_fetch_array($res)) {
+                $disp .= '<tr>
+                            <td>' . ($no++) . '</td>
+                            <td>' . $r['subjek'] . '</td>
+                            <td>' . listNumberArray(json_decode($r['jenjang'], false)) . '</td>
+                            <td>' . $r['bidang_studi'] . '</td>
+                            <td class="right-align">' . $r['mulai_pelaksanaan'] . '</td>
+                            <td class="right-align">' . $r['akhir_pelaksanaan'] . '</td>
+                            <td onclick="openoverlayListOfAllDataMember(\'' . '.BtnListOfAllMember' . $r["Id_subjek"] . '\',\'' . $Id_event . '\')"
+                                class="right-align BtnListOfAllMember' . $r["Id_subjek"] . '">
+                            ' . getFollower($conn, $r['Id_subjek']) . '
+                            </td>
                             <td class="right-align">
                                 <a class="mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber">
                                     <i class="material-icons">edit</i>
@@ -174,6 +177,23 @@ if ($token == privateHashing(gettodayShort())) {
             break;
         case 'saveSubjectEvent':
             echo ResultDataSubject($_POST);
+            break;
+
+        case 'BidangEvent':
+            echo BidangEvent();
+            break;
+        case 'saveoverlayBidangEvent':
+            echo ResultDataOverlayBidangEvent($_POST);
+            break;
+
+        case 'Jenjang':
+            echo Jenjang();
+            break;
+        case 'saveOverlayJenjang':
+            echo ResultDataJenjang($_POST);
+            break;
+        case 'getListOfAllDataMember':
+            echo ResultDataListOfAllDataMember($_REQUEST);
             break;
     }
 } else {

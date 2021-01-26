@@ -2,29 +2,30 @@ var boolMedia = false,
     dataUrl = '',
     typeBanner = '',
     subjek = ['Guru', 'Mahasiswa', 'Siswa'],
+    nama_jenjang = ['SD', 'MI', 'SMP', 'MTS', 'SMA', 'MA', 'SMK', 'MAHASISWA'],
     statusEvent = ['Publish', 'Private'],
     kontextCombos = '',
     listArr = [],
     mouse_combos = false,
     IdGlobal,
     arr_daftar_subjek = [];
-$(document).ready(function(e) {
+$(document).ready(function (e) {
     selectMenu('menu0');
     initSample();
-    $('.genCombos').hover(function() {
+    $('.genCombos').hover(function () {
         mouse_combos = true
-    }, function() {
+    }, function () {
         mouse_combos = false;
     });
 
-    $('body').mouseup(function() {
+    $('body').mouseup(function () {
         if (!mouse_combos) {
             $('.genCombos').hide();
         }
     });
 
     $('body').on({
-        mouseenter: function() {
+        mouseenter: function () {
             $('.tooltips').show();
             var kontextLabel = $(this).attr('meta-data');
             $('.tooltips').html(kontextLabel);
@@ -36,14 +37,14 @@ $(document).ready(function(e) {
             });
 
         },
-        mouseleave: function() {
+        mouseleave: function () {
             $('.tooltips').hide(100);
         }
     }, '.addbtn');
 
     //.header-search-input 
     //#search
-    $('.header-search-input, #search').on('keyup', function(e) {
+    $('.header-search-input, #search').on('keyup', function (e) {
         if (e.key === 'Enter' || e.keyCode === 13) {
             var targ = $(this).val();
             if (fungsiPencarian == 'tabel') {
@@ -55,7 +56,7 @@ $(document).ready(function(e) {
     });
 
 
-    $('.header-search-input, #search').on('input', function() {
+    $('.header-search-input, #search').on('input', function () {
         var targ = $(this).val();
 
         if (fungsiPencarian == 'tabel') {
@@ -65,7 +66,7 @@ $(document).ready(function(e) {
         }
     });
 
-    $('#inputmedia').on('input', function(e) {
+    $('#inputmedia').on('input', function (e) {
         var arrLink = $(this).val().split('v='),
             link = arrLink[1];
         // cek apakah didalam link ada &=
@@ -89,7 +90,7 @@ $(document).ready(function(e) {
         $('.frameVideo').html('<iframe style="width:100%; height:100%;" src="https://www.youtube.com/embed/' + targlink + '" allow="autoplay; encrypted-media" allowfullscreen="" frameborder="0"></iframe>')
     });
 
-    $('#browsemedia').on('change', function() {
+    $('#browsemedia').on('change', function () {
         boolMedia = false;
         $('.frameVideo').html('<canvas id="canvas"></canvas>');
         console.log($(this)[0].files[0]);
@@ -99,7 +100,7 @@ $(document).ready(function(e) {
 
         var meta = $(this).attr('meta-data');
         var img = new Image();
-        img.onload = function() {
+        img.onload = function () {
             var canvas = document.getElementById('canvas'),
 
                 width = $('.frameVideo').width(),
@@ -114,13 +115,13 @@ $(document).ready(function(e) {
             typeBanner = 'image';
 
         }
-        img.onerror = function() {
+        img.onerror = function () {
             console.error("The provided file couldn't be loaded as an Image media");
         }
         img.src = URL.createObjectURL(this.files[0]);
     });
 
-    $('#subjek, #statusevent').on('click', function() {
+    $('#subjek, #statusevent, #namaJenjang').on('click', function () {
         var tinggi = $(this).height();
         var atas = $(this).offset().top - $(document).scrollTop() + tinggi;
         var kiri = $(this).offset().left;
@@ -181,44 +182,33 @@ $(document).ready(function(e) {
         } else if (kontextCombos == 'statusevent') {
             setToListBody(statusEvent);
             listArr = statusEvent;
+        } else if (kontextCombos == 'namaJenjang') {
+            setToListBody(nama_jenjang);
+            listArr = nama_jenjang;
         }
     });
 
 
     //This For Ovelay Moore
-    $('.btntutup').on('click', function() {
+    $('.btntutup').on('click', function () {
         clsMe();
     });
 
-    $('.btnedit').click(function() {
+    $('.btnedit').click(function () {
         getDataEvent(IdGlobal);
     });
-    $('.btnsoal').click(function() {
-        $('.overlayMore .centers').html('<div class="chat">\
-                                            <div class="cointainerMessage">\
-                                                <div class="messages" id="chat">\
-                                                </div>\
-                                            </div>\
-                                            <div class="input">\
-                                                <i class="material-icons" onclick="clsMe(\'' + posVideo + '\')">close</i><input id="txtchat" placeholder="Type your message here!" type="text"><i class="material-icons" onclick="sendchat()">near_me</i>\
-                                            </div>\
-                                        </div>');
-        $('.overlayMore .centers').css({
-            'right': '0%'
-        });
-        posVideoTersorot = posVideo;
-    });
+    $('.btnsoal').click(function () {});
 
 
-    $('.btnhapus').click(function() {
+    $('.btnhapus').click(function () {
         openDeleteItem('Hapus', IdGlobal, 'Data Event Berikut', 'saveformEvent');
     });
 
-    $('.btnnilai').click(function() {
+    $('.btnnilai').click(function () {
         opendispSubjek('.btnnilai', IdGlobal);
     });
 
-    $('#btnUbah').click(function() {
+    $('#btnUbah').click(function () {
         var formData = new FormData();
         var palang = false;
         if ($('#pass1').val() == $('#pass2').val() && $('#pass1').val() != "") {
@@ -235,14 +225,14 @@ $(document).ready(function(e) {
                 data: formData,
                 processData: false,
                 contentType: false,
-                beforeSend: function() {
+                beforeSend: function () {
                     showLoad();
                 },
-                success: function(response) {
+                success: function (response) {
                     showToast(response);
                     setMyProfile();
                 },
-                error: function(xhr, ajaxOptions, thrownError) {
+                error: function (xhr, ajaxOptions, thrownError) {
 
                 }
             });
@@ -254,9 +244,8 @@ $(document).ready(function(e) {
 });
 
 function setToListBody(daftarArr) {
-    // alert(daftarArr);
     $('.bodyCombos').html('');
-    daftarArr.forEach(function(item, i) {
+    daftarArr.forEach(function (item, i) {
         $('.bodyCombos').append('<div class="listItem" onclick="setItemCombos(\'' + item + '\')">' + item.toUpperCase() + '</div>');
     });
     $('.bodyCombos').animate({
@@ -281,6 +270,18 @@ function setItemCombos(item) {
         }
 
         $('#subjek').val('');
+    } else if (kontextCombos == 'namaJenjang') {
+        if (!in_array(item, arr_daftar_subjek)) {
+            arr_daftar_subjek.push(item);
+            $('.daftarAksesJenjang').prepend('<div class="listAkses" id="' + item.split(' ').join('').replace('(', '').replace(')', '').replace('.', '') + '">\
+                                            <span>' + item + '</span>\
+                                            <i class="material-icons" onclick="delAkses(\'' + item + '\') ">close</i>\
+                                        </div>');
+        } else {
+            showToast('data sudah terdaftar');
+        }
+
+        $('#namaJenjang').val('');
     }
 }
 
@@ -290,6 +291,7 @@ function delAkses(target) {
         arr_daftar_subjek.splice(index, 1);
     }
     $('#' + target.split(' ').join('').replace('(', '').replace(')', '').replace('.', '')).hide(200);
+
 }
 
 function cariCombos(val, ev) {
@@ -297,7 +299,7 @@ function cariCombos(val, ev) {
     var prediksi = '',
         byk = 0;
     if (val.length > 1) {
-        listArr.forEach(function(item, i) {
+        listArr.forEach(function (item, i) {
             if (item.toUpperCase().indexOf(val.toUpperCase()) != -1) {
                 byk++;
                 if (byk == 1) {
@@ -307,7 +309,7 @@ function cariCombos(val, ev) {
             }
         });
     } else if (val == '') {
-        listArr.forEach(function(item, i) {
+        listArr.forEach(function (item, i) {
             byk++;
             if (byk == 1) {
                 prediksi = item;
@@ -334,26 +336,26 @@ function in_array(nilai, arr) {
 
 function searchDataTable(targ) {
     $('#paginattable').html('');
-    dataTabel.forEach(function(item, i) {
+    dataTabel.forEach(function (item, i) {
         if (item.toUpperCase().indexOf(targ.toUpperCase()) != -1) {
             // item = item.replace(targ, '<span style="color:red">' + targ + '</span>');
             $('#paginattable').append('<tr>' + item + '</tr>')
         }
     });
-    setTimeout(function() {
+    setTimeout(function () {
         setupTablePagination(rowtabledisp.value);
     }, 200)
 }
 
 function searchDataDiv(targ) {
     $('#paginattable').html('');
-    dataTabel.forEach(function(item, i) {
+    dataTabel.forEach(function (item, i) {
         if (item.toUpperCase().indexOf(targ.toUpperCase()) != -1) {
             // item = item.replace(targ, '<span style="color:red">' + targ + '</span>');
             $('#paginattable').append('<div class="col s12 m6 l4 card-width">' + item + '</div>')
         }
     });
-    setTimeout(function() {
+    setTimeout(function () {
         setupDivPagination(rowtabledisp.value);
     }, 200)
 }
@@ -361,7 +363,7 @@ function searchDataDiv(targ) {
 function dispDashboard() {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             $('.dispUtama').html(xmlhttp.responseText);
             var $el = $('.math-tex')
@@ -380,7 +382,7 @@ function dispDashboard() {
 function dispTimeline() {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             $('.dispUtama').html(xmlhttp.responseText);
             hideLoad();
@@ -393,7 +395,7 @@ function dispTimeline() {
 
 function showLoad() {
     $('.loadUtama').show();
-    setTimeout(function() {
+    setTimeout(function () {
         $('.loadUtama img').css({
             'transform': 'scale(1.0)'
         });
@@ -404,7 +406,7 @@ function hideLoad() {
     $('.loadUtama img').css({
         'transform': 'scale(0.0)'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.loadUtama').hide();
     }, 310);
 }
@@ -490,7 +492,7 @@ function openPreview(types, banner, idevent) {
         'border-radius': '10px',
         'display': 'block'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         if (layar > 762) {
             $('.form-View').css({
                 'margin-left': '-350px',
@@ -550,7 +552,7 @@ function closeView() {
         'left': kiri + 'px',
         'border-radius': '5px'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.overlayPreview').hide();
         $('.form-View').hide();
     }, 400);
@@ -560,7 +562,7 @@ function closeView() {
 function getDataEvent(Id_event) {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var modals = xmlhttp.responseText;
             hideLoad();
@@ -572,6 +574,119 @@ function getDataEvent(Id_event) {
     xmlhttp.open('GET', 'app-assets/js/scripts/engine/override.php?order=getdataevent&id_event=' + Id_event);
     xmlhttp.send();
 }
+
+
+// ============ MULAI SCRIPT JQUERY OVERLAYLISTOFALLDATAMEMBER ====================
+var btnoverlayListOfAllDataMember = '',
+    posoverlayListOfAllDataMember = '';
+
+function openoverlayListOfAllDataMember(dom, PosId) {
+    btnoverlayListOfAllDataMember = dom;
+    $('.form-header-overlayListOfAllDataMember #judul').html('List Of All Data Kompetisi');
+    var atas = $(dom).offset().top - $(document).scrollTop();
+    var kiri = $(dom).offset().left;
+    var lebar = $(dom).width();
+    var tinggi = $(dom).height();
+    var layar = $('body').width();
+    var tinggiLayar = $('body').height() - 20;
+
+    $('.overlayoverlayListOfAllDataMember').show();
+    $('.form-overlayListOfAllDataMember').css({
+        'margin-left': '0px',
+        'margin-top': '0px',
+        'width': lebar + 'px',
+        'height': tinggi + 'px',
+        'top': atas + 'px',
+        'left': kiri + 'px',
+        'display': 'block'
+    });
+    setTimeout(function () {
+        if (layar > 762) {
+            $('.form-overlayListOfAllDataMember').css({
+                'margin-left': '-600px',
+                'margin-top': (tinggiLayar < 700 ? -tinggiLayar / 2 + 'px' : '-350px'),
+                'width': '1200px',
+                'height': (tinggiLayar < 700 ? tinggiLayar + 'px' : '700px'),
+                'top': '50%',
+                'left': '50%'
+            });
+        } else {
+            // layar hape
+            $('.form-overlayListOfAllDataMember').css({
+                'margin-left': '-50vw',
+                'margin-top': '-50vh',
+                'width': '100vw',
+                'height': '100vh',
+                'top': '50%',
+                'left': '50%'
+            });
+        }
+    }, 200);
+    setTimeout(function () {
+        $('body').css({
+            'overflow-y': 'hidden'
+        });
+        $('.form-header-overlayListOfAllDataMember').show();
+        $('.form-body-overlayListOfAllDataMember').show();
+        $('.form-footer-overlayListOfAllDataMember').show();
+
+        // setup tinggi body form
+        var hForm = $('.form-overlayListOfAllDataMember').height(),
+            hBody = hForm - 103;
+        $('.form-body-overlayListOfAllDataMember').css({
+            'height': hBody + 'px'
+        });
+    }, 600);
+
+    ListAllDataOfMember(PosId);
+}
+
+
+function closeoverlayListOfAllDataMember() {
+    var dom = btnoverlayListOfAllDataMember;
+    $('body').css({
+        'overflow-y': 'auto'
+    });
+    var atas = $(dom).offset().top - $(document).scrollTop();
+    var kiri = $(dom).offset().left;
+    var lebar = $(dom).width();
+    var tinggi = $(dom).height();
+    $('.form-header-overlayListOfAllDataMember').hide();
+    $('.form-body-overlayListOfAllDataMember').hide();
+    $('.form-footer-overlayListOfAllDataMember').hide();
+    $('.form-overlayListOfAllDataMember').css({
+        'margin-left': '0px',
+        'margin-top': '0px',
+        'width': lebar + 'px',
+        'height': tinggi + 'px',
+        'top': atas + 'px',
+        'left': kiri + 'px'
+    });
+    setTimeout(function () {
+        $('.overlayoverlayListOfAllDataMember').hide();
+        $('.form-overlayListOfAllDataMember').hide();
+    }, 400);
+}
+// ============ AKHIR SCRIPT JQUERY OVERLAYLISTOFALLDATAMEMBER ====================
+
+
+
+//For List All Data Of Member
+function ListAllDataOfMember(isID) {
+    showLoad();
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            $('.form-body-overlayListOfAllDataMember').html(xmlhttp.responseText);
+            hideLoad();
+            auth(xmlhttp.responseText);
+        }
+    }
+    xmlhttp.open('GET', 'app-assets/js/scripts/engine/override.php?order=getListOfAllDataMember&idInSelect=' + isID);
+    xmlhttp.send();
+}
+
+
 
 
 // ============ MULAI SCRIPT JQUERY FORMEVENT ====================
@@ -601,7 +716,7 @@ function openformEvent(dom, status, pos, modal) {
         'border-radius': '100%',
         'display': 'block'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         if (layar > 762) {
             $('.form-formEvent').css({
                 'margin-left': '-460px',
@@ -625,7 +740,7 @@ function openformEvent(dom, status, pos, modal) {
             });
         }
     }, 200);
-    setTimeout(function() {
+    setTimeout(function () {
         $('body').css({
             'overflow-y': 'hidden'
         });
@@ -640,7 +755,7 @@ function openformEvent(dom, status, pos, modal) {
             'height': hBody + 'px'
         });
     }, 600);
-    setTimeout(function() {
+    setTimeout(function () {
         // var lbrCanvas = $('.frameVideo').width(),
         //     tggCanvas = parseInt(lbrCanvas / 1.6);
         // $('.frameVideo').css({
@@ -656,7 +771,7 @@ function openformEvent(dom, status, pos, modal) {
 
     $('#tanggaleventid label').addClass('active');
     $('#statuseventid label').addClass('active');
-    setTimeout(function() {
+    setTimeout(function () {
         $('.form-body-formEvent').animate({
             scrollTop: 0
         }, 200);
@@ -665,7 +780,7 @@ function openformEvent(dom, status, pos, modal) {
     if (status == 'New') {
         $('#inputmedia').val('');
         $('#inputmediaid label').removeClass('active');
-        $('.daftarAkses').html('');
+        $('.form-body-formEvent .daftarAkses').html('');
         $('#tema').val('');
         $('#temaid label').removeClass('active');
         arr_daftar_subjek = [];
@@ -699,10 +814,10 @@ function openformEvent(dom, status, pos, modal) {
             $('#inputmediaid label').addClass('active');
             $('.frameVideo').html('<iframe style="width:100%; height:100%;" src="https://www.youtube.com/embed/' + modals.banner + '" allow="autoplay; encrypted-media" allowfullscreen="" frameborder="0"></iframe>');
         }
-        $('.daftarAkses').html('');
+        $('.form-body-formEvent .daftarAkses').html('');
         arr_daftar_subjek = JSON.parse(modals.subjek);
-        arr_daftar_subjek.forEach(function(item, i) {
-            $('.daftarAkses').prepend('<div class="listAkses" id="' + item.split(' ').join('').replace('(', '').replace(')', '').replace('.', '') + '">\
+        arr_daftar_subjek.forEach(function (item, i) {
+            $('.form-body-formEvent .daftarAkses').prepend('<div class="listAkses" id="' + item.split(' ').join('').replace('(', '').replace(')', '').replace('.', '') + '">\
                                             <span>' + item + '</span>\
                                             <i class="material-icons" onclick="delAkses(\'' + item + '\') ">close</i>\
                                         </div>');
@@ -744,7 +859,7 @@ function closeformEvent() {
         'left': kiri + 'px',
         'border-radius': '100%'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.overlayformEvent').hide();
         $('.form-formEvent').hide();
         clsMe();
@@ -755,7 +870,7 @@ function simpanformEvent() {
     var formData = new FormData();
     var palang = true;
 
-    formEventElementArr.forEach(function(item, i) {
+    formEventElementArr.forEach(function (item, i) {
         if ($('#' + item).val() == "") {
             palang = false;
         }
@@ -781,16 +896,16 @@ function simpanformEvent() {
             data: formData,
             processData: false,
             contentType: false,
-            beforeSend: function() {
+            beforeSend: function () {
                 showLoad();
                 closeformEvent();
             },
-            success: function(response) {
+            success: function (response) {
                 showToast(response);
                 hideLoad();
                 dispTimeline();
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
 
             }
         });
@@ -830,7 +945,7 @@ function openMore(idVideo) {
     });
 
     $('.overlayMore').show();
-    setTimeout(function() {
+    setTimeout(function () {
         $('.btnedit').css({
             'top': atas - 50 + 'px',
             'left': kiri + 'px',
@@ -888,24 +1003,28 @@ function verifikasiDelete() {
         data: formData,
         processData: false,
         contentType: false,
-        beforeSend: function() {
+        beforeSend: function () {
             $('.overlayVerifikasi').hide();
             showLoad();
         },
-        success: function(response) {
+        success: function (response) {
             // console.log(response);
             showToast(response);
             if (forSubjectDelete == 'saveformEvent') {
                 dispTimeline();
                 clsMe();
             } else if (forSubjectDelete == 'saveSubjectEvent') {
-                dispSubject()
+                dispSubject();
+            } else if (forSubjectDelete == 'saveoverlayBidangEvent') {
+                dispBidang();
+            } else if (forSubjectDelete == 'saveOverlayJenjang') {
+                dispJenjang();
             }
             // $("#barisData" + posDelete).remove();
 
             hideLoad();
         },
-        error: function(xhr, ajaxOptions, thrownError) {}
+        error: function (xhr, ajaxOptions, thrownError) {}
     });
 }
 
@@ -933,7 +1052,7 @@ function opendispSubjek(dom, id_event) {
         'border-radius': '100%',
         'display': 'block'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         if (layar > 762) {
             $('.form-dispSubjek').css({
                 'margin-left': '-500px',
@@ -957,7 +1076,7 @@ function opendispSubjek(dom, id_event) {
             });
         }
     }, 200);
-    setTimeout(function() {
+    setTimeout(function () {
         $('body').css({
             'overflow-y': 'hidden'
         });
@@ -978,7 +1097,7 @@ function opendispSubjek(dom, id_event) {
 function getDataSubjekBidang(Id_event) {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             $('.form-body-dispSubjek').html(xmlhttp.responseText);
             hideLoad();
@@ -1011,7 +1130,7 @@ function closedispSubjek() {
         'left': kiri + 'px',
         'border-radius': '100%'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.overlaydispSubjek').hide();
         $('.form-dispSubjek').hide();
         clsMe();
@@ -1022,7 +1141,7 @@ function closedispSubjek() {
 function simpandispSubjek() {
     var formData = new FormData();
     var palang = true;
-    dispSubjekElementArr.forEach(function(item, i) {
+    dispSubjekElementArr.forEach(function (item, i) {
         if ($('#' + item).val() == "") {
             palang = false;
         }
@@ -1037,15 +1156,15 @@ function simpandispSubjek() {
             data: formData,
             processData: false,
             contentType: false,
-            beforeSend: function() {
+            beforeSend: function () {
                 showLoad();
                 closedispSubjek();
             },
-            success: function(response) {
+            success: function (response) {
                 showToast(response);
                 hideLoad();
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
 
             }
         });
@@ -1063,7 +1182,7 @@ function simpandispSubjek() {
 function dispSubject() {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             $('.dispUtama').html(xmlhttp.responseText);
             hideLoad();
@@ -1079,7 +1198,6 @@ function dispSubject() {
     xmlhttp.open('GET', 'app-assets/js/scripts/engine/override.php?order=subject');
     xmlhttp.send();
 }
-
 
 
 // ============ MULAI SCRIPT JQUERY SUBJECTEVENT ====================
@@ -1109,7 +1227,7 @@ function openSubjectEvent(dom, status, pos, modal) {
         'border-radius': '100%',
         'display': 'block'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         if (layar > 762) {
             $('.form-SubjectEvent').css({
                 'margin-left': '-300px',
@@ -1133,7 +1251,7 @@ function openSubjectEvent(dom, status, pos, modal) {
             });
         }
     }, 200);
-    setTimeout(function() {
+    setTimeout(function () {
         $('body').css({
             'overflow-y': 'hidden'
         });
@@ -1182,7 +1300,7 @@ function closeSubjectEvent() {
         'left': kiri + 'px',
         'border-radius': '100%'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.overlaySubjectEvent').hide();
         $('.form-SubjectEvent').hide();
     }, 400);
@@ -1192,7 +1310,7 @@ function closeSubjectEvent() {
 function simpanSubjectEvent() {
     var formData = new FormData();
     var palang = true;
-    SubjectEventElementArr.forEach(function(item, i) {
+    SubjectEventElementArr.forEach(function (item, i) {
         if ($('#' + item).val() == "") {
             palang = false;
         }
@@ -1207,16 +1325,16 @@ function simpanSubjectEvent() {
             data: formData,
             processData: false,
             contentType: false,
-            beforeSend: function() {
+            beforeSend: function () {
                 showLoad();
                 closeSubjectEvent();
             },
-            success: function(response) {
+            success: function (response) {
                 showToast(response);
                 dispSubject();
                 hideLoad();
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
 
             }
         });
@@ -1226,3 +1344,353 @@ function simpanSubjectEvent() {
 
 }
 // ============ AKHIR SCRIPT JQUERY SUBJECTEVENT ====================
+
+
+//For Menu 3 Display Bidang
+function dispBidang() {
+    showLoad();
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            $('.dispUtama').html(xmlhttp.responseText);
+            hideLoad();
+            auth(xmlhttp.responseText);
+            dataTabel = [];
+            var targ = $('#paginattable').children('tr');
+            for (i = 0; i < targ.length; i++) {
+                dataTabel.push(targ.eq(i).html());
+            }
+            setupTablePagination(rowtabledisp.value);
+        }
+    }
+    xmlhttp.open('GET', 'app-assets/js/scripts/engine/override.php?order=BidangEvent');
+    xmlhttp.send();
+}
+
+
+
+// ============ MULAI SCRIPT JQUERY OVERLAYBIDANGEVENT ====================
+var btnoverlayBidangEvent = '',
+    statusoverlayBidangEvent = '',
+    posoverlayBidangEvent = '',
+    overlayBidangEventElementArr = ['nama_bidang_event'];
+
+function openoverlayBidangEvent(dom, status, pos, modal) {
+    btnoverlayBidangEvent = dom;
+    $('.form-header-overlayBidangEvent #judul').html(status + " " + 'Bidang Event');
+    var atas = $(dom).offset().top - $(document).scrollTop();
+    var kiri = $(dom).offset().left;
+    var lebar = $(dom).width();
+    var tinggi = $(dom).height();
+    var layar = $('body').width();
+    var tinggiLayar = $('body').height() - 20;
+
+    $('.overlayoverlayBidangEvent').show();
+    $('.form-overlayBidangEvent').css({
+        'margin-left': '0px',
+        'margin-top': '0px',
+        'width': lebar + 'px',
+        'height': tinggi + 'px',
+        'top': atas + 'px',
+        'left': kiri + 'px',
+        'border-radius': '100%',
+        'display': 'block'
+    });
+    setTimeout(function () {
+        if (layar > 762) {
+            $('.form-overlayBidangEvent').css({
+                'margin-left': '-300px',
+                'margin-top': (tinggiLayar < 700 ? -tinggiLayar / 2 + 'px' : '-125px'),
+                'width': '600px',
+                'height': (tinggiLayar < 700 ? tinggiLayar + 'px' : '250px'),
+                'top': '50%',
+                'left': '50%',
+                'border-radius': '5px'
+            });
+        } else {
+            // layar hape
+            $('.form-overlayBidangEvent').css({
+                'margin-left': '-50vw',
+                'margin-top': '-50vh',
+                'width': '100vw',
+                'height': '100vh',
+                'top': '50%',
+                'left': '50%',
+                'border-radius': '5px'
+            });
+        }
+    }, 200);
+    setTimeout(function () {
+        $('body').css({
+            'overflow-y': 'hidden'
+        });
+        $('.form-header-overlayBidangEvent').show();
+        $('.form-body-overlayBidangEvent').show();
+        $('.form-footer-overlayBidangEvent').show();
+
+        // setup tinggi body form
+        var hForm = $('.form-overlayBidangEvent').height(),
+            hBody = hForm - 103;
+        $('.form-body-overlayBidangEvent').css({
+            'height': hBody + 'px'
+        });
+    }, 600);
+    statusoverlayBidangEvent = status;
+    if (status == 'New') {
+        var isiDom = [''];
+        setValueDom(overlayBidangEventElementArr, isiDom);
+    } else {
+        posoverlayBidangEvent = pos;
+        var isiDom = modal.split('A99');
+        setValueDom(overlayBidangEventElementArr, isiDom);
+    }
+
+}
+
+
+function closeoverlayBidangEvent() {
+    var dom = btnoverlayBidangEvent;
+    $('body').css({
+        'overflow-y': 'auto'
+    });
+    var atas = $(dom).offset().top - $(document).scrollTop();
+    var kiri = $(dom).offset().left;
+    var lebar = $(dom).width();
+    var tinggi = $(dom).height();
+    $('.form-header-overlayBidangEvent').hide();
+    $('.form-body-overlayBidangEvent').hide();
+    $('.form-footer-overlayBidangEvent').hide();
+    $('.form-overlayBidangEvent').css({
+        'margin-left': '0px',
+        'margin-top': '0px',
+        'width': lebar + 'px',
+        'height': tinggi + 'px',
+        'top': atas + 'px',
+        'left': kiri + 'px',
+        'border-radius': '100%'
+    });
+    setTimeout(function () {
+        $('.overlayoverlayBidangEvent').hide();
+        $('.form-overlayBidangEvent').hide();
+    }, 400);
+}
+
+
+function simpanoverlayBidangEvent() {
+    var formData = new FormData();
+    var palang = true;
+    overlayBidangEventElementArr.forEach(function (item, i) {
+        if ($('#' + item).val() == "") {
+            palang = false;
+        }
+        formData.append(item, $('#' + item).val());
+    });
+    formData.append('status', statusoverlayBidangEvent);
+    formData.append('pos', posoverlayBidangEvent);
+    if (palang) {
+        $.ajax({
+            type: 'POST',
+            url: 'app-assets/js/scripts/engine/override.php?order=saveoverlayBidangEvent',
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                showLoad();
+                closeoverlayBidangEvent();
+            },
+            success: function (response) {
+                showToast(response);
+                dispBidang();
+                hideLoad();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+            }
+        });
+    } else {
+        showToast('Data belum lengkap');
+    }
+
+}
+// ============ AKHIR SCRIPT JQUERY OVERLAYBIDANGEVENT ====================
+
+
+
+
+
+//For Menu 4 Display Jenjang
+function dispJenjang() {
+    showLoad();
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            $('.dispUtama').html(xmlhttp.responseText);
+            hideLoad();
+            auth(xmlhttp.responseText);
+            dataTabel = [];
+            var targ = $('#paginattable').children('tr');
+            for (i = 0; i < targ.length; i++) {
+                dataTabel.push(targ.eq(i).html());
+            }
+            setupTablePagination(rowtabledisp.value);
+        }
+    }
+    xmlhttp.open('GET', 'app-assets/js/scripts/engine/override.php?order=Jenjang');
+    xmlhttp.send();
+}
+
+
+
+// ============ MULAI SCRIPT JQUERY OVERLAYJENJANG ====================
+var btnOverlayJenjang = '',
+    statusOverlayJenjang = '',
+    posOverlayJenjang = '',
+    OverlayJenjangElementArr = ['nama_jenjang'];
+
+function openOverlayJenjang(dom, status, pos, modal) {
+    btnOverlayJenjang = dom;
+    $('.form-header-OverlayJenjang #judul').html(status + " " + 'OverlayJenjang');
+    var atas = $(dom).offset().top - $(document).scrollTop();
+    var kiri = $(dom).offset().left;
+    var lebar = $(dom).width();
+    var tinggi = $(dom).height();
+    var layar = $('body').width();
+    var tinggiLayar = $('body').height() - 20;
+
+    $('.overlayOverlayJenjang').show();
+    $('.form-OverlayJenjang').css({
+        'margin-left': '0px',
+        'margin-top': '0px',
+        'width': lebar + 'px',
+        'height': tinggi + 'px',
+        'top': atas + 'px',
+        'left': kiri + 'px',
+        'border-radius': '100%',
+        'display': 'block'
+    });
+    setTimeout(function () {
+        if (layar > 762) {
+            $('.form-OverlayJenjang').css({
+                'margin-left': '-300px',
+                'margin-top': (tinggiLayar < 700 ? -tinggiLayar / 2 + 'px' : '-350px'),
+                'width': '600px',
+                'height': (tinggiLayar < 700 ? tinggiLayar + 'px' : '700px'),
+                'top': '50%',
+                'left': '50%',
+                'border-radius': '5px'
+            });
+        } else {
+            // layar hape
+            $('.form-OverlayJenjang').css({
+                'margin-left': '-50vw',
+                'margin-top': '-50vh',
+                'width': '100vw',
+                'height': '100vh',
+                'top': '50%',
+                'left': '50%',
+                'border-radius': '5px'
+            });
+        }
+    }, 200);
+    setTimeout(function () {
+        $('body').css({
+            'overflow-y': 'hidden'
+        });
+        $('.form-header-OverlayJenjang').show();
+        $('.form-body-OverlayJenjang').show();
+        $('.form-footer-OverlayJenjang').show();
+
+        // setup tinggi body form
+        var hForm = $('.form-OverlayJenjang').height(),
+            hBody = hForm - 103;
+        $('.form-body-OverlayJenjang').css({
+            'height': hBody + 'px'
+        });
+    }, 600);
+    statusOverlayJenjang = status;
+    if (status == 'New') {
+        arr_daftar_subjek = [];
+    } else {
+        posOverlayJenjang = pos;
+        $('.daftarAksesJenjang').html('');
+        arr_daftar_subjek = JSON.parse(modal);
+        arr_daftar_subjek.forEach(function (item, i) {
+            $('.daftarAksesJenjang').prepend('<div class="listAkses" id="' + item.split(' ').join('').replace('(', '').replace(')', '').replace('.', '') + '">\
+                                            <span>' + item + '</span>\
+                                            <i class="material-icons" onclick="delAkses(\'' + item + '\') ">close</i>\
+                                        </div>');
+        });
+    }
+
+}
+
+
+function closeOverlayJenjang() {
+    var dom = btnOverlayJenjang;
+    $('body').css({
+        'overflow-y': 'auto'
+    });
+    var atas = $(dom).offset().top - $(document).scrollTop();
+    var kiri = $(dom).offset().left;
+    var lebar = $(dom).width();
+    var tinggi = $(dom).height();
+    $('.form-header-OverlayJenjang').hide();
+    $('.form-body-OverlayJenjang').hide();
+    $('.form-footer-OverlayJenjang').hide();
+    $('.form-OverlayJenjang').css({
+        'margin-left': '0px',
+        'margin-top': '0px',
+        'width': lebar + 'px',
+        'height': tinggi + 'px',
+        'top': atas + 'px',
+        'left': kiri + 'px',
+        'border-radius': '100%'
+    });
+    setTimeout(function () {
+        $('.overlayOverlayJenjang').hide();
+        $('.form-OverlayJenjang').hide();
+    }, 400);
+}
+
+
+function simpanOverlayJenjang() {
+    var formData = new FormData();
+    var palang = true;
+    OverlayJenjangElementArr.forEach(function (item, i) {
+        if ($('#' + item).val() == "") {
+            palang = false;
+        }
+        formData.append(item, $('#' + item).val());
+    });
+    if (arr_daftar_subjek.length == 0) {
+        palang = false;
+    }
+    formData.append('JenjangDong', JSON.stringify(arr_daftar_subjek));
+    formData.append('status', statusOverlayJenjang);
+    formData.append('pos', posOverlayJenjang);
+    if (palang) {
+        $.ajax({
+            type: 'POST',
+            url: 'app-assets/js/scripts/engine/override.php?order=saveOverlayJenjang',
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                showLoad();
+                closeOverlayJenjang();
+            },
+            success: function (response) {
+                showToast(response);
+                dispJenjang();
+                hideLoad();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+            }
+        });
+    } else {
+        showToast('Data belum lengkap');
+    }
+
+}
+// ============ AKHIR SCRIPT JQUERY OVERLAYJENJANG ====================

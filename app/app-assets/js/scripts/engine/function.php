@@ -409,9 +409,9 @@ function query($query)
 
 function ProsesData($query)
 {
-    global $conn;
-    mysqli_query($conn, $query);
-    return mysqli_affected_rows($conn);
+  global $conn;
+  mysqli_query($conn, $query);
+  return mysqli_affected_rows($conn);
 }
 
 
@@ -443,16 +443,27 @@ function moveData($id)
            ";
   ProsesData($query);
 }
-function listNumberArray($arr){
+function listNumberArray($arr)
+{
   $disp = '<ol>';
-  for($i=0;$i<COUNT($arr);$i++){
-    $disp .='<li>'.$arr[$i].'</li>';
+  for ($i = 0; $i < COUNT($arr); $i++) {
+    $disp .= '<li>' . $arr[$i] . '</li>';
   }
-  return $disp.'</ol>';
+  return $disp . '</ol>';
 }
 
-function getFollower($conn,$id_subjek){
-    $res = mysqli_query($conn,"SELECT COUNT(Id_kompetisi) as jlh FROM tb_kompetisi WHERE Id_subjek = '$id_subjek'");
-    $r = mysqli_fetch_assoc($res);
-    return '<a class="mb-6 btn waves-effect waves-light gradient-45deg-green-teal">'.$r['jlh'].'</a>';
+function getFollower($conn, $id_subjek)
+{
+  $res = mysqli_query($conn, "SELECT COUNT(Id_kompetisi) as jlh FROM tb_kompetisi WHERE Id_subjek = '$id_subjek'");
+  $r = mysqli_fetch_assoc($res);
+  return '<a class="mb-6 btn waves-effect waves-light gradient-45deg-green-teal">' . $r['jlh'] . '</a>';
+}
+
+
+
+function getDataByIdMember($conn, $id)
+{
+  $res = mysqli_query($conn, "SELECT nama, provinsi_sekolah, sekolah FROM `tb_member` WHERE `Id_member` = '$id'");
+  $r = mysqli_fetch_assoc($res);
+  return $r;
 }

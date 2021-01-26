@@ -965,6 +965,10 @@
     margin-left: 10px;
 }
 
+.colorNotifDel {
+    color: #FFFFFF !important;
+}
+
 
 /* END For CSS Overlay Tombol Hapus / Verifikasi */
 
@@ -1057,7 +1061,7 @@
 
 
 
-/* For CSS Overlay Tombol Subject / Verifikasi */
+/* For CSS Overlay Tombol Subject */
 
 .overlaySubjectEvent {
     position: fixed;
@@ -1146,4 +1150,330 @@
     margin-right: 10px;
 }
 
-/* END For CSS Overlay Tombol Subject / Verifikasi */
+/* END For CSS Overlay Tombol Subject  */
+
+
+
+
+/* For CSS Overlay Tombol Bidang Event  */
+
+.overlayoverlayBidangEvent {
+    position: fixed;
+    z-index: 100000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .52);
+    display: none;
+}
+
+.overlayoverlayBidangEvent .form-overlayBidangEvent {
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
+    border-radius: 5px;
+    background: #fafbfc;
+    transition: 0.3s;
+    position: fixed;
+    z-index: 100001;
+    width: 600px;
+    height: 250px;
+    margin-top: -125px;
+    margin-left: -300px;
+    left: 50%;
+    top: 50%;
+    display: none;
+}
+
+.overlayoverlayBidangEvent .form-overlayBidangEvent .form-header-overlayBidangEvent {
+    width: 100%;
+    height: 60px;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1) !important;
+    display: none;
+}
+
+.overlayoverlayBidangEvent .form-overlayBidangEvent .form-header-overlayBidangEvent h5 {
+    color: black;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+    margin-left: 20px;
+    line-height: 16px;
+    padding-top: 10px;
+    display: inline-block;
+}
+
+.overlayoverlayBidangEvent .form-overlayBidangEvent .form-header-overlayBidangEvent .btnclose {
+    float: right;
+    margin-right: 10px;
+    height: 60px;
+    width: 60px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+
+.overlayoverlayBidangEvent .form-overlayBidangEvent .form-header-overlayBidangEvent .btnclose i {
+    line-height: 25px;
+    font-size: 25px;
+    padding-top: 18px;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+}
+
+.overlayoverlayBidangEvent .form-overlayBidangEvent .form-header-overlayBidangEvent .btnclose i:hover {
+    color: red;
+}
+
+.overlayoverlayBidangEvent .form-overlayBidangEvent .form-body-overlayBidangEvent {
+    width: 100%;
+    background: transparent;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 10px;
+    height: 570px;
+    display: none;
+}
+
+.overlayoverlayBidangEvent .form-overlayBidangEvent .form-footer-overlayBidangEvent {
+    position: absolute;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    display: none;
+}
+
+.overlayoverlayBidangEvent .form-overlayBidangEvent .form-footer-overlayBidangEvent a {
+    float: right;
+    margin-right: 10px;
+}
+
+/* END For CSS Overlay Tombol Bidang Event  */
+
+
+
+
+
+
+
+
+
+/* For CSS Overlay Tombol Jenjang  */
+
+.overlayOverlayJenjang {
+    position: fixed;
+    z-index: 100000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .52);
+    display: none;
+}
+
+.overlayOverlayJenjang .form-OverlayJenjang {
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
+    border-radius: 5px;
+    background: #fafbfc;
+    transition: 0.3s;
+    position: fixed;
+    z-index: 100001;
+    width: 600px;
+    height: 700px;
+    margin-top: -350px;
+    margin-left: -300px;
+    left: 50%;
+    top: 50%;
+    display: none;
+}
+
+.overlayOverlayJenjang .form-OverlayJenjang .form-header-OverlayJenjang {
+    width: 100%;
+    height: 60px;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1) !important;
+    display: none;
+}
+
+.overlayOverlayJenjang .form-OverlayJenjang .form-header-OverlayJenjang h5 {
+    color: black;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+    margin-left: 20px;
+    line-height: 16px;
+    padding-top: 10px;
+    display: inline-block;
+}
+
+.overlayOverlayJenjang .form-OverlayJenjang .form-header-OverlayJenjang .btnclose {
+    float: right;
+    margin-right: 10px;
+    height: 60px;
+    width: 60px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+
+.overlayOverlayJenjang .form-OverlayJenjang .form-header-OverlayJenjang .btnclose i {
+    line-height: 25px;
+    font-size: 25px;
+    padding-top: 18px;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+}
+
+.overlayOverlayJenjang .form-OverlayJenjang .form-header-OverlayJenjang .btnclose i:hover {
+    color: red;
+}
+
+.overlayOverlayJenjang .form-OverlayJenjang .form-body-OverlayJenjang {
+    width: 100%;
+    background: transparent;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 10px;
+    height: 570px;
+    display: none;
+}
+
+.overlayOverlayJenjang .form-OverlayJenjang .form-body-OverlayJenjang .daftarAksesJenjang {
+    width: calc(100%-40px);
+    height: 60px;
+    box-shadow: 2px 2px 4px rgba(83, 81, 81, 0.37), -2px -2px 4px rgb(245, 245, 245);
+    margin-left: 20px;
+    margin-right: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.overlayOverlayJenjang .form-OverlayJenjang .form-body-OverlayJenjang .daftarAksesJenjang .listAkses {
+    display: inline-block;
+    padding: 4px;
+    background: blue;
+    margin: 2px;
+    box-shadow: 2px 2px 4px rgba(83, 81, 81, 0.37), -2px -2px 4px rgb(245, 245, 245);
+    border-radius: 5px;
+}
+
+.overlayOverlayJenjang .form-OverlayJenjang .form-body-OverlayJenjang .daftarAksesJenjang .listAkses span {
+    color: #fff;
+}
+
+.overlayOverlayJenjang .form-OverlayJenjang .form-body-OverlayJenjang .daftarAksesJenjang .listAkses i {
+    color: #fff;
+    cursor: pointer;
+}
+
+.overlayOverlayJenjang .form-OverlayJenjang .form-body-OverlayJenjang .daftarAksesJenjang .listAkses:hover span {
+    color: #f5e504;
+    transform: scale(1.1);
+}
+
+
+
+
+.overlayOverlayJenjang .form-OverlayJenjang .form-footer-OverlayJenjang {
+    position: absolute;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    display: none;
+}
+
+.overlayOverlayJenjang .form-OverlayJenjang .form-footer-OverlayJenjang a {
+    float: right;
+    margin-right: 10px;
+}
+
+/* END For CSS Overlay Tombol Jenjang  */
+
+
+
+
+
+/* For CSS Overlay Data List Of All Member  */
+
+.overlayoverlayListOfAllDataMember {
+    position: fixed;
+    z-index: 1000000000000000000000000000000000000000000000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .52);
+    display: none;
+}
+
+.overlayoverlayListOfAllDataMember .form-overlayListOfAllDataMember {
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
+    background: #fafbfc;
+    transition: 0.3s;
+    position: fixed;
+    z-index: 100001;
+    width: 1200px;
+    height: 700px;
+    margin-top: -350px;
+    margin-left: -600px;
+    left: 50%;
+    top: 50%;
+    display: none;
+}
+
+.overlayoverlayListOfAllDataMember .form-overlayListOfAllDataMember .form-header-overlayListOfAllDataMember {
+    width: 100%;
+    height: 60px;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1) !important;
+    display: none;
+}
+
+.overlayoverlayListOfAllDataMember .form-overlayListOfAllDataMember .form-header-overlayListOfAllDataMember h5 {
+    color: black;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+    margin-left: 20px;
+    line-height: 16px;
+    padding-top: 10px;
+    display: inline-block;
+}
+
+.overlayoverlayListOfAllDataMember .form-overlayListOfAllDataMember .form-header-overlayListOfAllDataMember .btnclose {
+    float: right;
+    margin-right: 10px;
+    height: 60px;
+    width: 60px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+
+.overlayoverlayListOfAllDataMember .form-overlayListOfAllDataMember .form-header-overlayListOfAllDataMember .btnclose i {
+    line-height: 25px;
+    font-size: 25px;
+    padding-top: 18px;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+}
+
+.overlayoverlayListOfAllDataMember .form-overlayListOfAllDataMember .form-header-overlayListOfAllDataMember .btnclose i:hover {
+    color: red;
+}
+
+.overlayoverlayListOfAllDataMember .form-overlayListOfAllDataMember .form-body-overlayListOfAllDataMember {
+    width: 100%;
+    background: transparent;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 10px;
+    height: 570px;
+    display: none;
+}
+
+.overlayoverlayListOfAllDataMember .form-overlayListOfAllDataMember .form-footer-overlayListOfAllDataMember {
+    position: absolute;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    display: none;
+}
+
+.overlayoverlayListOfAllDataMember .form-overlayListOfAllDataMember .form-footer-overlayListOfAllDataMember a {
+    float: right;
+    margin-right: 10px;
+}
+
+/* END For CSS Overlay Data List Of All Member  */

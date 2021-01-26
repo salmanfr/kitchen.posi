@@ -307,14 +307,14 @@
             </li>
             <li class="bold video" id="menu3" onclick="selectMenu('menu3')">
                 <a class="waves-effect waves-cyan">
-                    <i class="material-icons">emoji_events</i>
-                    <span class="menu-title" data-i18n="">Soal</span>
+                    <i class="material-icons">view_list</i>
+                    <span class="menu-title" data-i18n="">Bidang</span>
                 </a>
             </li>
             <li class="bold video" id="menu4" onclick="selectMenu('menu4')">
                 <a class="waves-effect waves-cyan">
                     <i class="material-icons">local_mall</i>
-                    <span class="menu-title" data-i18n="">Perangkingan</span>
+                    <span class="menu-title" data-i18n="">Jenjang</span>
                 </a>
             </li>
         </ul>
@@ -988,8 +988,10 @@
     <div class="overlayVerifikasi">
         <div class="card-alert card cyan">
             <div class="card-content white-text">
-                <span class="card-title red-text darken-1">
-                    <i class="material-icons">notifications</i> Some Message</span>
+                <span class="card-title red-text darken-1 colorNotifDel">
+                    <i class="material-icons colorNotifDel">notifications</i>
+                    Some Message
+                </span>
                 <p id="strKontext">Lorem ipsum Minim ad pariatur eiusmod ea ut nulla aliqua est quis id dolore minim
                     voluptate.
                 </p>
@@ -1037,6 +1039,96 @@
         </div>
     </div>
     <!-- END For Overlay Tombol Subject -->
+
+
+
+
+    <!-- For Overlay Tombol Bidang -->
+    <div class="overlayoverlayBidangEvent">
+        <div class="form-overlayBidangEvent">
+            <div class="form-header-overlayBidangEvent">
+                <h5 id="judul">overlayBidangEvent </h5>
+                <div class="btnclose" onclick="closeoverlayBidangEvent()">
+                    <i class="material-icons">close</i>
+                </div>
+            </div>
+            <div class="form-body-overlayBidangEvent">
+                <div class="row" id="nama_bidang_eventids">
+                    <div class="input-field col s12" id="nama_bidang_eventid">
+                        <i class="material-icons prefix">turned_in</i>
+                        <input id="nama_bidang_event" type="text" autocomplete="off">
+                        <label for="nama_bidang_event">Nama bidang event</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-footer-overlayBidangEvent">
+                <a class="mb-6 btn waves-effect waves-light gradient-45Deg-amber-amber kanan"
+                    onclick="simpanoverlayBidangEvent()"> Simpan</a>
+            </div>
+        </div>
+    </div>
+    <!-- END For Overlay Tombol Bidang -->
+
+
+
+    <!-- For Overlay Tombol Jenjang -->
+
+    <div class="overlayOverlayJenjang">
+        <div class="form-OverlayJenjang">
+            <div class="form-header-OverlayJenjang">
+                <h5 id="judul">OverlayJenjang </h5>
+                <div class="btnclose" onclick="closeOverlayJenjang()">
+                    <i class="material-icons">close</i>
+                </div>
+            </div>
+            <div class="form-body-OverlayJenjang">
+                <div class="row" id="nama_jenjangids">
+                    <div class="input-field col s12" id="nama_jenjangid">
+                        <i class="material-icons prefix">border_color</i>
+                        <input id="namaJenjang" type="text" autocomplete="off" readonly class="inpCombo"
+                            meta-data="namaJenjang">
+                        <label for="namaJenjang">Nama jenjang</label>
+                    </div>
+                </div>
+                <div class="daftarAksesJenjang"></div>
+
+            </div>
+            <div class="form-footer-OverlayJenjang">
+                <a class="mb-6 btn waves-effect waves-light gradient-45Deg-amber-amber kanan"
+                    onclick="simpanOverlayJenjang()"> Simpan</a>
+            </div>
+        </div>
+    </div>
+    <!-- END For Overlay Tombol Jenjang -->
+
+
+
+
+    <!-- For Overlay Data List All Of Member -->
+
+    <div class="overlayoverlayListOfAllDataMember">
+        <div class="form-overlayListOfAllDataMember">
+            <div class="form-header-overlayListOfAllDataMember">
+                <h5 id="judul">overlayListOfAllDataMember </h5>
+                <div class="btnclose" onclick="closeoverlayListOfAllDataMember()">
+                    <i class="material-icons">close</i>
+                </div>
+            </div>
+            <div class="form-body-overlayListOfAllDataMember">
+                <!-- Display For Table -->
+            </div>
+            <div class="form-footer-overlayListOfAllDataMember">
+                <a class="mb-6 btn waves-effect waves-light gradient-45Deg-amber-amber kanan"
+                    onclick="simpanoverlayListOfAllDataMember()"> Export</a>
+            </div>
+        </div>
+    </div>
+    <!-- END For Overlay Data List All Of Member -->
+
+
+
+
+
 
 
 

@@ -19,7 +19,12 @@ function selectMenu(idmenu) {
         dispTimeline();
     } else if (idmenu == 'menu2') {
         dispSubject();
+    } else if (idmenu == 'menu3') {
+        dispBidang();
+    } else if (idmenu == 'menu4') {
+        dispJenjang();
     }
+
     //navigationButtom(idmenu);
 }
 
