@@ -934,13 +934,13 @@ function opendispSubjek(dom, id_event) {
     setTimeout(function() {
         if (layar > 762) {
             $('.form-dispSubjek').css({
-                'margin-left': '-450px',
+                'margin-left': '-500px',
                 'margin-top': (tinggiLayar < 700 ? -tinggiLayar / 2 + 'px' : '-350px'),
-                'width': '900px',
+                'width': '1000px',
                 'height': (tinggiLayar < 700 ? tinggiLayar + 'px' : '700px'),
                 'top': '50%',
                 'left': '50%',
-                'border-radius': '5px'
+                'border-radius': '0px'
             });
         } else {
             // layar hape
@@ -951,7 +951,7 @@ function opendispSubjek(dom, id_event) {
                 'height': '100vh',
                 'top': '50%',
                 'left': '50%',
-                'border-radius': '5px'
+                'border-radius': '0px'
             });
         }
     }, 200);

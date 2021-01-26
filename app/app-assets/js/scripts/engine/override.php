@@ -156,8 +156,16 @@ if ($token == privateHashing(gettodayShort())) {
                             <td class="right-align">'.$r['mulai_pelaksanaan'].'</td>
                             <td class="right-align">'.$r['akhir_pelaksanaan'].'</td>
                             <td class="right-align">'.getFollower($conn,$r['Id_subjek']).'</td>
-                            <td class="right-align"></td>
-                            <td class="right-align"></td>
+                            <td class="right-align">
+                                <a class="mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                            </td>
+                            <td class="right-align">
+                                <a class="mb-6 btn-floating waves-effect waves-light gradient-45deg-purple-deep-orange">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </td>
                         </tr>';
             }
             echo $disp.'</tbody>
