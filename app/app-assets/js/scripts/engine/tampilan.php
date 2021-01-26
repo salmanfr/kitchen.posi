@@ -529,3 +529,135 @@ function dispKompetisi($conn, $Id_member)
                 </div>
             </div>';
 }
+
+
+//For Display Subject ==> Menu 2
+function Subject()
+{
+    $nomor = 1;
+    $result = "";
+    $dataSubject = query("SELECT * FROM dft_subjek");
+
+    foreach ($dataSubject as $row) {
+        $ParameterData = $row["subjek"] . "A99";
+        $contex = "Data Subject " . $row["subjek"];
+        $result .= '
+                  <tr id="barisData' . $row["Id_target"] . '">
+                    <td width="5%">' . $nomor++ . '</td>
+                    <td width="85%">' . $row["subjek"] . '</td>
+                    <td style="display: flex; justify-content: space-around;">
+                        <a style="cursor: pointer" meta-data="+ Edit entry"
+                            onclick="openSubjectEvent(\'' . '.btnSubjectEvent' . $row["Id_target"] . '\',\'' . 'Edit' . '\',\'' . $row["Id_target"] . '\', \'' . $ParameterData . '\')" 
+                                class="btnSubjectEvent' . $row["Id_target"] . ' invoice-action-edit btn btn-floating waves-effect waves-light gradient-45deg-purple-deep-orange breadcrumbs-btn right">
+                                <i class="material-icons">edit</i>
+                          </a>
+                          <a style="cursor: pointer" meta-data="+ Delete entry"
+                            onclick="openDeleteItem(\'' . 'Hapus' . '\',\'' . $row["Id_target"] . '\',\'' . $contex . '\',\'' . 'saveSubjectEvent' . '\')"
+                              class="invoice-action-edit btn btn-floating waves-effect waves-light pink accent-2 breadcrumbs-btn right">
+                                <i class="material-icons">delete</i>
+                          </a>
+                    </td>
+                  </tr>';
+    }
+
+
+    return '
+            <div class="breadcrumbs-inline pt-3 pb-1" id="breadcrumbs-wrapper">
+              <div class="container">
+                <div class="row">
+                  <div class="col s7 m6 l6 breadcrumbs-left">
+                    <h5 class="breadcrumbs-title mt-0 mb-0 display-inline hide-on-small-and-down"><span>POSI App</span></h5>
+                    <ol class="breadcrumbs mb-0">
+                      <li class="breadcrumb-item active">Subject
+                      </li>
+                    </ol>
+                  </div>
+                  <div class="col s5 m6 l6">
+                    <a meta-data="+ new entry" onclick="openSubjectEvent(\'' . '.btnSubjectEvent' . '\',\'' . 'New' . '\',\'' . '' . '\', \'' . '' . '\')" class="btnSubjectEvent addbtn btn btn-floating dropdown-settings waves-effect waves-light breadcrumbs-btn right"  data-target="dropdown1">
+                        <i class="material-icons">add</i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+                
+            <div class="row">
+              <div class="col s12">
+                <div class="card">
+                  <div class="card-content">
+                  
+                    <div class="row toolPagination">
+                      <div class="col s12 scrollTable">
+                        <table id="page-length-option" class="display striped">
+                          <thead>
+                            <tr>
+                              <th>No</th>
+                              <th>Nama Subject</th>
+                              <th colspan="2" style="text-align:center;">Action</th>
+                            </tr>
+                          </thead>
+                          
+                          <tbody id="paginattable">
+                          ' . $result . '
+                          </tbody>
+                          <tfoot>
+                           
+                          </tfoot>
+                        </table>
+                      </div>
+                        <div class="dataTables_info" id="page-length-option_info" role="status" aria-live="polite">Showing 11 to 20 of 57 entries</div>
+                        <div class="dataTables_paginate paging_simple_numbers" id="page-length-option_paginate">
+                                        <a class="paginate_button previous" aria-controls="page-length-option" data-dt-idx="0" tabindex="0" id="page-length-option_previous" onclick="prev()">Previous</a>
+                                        <span></span>
+                                        <a class="paginate_button next" aria-controls="page-length-option" data-dt-idx="7" tabindex="0" id="page-length-option_next" onclick="next()">Next</a>
+                        </div>
+                    </div>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            </div>';
+}
+
+function ResultDataSubject($data)
+{
+    $pos = anti_Injection($data['pos']);
+    $status = anti_Injection($data['status']);
+    $nama_subject = anti_Injection($data['nama_subject']);
+
+    if ($status == "New") {
+
+        $query = "INSERT INTO `dft_subjek`
+                  VALUES 
+                  (NULL, '$nama_subject')
+                 ";
+
+        if (ProsesData($query) > 0) {
+            echo "Data Berhasil Ditambah";
+        } else {
+            echo "Proses Gagal";
+        }
+    } else if ($status == "Edit") {
+
+        $query = "UPDATE `dft_subjek` SET
+                  `subjek` = '$nama_subject'
+                  WHERE `Id_target` = '$pos'
+                 ";
+
+        if (ProsesData($query) > 0) {
+            echo "Data Berhasil Diubah";
+        } else {
+            echo "Proses Gagal";
+        }
+    } else if ($status == 'Hapus') {
+
+        $query = "DELETE FROM `dft_subjek` WHERE `Id_target` = '$pos'";
+
+        if (ProsesData($query) > 0) {
+            echo "Data Berhasil Dihapus";
+        } else {
+            echo "Proses Gagal";
+        }
+    }
+}

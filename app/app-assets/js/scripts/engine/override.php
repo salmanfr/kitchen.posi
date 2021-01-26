@@ -125,6 +125,12 @@ if ($token == privateHashing(gettodayShort())) {
                 }
             }
             break;
+        case 'subject':
+            echo Subject();
+            break;
+        case 'saveSubjectEvent':
+            echo ResultDataSubject($_POST);
+            break;
     }
 } else {
     echo 0;
