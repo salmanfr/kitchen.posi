@@ -23,24 +23,23 @@ if ($token == privateHashing(gettodayShort())) {
             break;
         case 'timeline':
             $tahun = getTahun();
-            echo timeLine($conn, $subjek, $tahun, $Id_member);
+            echo timeLine($conn,$subjek,$tahun,$Id_member);
             break;
         case 'getdataevent':
             $Id_event = anti_Injection($_REQUEST['id_event']);
-            $res = mysqli_query($conn, "SELECT * FROM tb_event WHERE Id_event = '$Id_event'");
+            $res = mysqli_query($conn,"SELECT * FROM tb_event WHERE Id_event = '$Id_event'");
             $r = mysqli_fetch_assoc($res);
-            echo json_encode(array(
-                'type' => $r['banner_type'],
-                'banner' => $r['banner'],
-                'judul' => $r['judul'],
-                'desk' => $r['deskripsi'],
-                'subjek' => $r['subjek'],
-                'begin' => $r['tanggal_mulai'],
-                'end' => $r['tanggal_akhir'],
-                'event' => $r['tahun'] . '-' . $r['bulan'] . '-' . $r['hari'],
-                'status' => $r['status']
-            ));
-            break;
+            echo json_encode(array('type'=>$r['banner_type'],
+                                    'banner'=>$r['banner'],
+                                    'judul'=>$r['judul'],
+                                    'desk'=>$r['deskripsi'],
+                                    'subjek'=>$r['subjek'],
+                                    'begin'=>$r['tanggal_mulai'],
+                                    'end'=>$r['tanggal_akhir'],
+                                    'event'=>$r['tahun'].'-'.$r['bulan'].'-'.$r['hari'],
+                                    'status'=>$r['status']
+                                    ));
+            break;    
         case 'saveformEvent':
 
             $judul = anti_Injection($_POST['tema']);
@@ -59,14 +58,14 @@ if ($token == privateHashing(gettodayShort())) {
             $token =  md5(gettoday() . rand(0, 1000)) . '.jpg';
             $explode = explode('-', $tglevent);
             if ($type == 'image') {
-                if ($banner != 'namlastcorp') {
+                if($banner!='namlastcorp'){
                     $banner = uploadMyImageString($token, $banner);
                 }
             }
             $begin = $tglbegin . ' ' . $jambegin;
             $end = $tglend . ' ' . $jamend;
             if ($status == 'New') {
-                mysqli_query($conn, "INSERT INTO tb_event SET banner_type = '$type',
+                    mysqli_query($conn, "INSERT INTO tb_event SET banner_type = '$type',
                                                                 banner = '$banner',
                                                                 judul = '$judul',
                                                                 deskripsi = '$desk',
@@ -79,10 +78,11 @@ if ($token == privateHashing(gettodayShort())) {
                                                                 bulan = '$explode[1]',
                                                                 hari = '$explode[2]',
                                                                 `status` = '$statusEvent'");
-
+                
                 echo 'berhasil disimpan';
-            } else if ($status == 'Edit') {
-                if ($banner != "namlastcorp") {
+            }
+            else If($status=='Edit'){
+                if($banner!="namlastcorp"){
                     $query = "UPDATE tb_event SET banner_type = '$type',
                                                                 banner = '$banner',
                                                                 judul = '$judul',
@@ -96,7 +96,9 @@ if ($token == privateHashing(gettodayShort())) {
                                                                 bulan = '$explode[1]',
                                                                 hari = '$explode[2]',
                                                                 `status` = '$statusEvent' WHERE Id_event = '$pos'";
-                } else {
+                    
+                }
+                else{
                     $query = "UPDATE tb_event SET banner_type = '$type',
                                                   judul = '$judul',
                                                   deskripsi = '$desk',
@@ -109,6 +111,7 @@ if ($token == privateHashing(gettodayShort())) {
                                                   bulan = '$explode[1]',
                                                   hari = '$explode[2]',
                                                   `status` = '$statusEvent' WHERE Id_event = '$pos'";
+                  
                 }
                 if (ProsesData($query) > 0) {
                     echo  "Data berhasil diedit";
@@ -125,13 +128,43 @@ if ($token == privateHashing(gettodayShort())) {
                 }
             }
             break;
-        case 'subject':
-            echo Subject();
+        case 'getdatasubjek':
+            $Id_event = anti_Injection($_REQUEST['id_event']);
+            $res = mysqli_query($conn,"SELECT * FROM tb_subjek WHERE Id_event = '$Id_event'");
+            $disp = '<table class="responsive-table">
+                        <thead>
+                            <tr>
+                                <th data-field="id">No</th>
+                                <th data-field="month">Subjek</th>
+                                <th data-field="month">Jenjang</th>
+                                <th data-field="month">Bidang</th>
+                                <th data-field="item-sold" class="right-align">Mulai</th>
+                                <th data-field="item-sold" class="right-align">Selesai</th>
+                                <th data-field="item-sold" class="right-align">Peserta</th>
+                                <th data-field="item-sold" class="right-align">Edit</th>
+                                <th data-field="item-sold" class="right-align">Hapus</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listHist">';
+            $no = 1;
+            while($r = mysqli_fetch_array($res)){
+                $disp .='<tr>
+                            <td>'.($no++).'</td>
+                            <td>'.$r['subjek'].'</td>
+                            <td>'.listNumberArray(json_decode($r['jenjang'],false)).'</td>
+                            <td>'.$r['bidang_studi'].'</td>
+                            <td class="right-align">'.$r['mulai_pelaksanaan'].'</td>
+                            <td class="right-align">'.$r['akhir_pelaksanaan'].'</td>
+                            <td class="right-align">'.getFollower($conn,$r['Id_subjek']).'</td>
+                            <td class="right-align"></td>
+                            <td class="right-align"></td>
+                        </tr>';
+            }
+            echo $disp.'</tbody>
+                </table>';
             break;
-        case 'saveSubjectEvent':
-            echo ResultDataSubject($_POST);
-            break;
-    }
+    
+        }
 } else {
     echo 0;
 }
