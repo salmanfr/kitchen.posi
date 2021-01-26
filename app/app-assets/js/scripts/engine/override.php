@@ -175,6 +175,38 @@ if ($token == privateHashing(gettodayShort())) {
         case 'saveSubjectEvent':
             echo ResultDataSubject($_POST);
             break;
+        case 'getdatakompetisi':
+            $Id_event = anti_Injection($_REQUEST['id_event']);
+            $arrResp = array();
+            // ambil subjek event 
+            $res = mysqli_query($conn,"SELECT subjek, tahun, bulan, hari FROM tb_event WHERE Id_event = '$Id_event'");
+            $r = mysqli_fetch_assoc($res);
+            array_push($arrResp, array('subjek'=>$r['subjek'],
+                                       'tglevent'=>$r['tahun'].'-'.$r['bulan'].'-'.$r['hari']));
+            
+            // ambil jenjang
+            $res = mysqli_query($conn,"SELECT * FROM dft_jenjang");
+            $jenjang = array();
+            $subjek = json_decode($r['subjek'],false);
+            while($r = mysqli_fetch_array($res)){
+                if(in_array($r['subjek'],$subjek)){
+                    array_push($jenjang,array('jenjang'=>$r['jenjang'],
+                                               'subjek'=>$r['subjek']));
+                }
+            }
+            array_push($arrResp, array('jenjang'=>$jenjang));
+
+            // ambil bidang studi
+            $res = mysqli_query($conn,"SELECT * FROM dft_bidang_studi");
+            $bidang = array();
+            while($r = mysqli_fetch_array($res)){
+                array_push($bidang, $r['bidang_studi']);
+            }
+            array_push($arrResp, array('bidang'=>$bidang));
+
+            echo json_encode($arrResp);
+            
+            break;
     }
 } else {
     echo 0;

@@ -236,7 +236,6 @@
 }
 
 @media only screen and (max-width: 765px) {
-
     .overlayVoucher .vouch1,
     .vouch2,
     .vouch3,
@@ -331,11 +330,9 @@
         margin-left: 0;
         top: 5%;
     }
-
     .overlayVoucher .invoiceTransfer .logoposiinv {
         height: 30px;
     }
-
     .overlayVoucher .invoiceClose {
         position: absolute;
         width: 20px;
@@ -679,7 +676,6 @@
         top: 8px;
         left: 50px;
     }
-
     .logoposis .imglogo {
         width: 80px;
         height: 40px;
@@ -1056,7 +1052,6 @@
 }
 
 
-
 /* For CSS Overlay Tombol Subject / Verifikasi */
 
 .overlaySubjectEvent {
@@ -1146,4 +1141,128 @@
     margin-right: 10px;
 }
 
+
 /* END For CSS Overlay Tombol Subject / Verifikasi */
+
+.overlayformBidang {
+    position: fixed;
+    z-index: 100000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .52);
+    display: none;
+}
+
+.overlayformBidang .form-formBidang {
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2)!important;
+    border-radius: 5px;
+    background: #fafbfc;
+    transition: 0.3s;
+    position: fixed;
+    z-index: 100001;
+    width: 800px;
+    height: 700px;
+    margin-top: -350px;
+    margin-left: -400px;
+    left: 50%;
+    top: 50%;
+    display: none;
+}
+
+.overlayformBidang .form-formBidang .form-header-formBidang {
+    width: 100%;
+    height: 60px;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1)!important;
+    display: none;
+}
+
+.overlayformBidang .form-formBidang .form-header-formBidang h5 {
+    color: black;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+    margin-left: 20px;
+    line-height: 16px;
+    padding-top: 10px;
+    display: inline-block;
+}
+
+.overlayformBidang .form-formBidang .form-header-formBidang .btnclose {
+    float: right;
+    margin-right: 10px;
+    height: 60px;
+    width: 60px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+
+.overlayformBidang .form-formBidang .form-header-formBidang .btnclose i {
+    line-height: 25px;
+    font-size: 25px;
+    padding-top: 18px;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .22);
+}
+
+.overlayformBidang .form-formBidang .form-header-formBidang .btnclose i:hover {
+    color: red;
+}
+
+.overlayformBidang .form-formBidang .form-body-formBidang {
+    width: 100%;
+    background: transparent;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 10px;
+    height: 570px;
+    display: none;
+}
+
+.overlayformBidang .form-formBidang .form-body-formBidang .daftarAkses {
+    width: calc(100%-40px);
+    height: 60px;
+    box-shadow: 2px 2px 4px rgba(83, 81, 81, 0.37), -2px -2px 4px rgb(245, 245, 245);
+    margin-left: 20px;
+    margin-right: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.overlayformBidang .form-formBidang .form-body-formBidang .daftarAkses .listAkses {
+    display: inline-block;
+    padding: 4px;
+    background: blue;
+    margin: 2px;
+    box-shadow: 2px 2px 4px rgba(83, 81, 81, 0.37), -2px -2px 4px rgb(245, 245, 245);
+    border-radius: 5px;
+}
+
+.overlayformBidang .form-formBidang .form-body-formBidang .daftarAkses .listAkses span {
+    color: #fff;
+}
+
+.overlayformBidang .form-formBidang .form-body-formBidang .daftarAkses .listAkses i {
+    color: #fff;
+    cursor: pointer;
+}
+
+.overlayformBidang .form-formBidang .form-body-formBidang .daftarAkses .listAkses:hover span {
+    color: #f5e504;
+    transform: scale(1.1);
+}
+
+.overlayformBidang .form-formBidang .form-footer-formBidang {
+    position: absolute;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    display: none;
+}
+
+.overlayformBidang .form-formBidang .form-footer-formBidang a {
+    float: right;
+    margin-right: 10px;
+}
