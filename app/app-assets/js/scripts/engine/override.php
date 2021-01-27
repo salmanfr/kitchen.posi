@@ -156,9 +156,9 @@ if ($token == privateHashing(gettodayShort())) {
                             <td>' . $r['bidang_studi'] . '</td>
                             <td class="right-align">' . $r['mulai_pelaksanaan'] . '</td>
                             <td class="right-align">' . $r['akhir_pelaksanaan'] . '</td>
-                            <td onclick="openoverlayListOfAllDataMember(\'' . '.BtnListOfAllMember' . $r["Id_subjek"] . '\',\'' . $r["Id_subjek"] . '\',\'' . $Id_event . '\')"
-                                class="right-align BtnListOfAllMember' . $r["Id_subjek"] . '">
-                            ' . getFollower($conn, $r['Id_subjek']) . '
+                            <td class="right-align">
+                            <a onclick="openoverlayListOfAllDataMember(\'' . '.BtnListOfAllMember' . $r["Id_subjek"] . '\',\'' . $r["Id_subjek"] . '\',\'' . $Id_event . '\')"
+                                class="BtnListOfAllMember' . $r["Id_subjek"] . ' mb-6 btn waves-effect waves-light gradient-45deg-green-teal">' . getFollower($conn,$r['Id_subjek']) . '</a>
                             </td>
                             <td class="right-align">
                                 <a class="mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber btnformBidang'.$r['Id_subjek'].'" onclick="openformBidang(\''.'.btnformBidang'.$r['Id_subjek'].'\',\''.'Edit'.'\',\''.$r['Id_subjek'].'\',\''.murnikanJson($modal).'\')">
@@ -251,7 +251,6 @@ if ($token == privateHashing(gettodayShort())) {
                                                                 `bidang_studi` = '$bidang',
                                                                 `mulai_pelaksanaan`  = '$mulai',
                                                                 `akhir_pelaksanaan`  = '$akhir',
-                                                                `kisi` = '',
                                                                 `chat_group` = '$link',
                                                                 `atom` = '$price',
                                                                 `gold` = '$gold',
@@ -259,6 +258,22 @@ if ($token == privateHashing(gettodayShort())) {
                                                                 `bronze` = '$bronze' WHERE Id_subjek = '$pos'");
                 echo 'berhasil diedit';
             }
+            break;
+        case 'getListOfAllDataMember':
+                echo ResultDataListOfAllDataMember($_REQUEST);
+            break;
+            case 'BidangEvent':
+            echo BidangEvent();
+            break;
+        case 'saveoverlayBidangEvent':
+            echo ResultDataOverlayBidangEvent($_POST);
+            break;
+
+        case 'Jenjang':
+            echo Jenjang();
+            break;
+        case 'saveOverlayJenjang':
+            echo ResultDataJenjang($_POST);
             break;
     }
 } else {

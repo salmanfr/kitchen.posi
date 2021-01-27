@@ -665,9 +665,145 @@ function ResultDataSubject($data)
 }
 
 
+function ResultDataJenjang($data)
+{
+    $pos = anti_Injection($data['pos']);
+    $status = anti_Injection($data['status']);
+    $nama_jenjang = $data['JenjangDong'];
+
+    if ($status == "New") {
+
+        $query = "INSERT INTO `dft_jenjang`
+                  VALUES 
+                  (NULL, '$nama_jenjang')
+                 ";
+
+        if (ProsesData($query) > 0) {
+            echo "Data Berhasil Ditambah";
+        } else {
+            echo "Proses Gagal";
+        }
+    } else if ($status == "Edit") {
+
+        $query = "UPDATE `dft_jenjang` SET
+                  `jenjang` = '$nama_jenjang'
+                  WHERE `Id_jenjang` = '$pos'
+                 ";
+
+        if (ProsesData($query) > 0) {
+            echo "Data Berhasil Diubah";
+        } else {
+            echo "Proses Gagal";
+        }
+    } else if ($status == 'Hapus') {
+
+        $query = "DELETE FROM `dft_jenjang` WHERE `Id_jenjang` = '$pos'";
+
+        if (ProsesData($query) > 0) {
+            echo "Data Berhasil Dihapus";
+        } else {
+            echo "Proses Gagal";
+        }
+    }
+}
+
+function ResultDataListOfAllDataMember($data)
+{
+    global $conn;
+    $idSubject = anti_Injection($data["InSelectSubject"]);
+    $idEvent = anti_Injection($data["InSelectEvent"]);
+    $nomor = 0;
+    $result = '';
+
+    $res = mysqli_query(
+        $conn,
+        "SELECT *
+         FROM `tb_kompetisi` 
+         WHERE `Id_subjek` = '$idSubject' 
+         AND `Id_event` = '$idEvent'
+         --  AND `nilai` != NULL || `nilai` != ''
+         ORDER BY `nilai` DESC
+         "
+    );
+
+    $total = mysqli_num_rows($res);
+    $dataStatus = query("SELECT gold, silver, bronze FROM tb_subjek WHERE `Id_subjek` = '$idSubject' AND `Id_event` = '$idEvent'")[0];
+    $gold = $dataStatus["gold"];
+    $gold = ceil($gold / 100 * $total);
+
+    $silver = $dataStatus["silver"];
+    $silver = ceil($silver / 100 * $total);
+
+    $bronze = $dataStatus["bronze"];
+    $bronze = ceil($bronze / 100 * $total);
+    // $putaran = 1;
 
 
-//For Display Bidang Event ==> Menu 3
+
+    while ($r = mysqli_fetch_array($res)) {
+        $nomor++;
+        $info =  getDataByIdMember($conn, $r['Id_member']);
+
+        if ($nomor <= $gold) {
+            $result .= '<tr>
+                        <td width="5%">' . ($nomor) . '</td>
+                        <td width="30%">' . $info['nama'] . '</td>
+                        <td width="20%">' . $info['provinsi_sekolah'] . '</td>
+                        <td width="30%">' . $info['sekolah'] . '</td>
+                        <td width="5%">' . $r['nilai'] . '</td>
+                        <td width="5%"> Gold </td>
+                        </td>
+                    </tr>';
+        } else if ($nomor > $gold && $nomor <= ($silver + $gold)) {
+            $result .= '<tr>
+                        <td width="5%">' . ($nomor) . '</td>
+                        <td width="30%">' . $info['nama'] . '</td>
+                        <td width="20%">' . $info['provinsi_sekolah'] . '</td>
+                        <td width="30%">' . $info['sekolah'] . '</td>
+                        <td width="5%">' . $r['nilai'] . '</td>
+                        <td width="5%"> Silver </td>
+                        </td>
+                    </tr>';
+        } else if ($nomor > ($silver + $gold) && $nomor <= ($silver + $gold + $bronze)) {
+            $result .= '<tr>
+                        <td width="5%">' . ($nomor) . '</td>
+                        <td width="30%">' . $info['nama'] . '</td>
+                        <td width="20%">' . $info['provinsi_sekolah'] . '</td>
+                        <td width="30%">' . $info['sekolah'] . '</td>
+                        <td width="5%">' . $r['nilai'] . '</td>
+                        <td width="5%"> Bronze </td>
+                        </td>
+                    </tr>';
+        } else if ($nomor > $bronze) {
+            $result .= '<tr>
+                            <td width="5%">' . ($nomor) . '</td>
+                            <td width="30%">' . $info['nama'] . '</td>
+                            <td width="20%">' . $info['provinsi_sekolah'] . '</td>
+                            <td width="30%">' . $info['sekolah'] . '</td>
+                            <td width="5%">' . $r['nilai'] . '</td>
+                            <td width="5%"> </td>
+                            </td>
+                        </tr>';
+        }
+    }
+
+
+    echo '<table class="responsive-table display striped">
+            <thead>
+                <tr>
+                    <th>Nomor</th>
+                    <th>Nama</th>
+                    <th>Provinsi</th>
+                    <th>Sekolah</th>
+                    <th>Nilai</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="listHist">' . $result . '</tbody>
+          </table>';
+}
+
+
 function BidangEvent()
 {
     $nomor = 1;
@@ -886,143 +1022,3 @@ function Jenjang()
             </div>';
 }
 
-function ResultDataJenjang($data)
-{
-    $pos = anti_Injection($data['pos']);
-    $status = anti_Injection($data['status']);
-    $nama_jenjang = $data['JenjangDong'];
-
-    if ($status == "New") {
-
-        $query = "INSERT INTO `dft_jenjang`
-                  VALUES 
-                  (NULL, '$nama_jenjang')
-                 ";
-
-        if (ProsesData($query) > 0) {
-            echo "Data Berhasil Ditambah";
-        } else {
-            echo "Proses Gagal";
-        }
-    } else if ($status == "Edit") {
-
-        $query = "UPDATE `dft_jenjang` SET
-                  `jenjang` = '$nama_jenjang'
-                  WHERE `Id_jenjang` = '$pos'
-                 ";
-
-        if (ProsesData($query) > 0) {
-            echo "Data Berhasil Diubah";
-        } else {
-            echo "Proses Gagal";
-        }
-    } else if ($status == 'Hapus') {
-
-        $query = "DELETE FROM `dft_jenjang` WHERE `Id_jenjang` = '$pos'";
-
-        if (ProsesData($query) > 0) {
-            echo "Data Berhasil Dihapus";
-        } else {
-            echo "Proses Gagal";
-        }
-    }
-}
-
-
-
-//Display Overlay List Of All Data Member
-function ResultDataListOfAllDataMember($data)
-{
-    global $conn;
-    $idSubject = anti_Injection($data["InSelectSubject"]);
-    $idEvent = anti_Injection($data["InSelectEvent"]);
-    $nomor = 0;
-    $result = '';
-
-    $res = mysqli_query(
-        $conn,
-        "SELECT *
-         FROM `tb_kompetisi` 
-         WHERE `Id_subjek` = '$idSubject' 
-         AND `Id_event` = '$idEvent'
-         --  AND `nilai` != NULL || `nilai` != ''
-         ORDER BY `nilai` DESC
-         "
-    );
-
-    $total = mysqli_num_rows($res);
-    $dataStatus = query("SELECT gold, silver, bronze FROM tb_subjek WHERE `Id_subjek` = '$idSubject' AND `Id_event` = '$idEvent'")[0];
-    $gold = $dataStatus["gold"];
-    $gold = ceil($gold / 100 * $total);
-
-    $silver = $dataStatus["silver"];
-    $silver = ceil($silver / 100 * $total);
-
-    $bronze = $dataStatus["bronze"];
-    $bronze = ceil($bronze / 100 * $total);
-    // $putaran = 1;
-
-
-
-    while ($r = mysqli_fetch_array($res)) {
-        $nomor++;
-        $info =  getDataByIdMember($conn, $r['Id_member']);
-
-        if ($nomor <= $gold) {
-            $result .= '<tr>
-                        <td width="5%">' . ($nomor) . '</td>
-                        <td width="30%">' . $info['nama'] . '</td>
-                        <td width="20%">' . $info['provinsi_sekolah'] . '</td>
-                        <td width="30%">' . $info['sekolah'] . '</td>
-                        <td width="5%">' . $r['nilai'] . '</td>
-                        <td width="5%"> Gold </td>
-                        </td>
-                    </tr>';
-        } else if ($nomor > $gold && $nomor <= ($silver + $gold)) {
-            $result .= '<tr>
-                        <td width="5%">' . ($nomor) . '</td>
-                        <td width="30%">' . $info['nama'] . '</td>
-                        <td width="20%">' . $info['provinsi_sekolah'] . '</td>
-                        <td width="30%">' . $info['sekolah'] . '</td>
-                        <td width="5%">' . $r['nilai'] . '</td>
-                        <td width="5%"> Silver </td>
-                        </td>
-                    </tr>';
-        } else if ($nomor > ($silver + $gold) && $nomor <= ($silver + $gold + $bronze)) {
-            $result .= '<tr>
-                        <td width="5%">' . ($nomor) . '</td>
-                        <td width="30%">' . $info['nama'] . '</td>
-                        <td width="20%">' . $info['provinsi_sekolah'] . '</td>
-                        <td width="30%">' . $info['sekolah'] . '</td>
-                        <td width="5%">' . $r['nilai'] . '</td>
-                        <td width="5%"> Bronze </td>
-                        </td>
-                    </tr>';
-        } else if ($nomor > $bronze) {
-            $result .= '<tr>
-                            <td width="5%">' . ($nomor) . '</td>
-                            <td width="30%">' . $info['nama'] . '</td>
-                            <td width="20%">' . $info['provinsi_sekolah'] . '</td>
-                            <td width="30%">' . $info['sekolah'] . '</td>
-                            <td width="5%">' . $r['nilai'] . '</td>
-                            <td width="5%"> </td>
-                            </td>
-                        </tr>';
-        }
-    }
-
-
-    echo '<table class="responsive-table display striped">
-            <thead>
-                <tr>
-                    <th>Nomor</th>
-                    <th>Nama</th>
-                    <th>Provinsi</th>
-                    <th>Sekolah</th>
-                    <th>Nilai</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody id="listHist">' . $result . '</tbody>
-          </table>';
-}

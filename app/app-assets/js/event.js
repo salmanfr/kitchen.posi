@@ -2,6 +2,7 @@ var boolMedia = false,
     dataUrl = '',
     typeBanner = '',
     subjek = ['Guru', 'Mahasiswa', 'Siswa', 'Pekerja'],
+    nama_jenjang = ['SD', 'MI', 'SMP', 'MTS', 'SMA', 'MA', 'SMK', 'MAHASISWA'],
     statusEvent = ['Publish', 'Private'],
     kontextCombos = '',
     listArr = [],
@@ -126,7 +127,7 @@ $(document).ready(function(e) {
         img.src = URL.createObjectURL(this.files[0]);
     });
 
-    $('#subjek, #statusevent, #subjbidang, #jjgbidang, #bidang').on('click', function() {
+    $('#subjek, #statusevent, #subjbidang, #jjgbidang, #bidang, #namaJenjang').on('click', function() {
         var tinggi = $(this).height();
         var atas = $(this).offset().top - $(document).scrollTop() + tinggi;
         var kiri = $(this).offset().left;
@@ -195,6 +196,9 @@ $(document).ready(function(e) {
         } else if (kontextCombos == 'bidang') {
             setToListBody(bdgEvent);
             listArr = bdgEvent;
+        } else if (kontextCombos == 'namaJenjang') {
+            setToListBody(nama_jenjang);
+            listArr = nama_jenjang;
         }
     });
 
@@ -300,6 +304,18 @@ function setItemCombos(item) {
                                             </div>');
         }
         $('#' + kontextCombos).val('');
+    } else if (kontextCombos == 'namaJenjang') {
+        if (!in_array(item, arr_daftar_subjek)) {
+            arr_daftar_subjek.push(item);
+            $('.daftarAksesJenjang').prepend('<div class="listAkses" id="' + item.split(' ').join('').replace('(', '').replace(')', '').replace('.', '') + '">\
+                                            <span>' + item + '</span>\
+                                            <i class="material-icons" onclick="delAkses(\'' + item + '\') ">close</i>\
+                                        </div>');
+        } else {
+            showToast('data sudah terdaftar');
+        }
+
+        $('#namaJenjang').val('');
     }
 }
 
@@ -1470,3 +1486,462 @@ function rekontruksiJson(modal) {
 function rekontruksiSiku(targ) {
     return targ.split('FRG').join(']').split('FLG').join('[').split('KMA').join('"');
 }
+
+
+// ============ MULAI SCRIPT JQUERY OVERLAYLISTOFALLDATAMEMBER ====================
+var btnoverlayListOfAllDataMember = '',
+    posoverlayListOfAllDataMember = '';
+
+function openoverlayListOfAllDataMember(dom, IdSubject, IdEvent) {
+    btnoverlayListOfAllDataMember = dom;
+    $('.form-header-overlayListOfAllDataMember #judul').html('Daftar Peserta & Rank');
+    var atas = $(dom).offset().top - $(document).scrollTop();
+    var kiri = $(dom).offset().left;
+    var lebar = $(dom).width() + 56;
+    var tinggi = $(dom).height();
+    var layar = $('body').width();
+    var tinggiLayar = $('body').height() - 20;
+
+    $('.overlayoverlayListOfAllDataMember').show();
+    $('.form-overlayListOfAllDataMember').css({
+        'margin-left': '0px',
+        'margin-top': '0px',
+        'width': lebar + 'px',
+        'height': tinggi + 'px',
+        'top': atas + 'px',
+        'left': kiri + 'px',
+        'display': 'block'
+    });
+    setTimeout(function() {
+        if (layar > 762) {
+            $('.form-overlayListOfAllDataMember').css({
+                'margin-left': '-600px',
+                'margin-top': (tinggiLayar < 700 ? -tinggiLayar / 2 + 'px' : '-350px'),
+                'width': '1200px',
+                'height': (tinggiLayar < 700 ? tinggiLayar + 'px' : '700px'),
+                'top': '50%',
+                'left': '50%'
+            });
+        } else {
+            // layar hape
+            $('.form-overlayListOfAllDataMember').css({
+                'margin-left': '-50vw',
+                'margin-top': '-50vh',
+                'width': '100vw',
+                'height': '100vh',
+                'top': '50%',
+                'left': '50%'
+            });
+        }
+    }, 200);
+    setTimeout(function() {
+        $('body').css({
+            'overflow-y': 'hidden'
+        });
+        $('.form-header-overlayListOfAllDataMember').show();
+        $('.form-body-overlayListOfAllDataMember').show();
+        $('.form-footer-overlayListOfAllDataMember').show();
+
+        // setup tinggi body form
+        var hForm = $('.form-overlayListOfAllDataMember').height(),
+            hBody = hForm - 103;
+        $('.form-body-overlayListOfAllDataMember').css({
+            'height': hBody + 'px'
+        });
+    }, 600);
+
+    ListAllDataOfMember(IdSubject, IdEvent);
+}
+
+
+function closeoverlayListOfAllDataMember() {
+    var dom = btnoverlayListOfAllDataMember;
+    $('body').css({
+        'overflow-y': 'auto'
+    });
+    var atas = $(dom).offset().top - $(document).scrollTop();
+    var kiri = $(dom).offset().left;
+    var lebar = $(dom).width() + 56;
+    var tinggi = $(dom).height();
+    $('.form-header-overlayListOfAllDataMember').hide();
+    $('.form-body-overlayListOfAllDataMember').hide();
+    $('.form-footer-overlayListOfAllDataMember').hide();
+    $('.form-overlayListOfAllDataMember').css({
+        'margin-left': '0px',
+        'margin-top': '0px',
+        'width': lebar + 'px',
+        'height': tinggi + 'px',
+        'top': atas + 'px',
+        'left': kiri + 'px'
+    });
+    setTimeout(function() {
+        $('.overlayoverlayListOfAllDataMember').hide();
+        $('.form-overlayListOfAllDataMember').hide();
+    }, 400);
+}
+// ============ AKHIR SCRIPT JQUERY OVERLAYLISTOFALLDATAMEMBER ====================
+
+
+
+//For List All Data Of Member
+function ListAllDataOfMember(isIdSubject, isIdEvent) {
+    showLoad();
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            $('.form-body-overlayListOfAllDataMember').html(xmlhttp.responseText);
+            hideLoad();
+            auth(xmlhttp.responseText);
+        }
+    }
+    xmlhttp.open('GET', 'app-assets/js/scripts/engine/override.php?order=getListOfAllDataMember&InSelectSubject=' + isIdSubject + '&InSelectEvent=' + isIdEvent);
+    xmlhttp.send();
+}
+
+function dispBidang() {
+    showLoad();
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            $('.dispUtama').html(xmlhttp.responseText);
+            hideLoad();
+            auth(xmlhttp.responseText);
+            dataTabel = [];
+            var targ = $('#paginattable').children('tr');
+            for (i = 0; i < targ.length; i++) {
+                dataTabel.push(targ.eq(i).html());
+            }
+            setupTablePagination(rowtabledisp.value);
+        }
+    }
+    xmlhttp.open('GET', 'app-assets/js/scripts/engine/override.php?order=BidangEvent');
+    xmlhttp.send();
+}
+
+
+
+// ============ MULAI SCRIPT JQUERY OVERLAYBIDANGEVENT ====================
+var btnoverlayBidangEvent = '',
+    statusoverlayBidangEvent = '',
+    posoverlayBidangEvent = '',
+    overlayBidangEventElementArr = ['nama_bidang_event'];
+
+function openoverlayBidangEvent(dom, status, pos, modal) {
+    btnoverlayBidangEvent = dom;
+    $('.form-header-overlayBidangEvent #judul').html(status + " " + 'Bidang Event');
+    var atas = $(dom).offset().top - $(document).scrollTop();
+    var kiri = $(dom).offset().left;
+    var lebar = $(dom).width();
+    var tinggi = $(dom).height();
+    var layar = $('body').width();
+    var tinggiLayar = $('body').height() - 20;
+
+    $('.overlayoverlayBidangEvent').show();
+    $('.form-overlayBidangEvent').css({
+        'margin-left': '0px',
+        'margin-top': '0px',
+        'width': lebar + 'px',
+        'height': tinggi + 'px',
+        'top': atas + 'px',
+        'left': kiri + 'px',
+        'border-radius': '100%',
+        'display': 'block'
+    });
+    setTimeout(function() {
+        if (layar > 762) {
+            $('.form-overlayBidangEvent').css({
+                'margin-left': '-300px',
+                'margin-top': (tinggiLayar < 700 ? -tinggiLayar / 2 + 'px' : '-125px'),
+                'width': '600px',
+                'height': (tinggiLayar < 700 ? tinggiLayar + 'px' : '250px'),
+                'top': '50%',
+                'left': '50%',
+                'border-radius': '5px'
+            });
+        } else {
+            // layar hape
+            $('.form-overlayBidangEvent').css({
+                'margin-left': '-50vw',
+                'margin-top': '-50vh',
+                'width': '100vw',
+                'height': '100vh',
+                'top': '50%',
+                'left': '50%',
+                'border-radius': '5px'
+            });
+        }
+    }, 200);
+    setTimeout(function() {
+        $('body').css({
+            'overflow-y': 'hidden'
+        });
+        $('.form-header-overlayBidangEvent').show();
+        $('.form-body-overlayBidangEvent').show();
+        $('.form-footer-overlayBidangEvent').show();
+
+        // setup tinggi body form
+        var hForm = $('.form-overlayBidangEvent').height(),
+            hBody = hForm - 103;
+        $('.form-body-overlayBidangEvent').css({
+            'height': hBody + 'px'
+        });
+    }, 600);
+    statusoverlayBidangEvent = status;
+    if (status == 'New') {
+        var isiDom = [''];
+        setValueDom(overlayBidangEventElementArr, isiDom);
+    } else {
+        posoverlayBidangEvent = pos;
+        var isiDom = modal.split('A99');
+        setValueDom(overlayBidangEventElementArr, isiDom);
+    }
+
+}
+
+
+function closeoverlayBidangEvent() {
+    var dom = btnoverlayBidangEvent;
+    $('body').css({
+        'overflow-y': 'auto'
+    });
+    var atas = $(dom).offset().top - $(document).scrollTop();
+    var kiri = $(dom).offset().left;
+    var lebar = $(dom).width();
+    var tinggi = $(dom).height();
+    $('.form-header-overlayBidangEvent').hide();
+    $('.form-body-overlayBidangEvent').hide();
+    $('.form-footer-overlayBidangEvent').hide();
+    $('.form-overlayBidangEvent').css({
+        'margin-left': '0px',
+        'margin-top': '0px',
+        'width': lebar + 'px',
+        'height': tinggi + 'px',
+        'top': atas + 'px',
+        'left': kiri + 'px',
+        'border-radius': '100%'
+    });
+    setTimeout(function() {
+        $('.overlayoverlayBidangEvent').hide();
+        $('.form-overlayBidangEvent').hide();
+    }, 400);
+}
+
+
+function simpanoverlayBidangEvent() {
+    var formData = new FormData();
+    var palang = true;
+    overlayBidangEventElementArr.forEach(function(item, i) {
+        if ($('#' + item).val() == "") {
+            palang = false;
+        }
+        formData.append(item, $('#' + item).val());
+    });
+    formData.append('status', statusoverlayBidangEvent);
+    formData.append('pos', posoverlayBidangEvent);
+    if (palang) {
+        $.ajax({
+            type: 'POST',
+            url: 'app-assets/js/scripts/engine/override.php?order=saveoverlayBidangEvent',
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function() {
+                showLoad();
+                closeoverlayBidangEvent();
+            },
+            success: function(response) {
+                showToast(response);
+                dispBidang();
+                hideLoad();
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+
+            }
+        });
+    } else {
+        showToast('Data belum lengkap');
+    }
+
+}
+// ============ AKHIR SCRIPT JQUERY OVERLAYBIDANGEVENT ====================
+
+
+
+
+
+//For Menu 4 Display Jenjang
+function dispJenjang() {
+    showLoad();
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            $('.dispUtama').html(xmlhttp.responseText);
+            hideLoad();
+            auth(xmlhttp.responseText);
+            dataTabel = [];
+            var targ = $('#paginattable').children('tr');
+            for (i = 0; i < targ.length; i++) {
+                dataTabel.push(targ.eq(i).html());
+            }
+            setupTablePagination(rowtabledisp.value);
+        }
+    }
+    xmlhttp.open('GET', 'app-assets/js/scripts/engine/override.php?order=Jenjang');
+    xmlhttp.send();
+}
+
+
+
+// ============ MULAI SCRIPT JQUERY OVERLAYJENJANG ====================
+var btnOverlayJenjang = '',
+    statusOverlayJenjang = '',
+    posOverlayJenjang = '',
+    OverlayJenjangElementArr = ['nama_jenjang'];
+
+function openOverlayJenjang(dom, status, pos, modal) {
+    btnOverlayJenjang = dom;
+    $('.form-header-OverlayJenjang #judul').html(status + " " + 'OverlayJenjang');
+    var atas = $(dom).offset().top - $(document).scrollTop();
+    var kiri = $(dom).offset().left;
+    var lebar = $(dom).width();
+    var tinggi = $(dom).height();
+    var layar = $('body').width();
+    var tinggiLayar = $('body').height() - 20;
+
+    $('.overlayOverlayJenjang').show();
+    $('.form-OverlayJenjang').css({
+        'margin-left': '0px',
+        'margin-top': '0px',
+        'width': lebar + 'px',
+        'height': tinggi + 'px',
+        'top': atas + 'px',
+        'left': kiri + 'px',
+        'border-radius': '100%',
+        'display': 'block'
+    });
+    setTimeout(function() {
+        if (layar > 762) {
+            $('.form-OverlayJenjang').css({
+                'margin-left': '-300px',
+                'margin-top': (tinggiLayar < 700 ? -tinggiLayar / 2 + 'px' : '-350px'),
+                'width': '600px',
+                'height': (tinggiLayar < 700 ? tinggiLayar + 'px' : '700px'),
+                'top': '50%',
+                'left': '50%',
+                'border-radius': '5px'
+            });
+        } else {
+            // layar hape
+            $('.form-OverlayJenjang').css({
+                'margin-left': '-50vw',
+                'margin-top': '-50vh',
+                'width': '100vw',
+                'height': '100vh',
+                'top': '50%',
+                'left': '50%',
+                'border-radius': '5px'
+            });
+        }
+    }, 200);
+    setTimeout(function() {
+        $('body').css({
+            'overflow-y': 'hidden'
+        });
+        $('.form-header-OverlayJenjang').show();
+        $('.form-body-OverlayJenjang').show();
+        $('.form-footer-OverlayJenjang').show();
+
+        // setup tinggi body form
+        var hForm = $('.form-OverlayJenjang').height(),
+            hBody = hForm - 103;
+        $('.form-body-OverlayJenjang').css({
+            'height': hBody + 'px'
+        });
+    }, 600);
+    statusOverlayJenjang = status;
+    if (status == 'New') {
+        arr_daftar_subjek = [];
+    } else {
+        posOverlayJenjang = pos;
+        $('.daftarAksesJenjang').html('');
+        arr_daftar_subjek = JSON.parse(modal);
+        arr_daftar_subjek.forEach(function(item, i) {
+            $('.daftarAksesJenjang').prepend('<div class="listAkses" id="' + item.split(' ').join('').replace('(', '').replace(')', '').replace('.', '') + '">\
+                                            <span>' + item + '</span>\
+                                            <i class="material-icons" onclick="delAkses(\'' + item + '\') ">close</i>\
+                                        </div>');
+        });
+    }
+
+}
+
+
+function closeOverlayJenjang() {
+    var dom = btnOverlayJenjang;
+    $('body').css({
+        'overflow-y': 'auto'
+    });
+    var atas = $(dom).offset().top - $(document).scrollTop();
+    var kiri = $(dom).offset().left;
+    var lebar = $(dom).width();
+    var tinggi = $(dom).height();
+    $('.form-header-OverlayJenjang').hide();
+    $('.form-body-OverlayJenjang').hide();
+    $('.form-footer-OverlayJenjang').hide();
+    $('.form-OverlayJenjang').css({
+        'margin-left': '0px',
+        'margin-top': '0px',
+        'width': lebar + 'px',
+        'height': tinggi + 'px',
+        'top': atas + 'px',
+        'left': kiri + 'px',
+        'border-radius': '100%'
+    });
+    setTimeout(function() {
+        $('.overlayOverlayJenjang').hide();
+        $('.form-OverlayJenjang').hide();
+    }, 400);
+}
+
+
+function simpanOverlayJenjang() {
+    var formData = new FormData();
+    var palang = true;
+    OverlayJenjangElementArr.forEach(function(item, i) {
+        if ($('#' + item).val() == "") {
+            palang = false;
+        }
+        formData.append(item, $('#' + item).val());
+    });
+    if (arr_daftar_subjek.length == 0) {
+        palang = false;
+    }
+    formData.append('JenjangDong', JSON.stringify(arr_daftar_subjek));
+    formData.append('status', statusOverlayJenjang);
+    formData.append('pos', posOverlayJenjang);
+    if (palang) {
+        $.ajax({
+            type: 'POST',
+            url: 'app-assets/js/scripts/engine/override.php?order=saveOverlayJenjang',
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function() {
+                showLoad();
+                closeOverlayJenjang();
+            },
+            success: function(response) {
+                showToast(response);
+                dispJenjang();
+                hideLoad();
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+
+            }
+        });
+    } else {
+        showToast('Data belum lengkap');
+    }
+
+}
+// ============ AKHIR SCRIPT JQUERY OVERLAYJENJANG ====================

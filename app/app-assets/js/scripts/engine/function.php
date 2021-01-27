@@ -456,7 +456,7 @@ function getFollower($conn, $id_subjek)
 {
   $res = mysqli_query($conn, "SELECT COUNT(Id_kompetisi) as jlh FROM tb_kompetisi WHERE Id_subjek = '$id_subjek'");
   $r = mysqli_fetch_assoc($res);
-  return '<a class="mb-6 btn waves-effect waves-light gradient-45deg-green-teal">' . $r['jlh'] . '</a>';
+  return $r['jlh'];
 }
 
 
