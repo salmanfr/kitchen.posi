@@ -163,17 +163,17 @@ if ($token == privateHashing(gettodayShort())) {
                             <td class="right-align">' . $r['mulai_pelaksanaan'] . '</td>
                             <td class="right-align">' . $r['akhir_pelaksanaan'] . '</td>
                             <td class="right-align">
-                            <a onclick="opendaftarSoal(\'' . '.btndaftarSoal' . $r['Id_subjek'] . '\',\'' . $r['Id_subjek'] . '\',\'' . $r['subjek'] . '\',\'' . $isSubject . '\')" class="btndaftarSoal' . $r['Id_subjek'] . ' mb-6 btn waves-effect waves-light gradient-45deg-light-blue-cyan">' . getSoal($conn, $r['Id_subjek']) . '</a>
+                            <a onclick="opendaftarSoal(\'' . '.btndaftarSoal' . $r['Id_subjek'] . '\',\'' . $r['Id_subjek'] . '\',\'' . $r['bidang_studi'] . '\',\'' . $r['subjek'] . '\',\'' . $isSubject . '\')" class="btndaftarSoal' . $r['Id_subjek'] . ' mb-6 btn waves-effect waves-light gradient-45deg-light-blue-cyan">' . getSoal($conn, $r['Id_subjek']) . '</a>
                             </td>
                             <td class="right-align">
                             <a onclick="openoverlayListOfAllDataMember(\'' . '.BtnListOfAllMember' . $r["Id_subjek"] . '\',\'' . $r["Id_subjek"] . '\',\'' . $Id_event . '\')"
                                 class="BtnListOfAllMember' . $r["Id_subjek"] . ' mb-6 btn waves-effect waves-light gradient-45deg-green-teal">' . getFollower($conn, $r['Id_subjek']) . '</a>
                             </td>
-                            <td class="right-align">
-                                <a class="mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber btnformBidang' . $r['Id_subjek'] . '" onclick="openformBidang(\'' . '.btnformBidang' . $r['Id_subjek'] . '\',\'' . 'Edit' . '\',\'' . $r['Id_subjek'] . '\',\'' . murnikanJson($modal) . '\')">
-                                    <i class="material-icons">edit</i>
-                                </a>
-                            </td>
+                            <td class="right-align">';
+                // <a class="mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber btnformBidang'.$r['Id_subjek'].'" onclick="openformBidang(\''.'.btnformBidang'.$r['Id_subjek'].'\',\''.'Edit'.'\',\''.$r['Id_subjek'].'\',\''.murnikanJson($modal).'\')">
+                //     <i class="material-icons">edit</i>
+                // </a>
+                $disp .= '</td>
                             <td class="right-align">
                                 <a class="mb-6 btn-floating waves-effect waves-light gradient-45deg-purple-deep-orange">
                                     <i class="material-icons">delete</i>
@@ -302,12 +302,6 @@ if ($token == privateHashing(gettodayShort())) {
                         <tr>
                             <th data-field="id">No</th>
                             <th data-field="month">Soal</th>
-                            <th data-field="month">Opt A</th>
-                            <th data-field="month">Opt B</th>
-                            <th data-field="month">Opt C</th>
-                            <th data-field="month">Opt D</th>
-                            <th data-field="month">Opt E</th>
-                            <th data-field="month">Jawaban</th>
                             <th data-field="item-sold" class="right-align">Edit</th>
                             <th data-field="item-sold" class="right-align">Hapus</th>
                         </tr>
@@ -316,15 +310,30 @@ if ($token == privateHashing(gettodayShort())) {
             $nomor = 1;
             while ($r = mysqli_fetch_array($res)) {
                 $contex = "Data Soal " . $row['sub_materi'];
+
                 $disp .= '<tr>
-                            <td data-field="id">' . ($nomor++) . '</td>
-                            <td data-field="month">' . $r['soal'] . '</td>
-                            <td data-field="month">' . $r['opt_a'] . '</td>
-                            <td data-field="month">' . $r['opt_b'] . '</td>
-                            <td data-field="month">' . $r['opt_c'] . '</td>
-                            <td data-field="month">' . $r['opt_d'] . '</td>
-                            <td data-field="month">' . $r['opt_e'] . '</td>
-                            <td data-field="month">' . $r['answer'] . '</td>
+                            <td data-field="id" style="vertical-align:top"><p>' . ($nomor++) . '</p></td>
+                            <td data-field="month" style="vertical-align:top">' . $r['soal'] . '<br/>
+                               <span style="display:inline-flex; width:100%"> <p style="margin-right: 10px;">A. </p> ' . $r['opt_a'] . '</span></br>
+                               <span style="display:inline-flex; width:100%"> <p style="margin-right: 10px;">B. </p> ' . $r['opt_b'] . '</span></br>
+                               <span style="display:inline-flex; width:100%"> <p style="margin-right: 10px;">C. </p> ' . $r['opt_c'] . '</span></br>
+                               <span style="display:inline-flex; width:100%"> <p style="margin-right: 10px;">D. </p> ' . $r['opt_d'] . '</span></br>
+                               <span style="display:inline-flex; width:100%">
+                               ' . ($r['opt_e'] == '' ? '' : '<p style="margin-right: 10px;">E. </p>' . $r['opt_e']) . '
+                               </span>
+                               <span style="width:100%">
+                                <u style="font-weight: bold; color: #000;"><p> Pembahasan : </p></u> <p>' . $r['pembahasan'] . '</p>
+                               </span>
+                               <span style="display:inline-flex; width:100%">
+                               <p> Jawaban :  </p> <p style="margin-left: 10px;">' . $r['answer'] . '</p>
+                               </span>
+                               <span style="display:inline-flex; width:100%">
+                                <p> Skor Benar :  </p> <p style="margin-left: 10px;">' . $r['score_benar'] . '</p>
+                               </span>
+                               <span style="display:inline-flex; width:100%">
+                                <p> Skor Salah :  </p> <p style="margin-left: 10px;">' . $r['score_salah'] . '</p>
+                               </span>
+                            </td>
                             <td data-field="item-sold" class="right-align">
                                 <a onclick="openinputSoal(\'' . '.btninputSoal' . $r['Id_soal'] . '\', \'' . 'Edit' . '\', \'' . $r['Id_soal'] . '\')" class="btninputSoal' . $r['Id_soal'] . ' mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber">
                                     <i class="material-icons">edit</i>

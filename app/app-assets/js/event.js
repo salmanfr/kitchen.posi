@@ -2015,12 +2015,13 @@ function simpanOverlayJenjang() {
 var btndaftarSoal = '',
     IdGlobalSubjek = 0;
 
-function opendaftarSoal(dom, id_subjek, isSubject, jenjangSubject) {
+function opendaftarSoal(dom, id_subjek, isBidang, isSubject, jenjangSubject) {
     IdGlobalSubjek = id_subjek;
     btndaftarSoal = dom;
     isSubject = isSubject.toUpperCase();
     jenjangSubject = jenjangSubject.toUpperCase();
-    $('.form-header-daftarSoal #judul').html(`DAFTAR SOAL ${isSubject} JENJANG ${jenjangSubject}`);
+    isBidang = isBidang.toUpperCase();
+    $('.form-header-daftarSoal #judul').html(`DAFTAR SOAL ${isBidang} ${isSubject} (${jenjangSubject})`);
     var atas = $(dom).offset().top - $(document).scrollTop();
     var kiri = $(dom).offset().left;
     var lebar = $(dom).width() + 56;
@@ -2043,7 +2044,7 @@ function opendaftarSoal(dom, id_subjek, isSubject, jenjangSubject) {
     setTimeout(function () {
         if (layar > 762) {
             $('.form-daftarSoal').css({
-                'margin-left': (lebarLayar < 1400 ? -lebarLayar / 2 + 'px' : '-700px'),
+                'margin-left': (lebarLayar < 1400 ? -lebarLayar / 2 + 'px' : '-650px'),
                 'margin-top': (tinggiLayar < 700 ? -tinggiLayar / 2 + 'px' : '-350px'),
                 'width': (lebarLayar < 1400 ? lebarLayar + 'px' : '1300px'),
                 'height': (tinggiLayar < 700 ? tinggiLayar + 'px' : '700px'),
@@ -2138,7 +2139,7 @@ function openinputSoal(dom, status, pos) {
     $('.form-header-inputSoal #judul').html(status + " " + ' Soal');
     var atas = $(dom).offset().top - $(document).scrollTop();
     var kiri = $(dom).offset().left;
-    var lebar = $(dom).width() + 56;
+    var lebar = $(dom).width() + (status == 'New' ? 56 : 0);
     var tinggi = $(dom).height();
     var layar = $('body').width();
     var tinggiLayar = $('body').height() - 20;
@@ -2151,7 +2152,7 @@ function openinputSoal(dom, status, pos) {
         'height': tinggi + 'px',
         'top': atas + 'px',
         'left': kiri + 'px',
-        'border-radius': '3px',
+        'border-radius': (status == 'New' ? '3px' : '100%'),
         'display': 'block'
     });
     setTimeout(function () {
@@ -2192,23 +2193,25 @@ function openinputSoal(dom, status, pos) {
         $('.form-body-inputSoal').css({
             'height': hBody + 'px'
         });
-    }, 600);
-    statusinputSoal = status;
-    if (status == 'New') {
-        var isiDom = ['', '', '', '', '', ''];
-        setValueDom(inputSoalElementArr, isiDom);
-        CKEDITOR.instances.soal.setData('');
-        CKEDITOR.instances.opta.setData('');
-        CKEDITOR.instances.optb.setData('');
-        CKEDITOR.instances.optc.setData('');
-        CKEDITOR.instances.optd.setData('');
-        CKEDITOR.instances.opte.setData('');
-        CKEDITOR.instances.pembahasan.setData('');
-        CKEDITOR.instances.rekomendasi.setData('');
-    } else {
-        posinputSoal = pos;
-        getSoalNo(posinputSoal);
-    }
+
+        statusinputSoal = status;
+        if (status == 'New') {
+            var isiDom = ['', '', '', '', '', ''];
+            setValueDom(inputSoalElementArr, isiDom);
+            CKEDITOR.instances.soal.setData('');
+            CKEDITOR.instances.opta.setData('');
+            CKEDITOR.instances.optb.setData('');
+            CKEDITOR.instances.optc.setData('');
+            CKEDITOR.instances.optd.setData('');
+            CKEDITOR.instances.opte.setData('');
+            CKEDITOR.instances.pembahasan.setData('');
+            CKEDITOR.instances.rekomendasi.setData('');
+        } else {
+            posinputSoal = pos;
+            getSoalNo(posinputSoal);
+        }
+    }, 1000);
+
 }
 
 function getSoalNo(pos) {
@@ -2258,7 +2261,7 @@ function closeinputSoal() {
     });
     var atas = $(dom).offset().top - $(document).scrollTop();
     var kiri = $(dom).offset().left;
-    var lebar = $(dom).width() + 56;
+    var lebar = $(dom).width() + (statusinputSoal == 'New' ? 56 : 0);
     var tinggi = $(dom).height();
     $('.form-header-inputSoal').hide();
     $('.form-body-inputSoal').hide();
@@ -2270,7 +2273,7 @@ function closeinputSoal() {
         'height': tinggi + 'px',
         'top': atas + 'px',
         'left': kiri + 'px',
-        'border-radius': '3px'
+        'border-radius': (statusinputSoal == 'New' ? '3px' : '100%')
     });
     setTimeout(function () {
         $('.overlayinputSoal').hide();
