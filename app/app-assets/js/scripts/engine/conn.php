@@ -1,9 +1,9 @@
 <?php
-   $host="localhost";
-   $user="root";
-   $pass="";
-   $database = "posi";
-   $conn=mysqli_connect($host,$user,$pass,$database) or die("Koneksi gagal");
+$host = "localhost";
+$user = "root";
+$pass = "";
+$database = "posi";
+$conn = mysqli_connect($host, $user, $pass, $database) or die("Koneksi gagal");
 
    // define("RDS_HOSTNAME", $_SERVER["RDS_HOSTNAME"]);
    // define("RDS_PORT", $_SERVER["RDS_PORT"]);
@@ -17,5 +17,3 @@
    // $database = RDS_DB_NAME;
    // $port = RDS_PORT;
    // $conn=mysqli_connect($host,$user,$pass,$database,$port) or die("Koneksi gagal");
-
-?>

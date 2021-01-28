@@ -146,11 +146,16 @@ if ($token == privateHashing(gettodayShort())) {
                         </thead>
                         <tbody id="listHist">';
             $no = 1;
+            
             while ($r = mysqli_fetch_array($res)) {
-                
-                $mulai = explode(' ',$r['mulai_pelaksanaan']);
-                $akhir = explode(' ',$r['akhir_pelaksanaan']);
-                $modal = array($r['subjek'],$r['bidang_studi'],$mulai[0],$mulai[1],$akhir[0],$akhir[1],$r['chat_group'],$r['atom'],$r['gold'],$r['silver'],$r['bronze'],str_replace('"', 'KMA',str_replace('[', 'FLG',str_replace(']', "FRG",$r['jenjang']))),str_replace('"', 'KMA',str_replace('[', 'FLG',str_replace(']', "FRG",$r['kisi']))));
+                $isSubject = '';
+                $dataSubject = json_decode($r["jenjang"], false);
+                foreach ($dataSubject as $row) {
+                    $isSubject .= $row . ' ';
+                }
+                $mulai = explode(' ', $r['mulai_pelaksanaan']);
+                $akhir = explode(' ', $r['akhir_pelaksanaan']);
+                $modal = array($r['subjek'], $r['bidang_studi'], $mulai[0], $mulai[1], $akhir[0], $akhir[1], $r['chat_group'], $r['atom'], $r['gold'], $r['silver'], $r['bronze'], str_replace('"', 'KMA', str_replace('[', 'FLG', str_replace(']', "FRG", $r['jenjang']))), str_replace('"', 'KMA', str_replace('[', 'FLG', str_replace(']', "FRG", $r['kisi']))));
                 $disp .= '<tr>
                             <td>' . ($no++) . '</td>
                             <td>' . $r['subjek'] . '</td>
@@ -159,17 +164,17 @@ if ($token == privateHashing(gettodayShort())) {
                             <td class="right-align">' . $r['mulai_pelaksanaan'] . '</td>
                             <td class="right-align">' . $r['akhir_pelaksanaan'] . '</td>
                             <td class="right-align">
-                            <a onclick="opendaftarSoal(\''.'.btndaftarSoal'.$r['Id_subjek'].'\',\''.$r['Id_subjek'].'\')" class="btndaftarSoal'.$r['Id_subjek'].' mb-6 btn waves-effect waves-light gradient-45deg-light-blue-cyan">' . getSoal($conn,$r['Id_subjek']) . '</a>
+                            <a onclick="opendaftarSoal(\'' . '.btndaftarSoal' . $r['Id_subjek'] . '\',\'' . $r['Id_subjek'] . '\',\'' . $r['bidang_studi'] . '\',\'' . $r['subjek'] . '\',\'' . $isSubject . '\')" class="btndaftarSoal' . $r['Id_subjek'] . ' mb-6 btn waves-effect waves-light gradient-45deg-light-blue-cyan">' . getSoal($conn, $r['Id_subjek']) . '</a>
                             </td>
                             <td class="right-align">
                             <a onclick="openoverlayListOfAllDataMember(\'' . '.BtnListOfAllMember' . $r["Id_subjek"] . '\',\'' . $r["Id_subjek"] . '\',\'' . $Id_event . '\')"
-                                class="BtnListOfAllMember' . $r["Id_subjek"] . ' mb-6 btn waves-effect waves-light gradient-45deg-green-teal">' . getFollower($conn,$r['Id_subjek']) . '</a>
+                                class="BtnListOfAllMember' . $r["Id_subjek"] . ' mb-6 btn waves-effect waves-light gradient-45deg-green-teal">' . getFollower($conn, $r['Id_subjek']) . '</a>
                             </td>
                             <td class="right-align">';
-                                // <a class="mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber btnformBidang'.$r['Id_subjek'].'" onclick="openformBidang(\''.'.btnformBidang'.$r['Id_subjek'].'\',\''.'Edit'.'\',\''.$r['Id_subjek'].'\',\''.murnikanJson($modal).'\')">
-                                //     <i class="material-icons">edit</i>
-                                // </a>
-                        $disp.='</td>
+                // <a class="mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber btnformBidang'.$r['Id_subjek'].'" onclick="openformBidang(\''.'.btnformBidang'.$r['Id_subjek'].'\',\''.'Edit'.'\',\''.$r['Id_subjek'].'\',\''.murnikanJson($modal).'\')">
+                //     <i class="material-icons">edit</i>
+                // </a>
+                $disp .= '</td>
                             <td class="right-align">
                                 <a class="mb-6 btn-floating waves-effect waves-light gradient-45deg-purple-deep-orange">
                                     <i class="material-icons">delete</i>
@@ -191,39 +196,43 @@ if ($token == privateHashing(gettodayShort())) {
             $Id_event = anti_Injection($_REQUEST['id_event']);
             $arrResp = array();
             // ambil subjek event 
-            $res = mysqli_query($conn,"SELECT subjek, tahun, bulan, hari FROM tb_event WHERE Id_event = '$Id_event'");
+            $res = mysqli_query($conn, "SELECT subjek, tahun, bulan, hari FROM tb_event WHERE Id_event = '$Id_event'");
             $r = mysqli_fetch_assoc($res);
-            array_push($arrResp, array('subjek'=>$r['subjek'],
-                                       'tglevent'=>$r['tahun'].'-'.$r['bulan'].'-'.$r['hari']));
-            
+            array_push($arrResp, array(
+                'subjek' => $r['subjek'],
+                'tglevent' => $r['tahun'] . '-' . $r['bulan'] . '-' . $r['hari']
+            ));
+
             // ambil jenjang
-            $res = mysqli_query($conn,"SELECT * FROM dft_jenjang");
+            $res = mysqli_query($conn, "SELECT * FROM dft_jenjang");
             $jenjang = array();
-            $subjek = json_decode($r['subjek'],false);
-            while($r = mysqli_fetch_array($res)){
-                if(in_array($r['subjek'],$subjek)){
-                    array_push($jenjang,array('jenjang'=>$r['jenjang'],
-                                               'subjek'=>$r['subjek']));
+            $subjek = json_decode($r['subjek'], false);
+            while ($r = mysqli_fetch_array($res)) {
+                if (in_array($r['subjek'], $subjek)) {
+                    array_push($jenjang, array(
+                        'jenjang' => $r['jenjang'],
+                        'subjek' => $r['subjek']
+                    ));
                 }
             }
-            array_push($arrResp, array('jenjang'=>$jenjang));
+            array_push($arrResp, array('jenjang' => $jenjang));
 
             // ambil bidang studi
-            $res = mysqli_query($conn,"SELECT * FROM dft_bidang_studi");
+            $res = mysqli_query($conn, "SELECT * FROM dft_bidang_studi");
             $bidang = array();
-            while($r = mysqli_fetch_array($res)){
+            while ($r = mysqli_fetch_array($res)) {
                 array_push($bidang, $r['bidang_studi']);
             }
-            array_push($arrResp, array('bidang'=>$bidang));
+            array_push($arrResp, array('bidang' => $bidang));
 
             echo json_encode($arrResp);
-            
+
             break;
         case 'saveformBidang':
             $subjek = anti_Injection($_POST['subjbidang']);
             $bidang = anti_Injection($_POST['bidang']);
-            $mulai = $_POST['tglev1'].' '.$_POST['jammulai'];
-            $akhir = $_POST['tglev2'].' '.$_POST['jamakhir'];
+            $mulai = $_POST['tglev1'] . ' ' . $_POST['jammulai'];
+            $akhir = $_POST['tglev2'] . ' ' . $_POST['jamakhir'];
             $link = anti_Injection($_POST['linktg']);
             $price = anti_Injection($_POST['price']);
             $gold = anti_Injection($_POST['gold']);
@@ -235,8 +244,8 @@ if ($token == privateHashing(gettodayShort())) {
             $id_event = anti_Injection($_POST['id_event']);
             $kisi = $_POST['kisi'];
 
-            if($status=='New'){
-                mysqli_query($conn,"INSERT INTO `tb_subjek` SET `Id_event` = '$id_event',
+            if ($status == 'New') {
+                mysqli_query($conn, "INSERT INTO `tb_subjek` SET `Id_event` = '$id_event',
                                                                  `subjek` = '$subjek',
                                                                  `jenjang` = '$jenjang',
                                                                  `bidang_studi` = '$bidang',
@@ -249,9 +258,8 @@ if ($token == privateHashing(gettodayShort())) {
                                                                  `silver` = '$silver',
                                                                  `bronze` = '$bronze'");
                 echo 'Berhasil di tambahkan';
-            }
-            else {
-                mysqli_query($conn,"UPDATE `tb_subjek` SET `Id_event` = '$id_event',
+            } else {
+                mysqli_query($conn, "UPDATE `tb_subjek` SET `Id_event` = '$id_event',
                                                                 `subjek` = '$subjek',
                                                                 `jenjang` = '$jenjang',
                                                                 `bidang_studi` = '$bidang',
@@ -264,17 +272,17 @@ if ($token == privateHashing(gettodayShort())) {
                                                                 `silver` = '$silver',
                                                                 `bronze` = '$bronze' WHERE Id_subjek = '$pos'");
                 // sekalian update ke tb kompetisi
-                mysqli_query($conn,"UPDATE tb_kompetisi SET mulai_pelaksanaan = '$mulai',
+                mysqli_query($conn, "UPDATE tb_kompetisi SET mulai_pelaksanaan = '$mulai',
                                                             akhir_pelaksanaan = '$akhir',
                                                             `kisi` = '$kisi' WHERE Id_subjek = '$pos'");
-                
+
                 echo 'berhasil diedit';
             }
             break;
         case 'getListOfAllDataMember':
-                echo ResultDataListOfAllDataMember($_REQUEST);
+            echo ResultDataListOfAllDataMember($_REQUEST);
             break;
-            case 'BidangEvent':
+        case 'BidangEvent':
             echo BidangEvent();
             break;
         case 'saveoverlayBidangEvent':
@@ -289,7 +297,7 @@ if ($token == privateHashing(gettodayShort())) {
             break;
         case 'getdaftarsoal':
             $id_subjek = anti_Injection($_REQUEST['id_subjek']);
-            $res = mysqli_query($conn,"SELECT * FROM tb_soal WHERE Id_subjek = '$id_subjek'");
+            $res = mysqli_query($conn, "SELECT * FROM tb_soal WHERE Id_subjek = '$id_subjek'");
             $disp = '<table class="responsive-table">
                     <thead>
                         <tr>
@@ -301,19 +309,34 @@ if ($token == privateHashing(gettodayShort())) {
                     </thead>
                     <tbody id="listHist">';
             $nomor = 1;
-            while($r=mysqli_fetch_array($res)){
+            while ($r = mysqli_fetch_array($res)) {
                 $contex = "Data Soal " . $row['sub_materi'];
-                $disp .='<tr>
-                            <td data-field="id" style="vertical-align:top"><p>'.($nomor++).'</p></td>
-                            <td data-field="month" style="vertical-align:top">'.$r['soal'].'<br/>
-                               <span style="display:inline-flex; width:100%"> <p style="margin-right:10px;">A. </p> '.$r['opt_a'].'</span></br>
-                               <span style="display:inline-flex; width:100%"> <p style="margin-right:10px;">B. </p> '.$r['opt_b'].'</span></br>
-                               <span style="display:inline-flex; width:100%"> <p style="margin-right:10px;">C. </p> '.$r['opt_c'].'</span></br>
-                               <span style="display:inline-flex; width:100%"> <p style="margin-right:10px;">D. </p> '.$r['opt_d'].'</span></br>
-                               '.($r['opt_e']==''?'':'<span style="display:inline-flex; width:100%"> <p style="margin-right:10px;">E. </p> '.$r['opt_e'].'</span>').'
+
+                $disp .= '<tr>
+                            <td data-field="id" style="vertical-align:top"><p>' . ($nomor++) . '</p></td>
+                            <td data-field="month" style="vertical-align:top">' . $r['soal'] . '<br/>
+                               <span style="display:inline-flex; width:100%"> <p style="margin-right: 10px;">A. </p> ' . $r['opt_a'] . '</span></br>
+                               <span style="display:inline-flex; width:100%"> <p style="margin-right: 10px;">B. </p> ' . $r['opt_b'] . '</span></br>
+                               <span style="display:inline-flex; width:100%"> <p style="margin-right: 10px;">C. </p> ' . $r['opt_c'] . '</span></br>
+                               <span style="display:inline-flex; width:100%"> <p style="margin-right: 10px;">D. </p> ' . $r['opt_d'] . '</span></br>
+                               <span style="display:inline-flex; width:100%">
+                               ' . ($r['opt_e'] == '' ? '' : '<p style="margin-right: 10px;">E. </p>' . $r['opt_e']) . '
+                               </span>
+                               <span style="width:100%">
+                                <u style="font-weight: bold; color: #000;"><p> Pembahasan : </p></u> <p>' . $r['pembahasan'] . '</p>
+                               </span>
+                               <span style="display:inline-flex; width:100%">
+                               <p> Jawaban :  </p> <p style="margin-left: 10px;">' . $r['answer'] . '</p>
+                               </span>
+                               <span style="display:inline-flex; width:100%">
+                                <p> Skor Benar :  </p> <p style="margin-left: 10px;">' . $r['score_benar'] . '</p>
+                               </span>
+                               <span style="display:inline-flex; width:100%">
+                                <p> Skor Salah :  </p> <p style="margin-left: 10px;">' . $r['score_salah'] . '</p>
+                               </span>
                             </td>
                             <td data-field="item-sold" class="right-align">
-                                <a onclick="openinputSoal(\''.'.btninputSoal'.$r['Id_soal'].'\', \''.'Edit'.'\', \''.$r['Id_soal'].'\')" class="btninputSoal'.$r['Id_soal'].' mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber">
+                                <a onclick="openinputSoal(\'' . '.btninputSoal' . $r['Id_soal'] . '\', \'' . 'Edit' . '\', \'' . $r['Id_soal'] . '\')" class="btninputSoal' . $r['Id_soal'] . ' mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber">
                                     <i class="material-icons">edit</i>
                                 </a>
                             </td>
@@ -348,12 +371,12 @@ if ($token == privateHashing(gettodayShort())) {
             $opte = $_POST['opte'];
 
             $pembahsan = $_POST['pembahasan'];
-            $rekomendasi= $_POST['rekomendasi'];
+            $rekomendasi = $_POST['rekomendasi'];
 
-            $id_subjek= $_POST['id_subjek'];
+            $id_subjek = $_POST['id_subjek'];
 
-            if($status == 'New'){
-                mysqli_query($conn,"INSERT INTO `tb_soal` SET `Id_subjek` = '$id_subjek',
+            if ($status == 'New') {
+                mysqli_query($conn, "INSERT INTO `tb_soal` SET `Id_subjek` = '$id_subjek',
                                                               `materi` = '$materi',
                                                               `sub_materi` = '$submateri',
                                                               `soal` = '$soal',
@@ -370,8 +393,8 @@ if ($token == privateHashing(gettodayShort())) {
                                                               `rekomendasi_belajar` = '$rekomendasi'");
 
                 echo 'berhasil ditambahkan';
-            } else if ($status == 'Edit'){
-                mysqli_query($conn,"UPDATE `tb_soal` SET `Id_subjek` = '$id_subjek',
+            } else if ($status == 'Edit') {
+                mysqli_query($conn, "UPDATE `tb_soal` SET `Id_subjek` = '$id_subjek',
                                                                 `materi` = '$materi',
                                                                 `sub_materi` = '$submateri',
                                                                 `soal` = '$soal',
@@ -400,25 +423,26 @@ if ($token == privateHashing(gettodayShort())) {
 
             break;
         case 'getsoalno':
-                $id_soal = $_REQUEST['id_soal'];
-                $res = mysqli_query($conn,"SELECT * FROM tb_soal WHERE Id_soal = '$id_soal'");
-                $r = mysqli_fetch_assoc($res);
-                echo json_encode(array('materi'=>$r['materi'],
-                                       'submateri'=>$r['sub_materi'],
-                                       'soal'=>$r['soal'],
-                                       'opta'=>$r['opt_a'],
-                                       'optb'=>$r['opt_b'],
-                                       'optc'=>$r['opt_c'],
-                                       'optd'=>$r['opt_d'],
-                                       'opte'=>$r['opt_e'],
-                                       'opta'=>$r['opt_a'],
-                                       'pembahasan'=>$r['pembahasan'],
-                                       'jawaban'=>$r['answer'],
-                                       'benar'=>$r['score_benar'],
-                                       'salah'=>$r['score_salah'],
-                                       'kesukaran'=>$r['tingkat_kesulitan'],
-                                       'rekomendasi'=>$r['rekomendasi_belajar']
-                                    ));
+            $id_soal = $_REQUEST['id_soal'];
+            $res = mysqli_query($conn, "SELECT * FROM tb_soal WHERE Id_soal = '$id_soal'");
+            $r = mysqli_fetch_assoc($res);
+            echo json_encode(array(
+                'materi' => $r['materi'],
+                'submateri' => $r['sub_materi'],
+                'soal' => $r['soal'],
+                'opta' => $r['opt_a'],
+                'optb' => $r['opt_b'],
+                'optc' => $r['opt_c'],
+                'optd' => $r['opt_d'],
+                'opte' => $r['opt_e'],
+                'opta' => $r['opt_a'],
+                'pembahasan' => $r['pembahasan'],
+                'jawaban' => $r['answer'],
+                'benar' => $r['score_benar'],
+                'salah' => $r['score_salah'],
+                'kesukaran' => $r['tingkat_kesulitan'],
+                'rekomendasi' => $r['rekomendasi_belajar']
+            ));
             break;
         case 'getDataDetailHasilUjian':
             echo ResultDataDetailHasilUjian($_REQUEST);

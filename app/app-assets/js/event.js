@@ -1400,7 +1400,9 @@ function openformBidang(dom, status, pos, modal) {
         }
     }, 200);
     setTimeout(function() {
-        $('body').css({ 'overflow-y': 'hidden' });
+        $('body').css({
+            'overflow-y': 'hidden'
+        });
         $('.form-header-formBidang').show();
         $('.form-body-formBidang').show();
         $('.form-footer-formBidang').show();
@@ -1471,7 +1473,9 @@ function openformBidang(dom, status, pos, modal) {
 
 function closeformBidang() {
     var dom = btnformBidang;
-    $('body').css({ 'overflow-y': 'auto' });
+    $('body').css({
+        'overflow-y': 'auto'
+    });
     var atas = $(dom).offset().top - $(document).scrollTop();
     var kiri = $(dom).offset().left;
     var lebar = $(dom).width() + (statusformBidang == 'New' ? 56 : 0);
@@ -2011,10 +2015,13 @@ function simpanOverlayJenjang() {
 var btndaftarSoal = '',
     IdGlobalSubjek = 0;
 
-function opendaftarSoal(dom, id_subjek) {
+function opendaftarSoal(dom, id_subjek, isBidang, isSubject, jenjangSubject) {
     IdGlobalSubjek = id_subjek;
     btndaftarSoal = dom;
-    $('.form-header-daftarSoal #judul').html('DAFTAR SOAL');
+    isSubject = isSubject.toUpperCase();
+    jenjangSubject = jenjangSubject.toUpperCase();
+    isBidang = isBidang.toUpperCase();
+    $('.form-header-daftarSoal #judul').html(`DAFTAR SOAL ${isBidang} ${isSubject} (${jenjangSubject})`);
     var atas = $(dom).offset().top - $(document).scrollTop();
     var kiri = $(dom).offset().left;
     var lebar = $(dom).width() + 56;
@@ -2037,7 +2044,7 @@ function opendaftarSoal(dom, id_subjek) {
     setTimeout(function() {
         if (layar > 762) {
             $('.form-daftarSoal').css({
-                'margin-left': (lebarLayar < 1400 ? -lebarLayar / 2 + 'px' : '-700px'),
+                'margin-left': (lebarLayar < 1400 ? -lebarLayar / 2 + 'px' : '-650px'),
                 'margin-top': (tinggiLayar < 700 ? -tinggiLayar / 2 + 'px' : '-350px'),
                 'width': (lebarLayar < 1400 ? lebarLayar + 'px' : '1300px'),
                 'height': (tinggiLayar < 700 ? tinggiLayar + 'px' : '700px'),
@@ -2059,7 +2066,9 @@ function opendaftarSoal(dom, id_subjek) {
         }
     }, 200);
     setTimeout(function() {
-        $('body').css({ 'overflow-y': 'hidden' });
+        $('body').css({
+            'overflow-y': 'hidden'
+        });
         $('.form-header-daftarSoal').show();
         $('.form-body-daftarSoal').show();
         $('.form-footer-daftarSoal').show();
@@ -2091,8 +2100,11 @@ function getDaftarSoal(id_subjek) {
 
 
 function closedaftarSoal() {
+    getDataSubjekBidang(IdGlobal);
     var dom = btndaftarSoal;
-    $('body').css({ 'overflow-y': 'auto' });
+    $('body').css({
+        'overflow-y': 'auto'
+    });
     var atas = $(dom).offset().top - $(document).scrollTop();
     var kiri = $(dom).offset().left;
     var lebar = $(dom).width() + 56;
@@ -2168,7 +2180,9 @@ function openinputSoal(dom, status, pos) {
         }
     }, 200);
     setTimeout(function() {
-        $('body').css({ 'overflow-y': 'hidden' });
+        $('body').css({
+            'overflow-y': 'hidden'
+        });
         $('.form-header-inputSoal').show();
         $('.form-body-inputSoal').show();
         $('.form-footer-inputSoal').show();
@@ -2179,23 +2193,25 @@ function openinputSoal(dom, status, pos) {
         $('.form-body-inputSoal').css({
             'height': hBody + 'px'
         });
+
+        statusinputSoal = status;
+        if (status == 'New') {
+            var isiDom = ['', '', '', '', '', ''];
+            setValueDom(inputSoalElementArr, isiDom);
+            CKEDITOR.instances.soal.setData('');
+            CKEDITOR.instances.opta.setData('');
+            CKEDITOR.instances.optb.setData('');
+            CKEDITOR.instances.optc.setData('');
+            CKEDITOR.instances.optd.setData('');
+            CKEDITOR.instances.opte.setData('');
+            CKEDITOR.instances.pembahasan.setData('');
+            CKEDITOR.instances.rekomendasi.setData('');
+        } else {
+            posinputSoal = pos;
+            getSoalNo(posinputSoal);
+        }
     }, 1000);
-    statusinputSoal = status;
-    if (status == 'New') {
-        var isiDom = ['', '', '', '', '', ''];
-        setValueDom(inputSoalElementArr, isiDom);
-        CKEDITOR.instances.soal.setData('');
-        CKEDITOR.instances.opta.setData('');
-        CKEDITOR.instances.optb.setData('');
-        CKEDITOR.instances.optc.setData('');
-        CKEDITOR.instances.optd.setData('');
-        CKEDITOR.instances.opte.setData('');
-        CKEDITOR.instances.pembahasan.setData('');
-        CKEDITOR.instances.rekomendasi.setData('');
-    } else {
-        posinputSoal = pos;
-        getSoalNo(posinputSoal);
-    }
+
 }
 
 function getSoalNo(pos) {
@@ -2240,7 +2256,9 @@ function getSoalNo(pos) {
 
 function closeinputSoal() {
     var dom = btninputSoal;
-    $('body').css({ 'overflow-y': 'auto' });
+    $('body').css({
+        'overflow-y': 'auto'
+    });
     var atas = $(dom).offset().top - $(document).scrollTop();
     var kiri = $(dom).offset().left;
     var lebar = $(dom).width() + (statusinputSoal == 'New' ? 56 : 0);
