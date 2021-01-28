@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 session_start();
 require 'conn.php';
 require 'function.php';
@@ -137,6 +138,7 @@ if ($token == privateHashing(gettodayShort())) {
                                 <th data-field="month">Bidang</th>
                                 <th data-field="item-sold" class="right-align">Mulai</th>
                                 <th data-field="item-sold" class="right-align">Selesai</th>
+                                <th data-field="item-sold" class="right-align">Soal</th>
                                 <th data-field="item-sold" class="right-align">Peserta</th>
                                 <th data-field="item-sold" class="right-align">Edit</th>
                                 <th data-field="item-sold" class="right-align">Hapus</th>
@@ -148,7 +150,7 @@ if ($token == privateHashing(gettodayShort())) {
                 
                 $mulai = explode(' ',$r['mulai_pelaksanaan']);
                 $akhir = explode(' ',$r['akhir_pelaksanaan']);
-                $modal = array($r['subjek'],$r['bidang_studi'],$mulai[0],$mulai[1],$akhir[0],$akhir[1],$r['chat_group'],$r['atom'],$r['gold'],$r['silver'],$r['bronze'],str_replace('"', 'KMA',str_replace('[', 'FLG',str_replace(']', "FRG",$r['jenjang']))));
+                $modal = array($r['subjek'],$r['bidang_studi'],$mulai[0],$mulai[1],$akhir[0],$akhir[1],$r['chat_group'],$r['atom'],$r['gold'],$r['silver'],$r['bronze'],str_replace('"', 'KMA',str_replace('[', 'FLG',str_replace(']', "FRG",$r['jenjang']))),str_replace('"', 'KMA',str_replace('[', 'FLG',str_replace(']', "FRG",$r['kisi']))));
                 $disp .= '<tr>
                             <td>' . ($no++) . '</td>
                             <td>' . $r['subjek'] . '</td>
@@ -156,6 +158,9 @@ if ($token == privateHashing(gettodayShort())) {
                             <td>' . $r['bidang_studi'] . '</td>
                             <td class="right-align">' . $r['mulai_pelaksanaan'] . '</td>
                             <td class="right-align">' . $r['akhir_pelaksanaan'] . '</td>
+                            <td class="right-align">
+                            <a onclick="opendaftarSoal(\''.'.btndaftarSoal'.$r['Id_subjek'].'\',\''.$r['Id_subjek'].'\')" class="btndaftarSoal'.$r['Id_subjek'].' mb-6 btn waves-effect waves-light gradient-45deg-light-blue-cyan">' . getSoal($conn,$r['Id_subjek']) . '</a>
+                            </td>
                             <td class="right-align">
                             <a onclick="openoverlayListOfAllDataMember(\'' . '.BtnListOfAllMember' . $r["Id_subjek"] . '\',\'' . $r["Id_subjek"] . '\',\'' . $Id_event . '\')"
                                 class="BtnListOfAllMember' . $r["Id_subjek"] . ' mb-6 btn waves-effect waves-light gradient-45deg-green-teal">' . getFollower($conn,$r['Id_subjek']) . '</a>
@@ -228,6 +233,7 @@ if ($token == privateHashing(gettodayShort())) {
             $pos = anti_Injection($_POST['pos']);
             $status = anti_Injection($_POST['status']);
             $id_event = anti_Injection($_POST['id_event']);
+            $kisi = $_POST['kisi'];
 
             if($status=='New'){
                 mysqli_query($conn,"INSERT INTO `tb_subjek` SET `Id_event` = '$id_event',
@@ -236,7 +242,7 @@ if ($token == privateHashing(gettodayShort())) {
                                                                  `bidang_studi` = '$bidang',
                                                                  `mulai_pelaksanaan`  = '$mulai',
                                                                  `akhir_pelaksanaan`  = '$akhir',
-                                                                 `kisi` = '',
+                                                                 `kisi` = '$kisi',
                                                                  `chat_group` = '$link',
                                                                  `atom` = '$price',
                                                                  `gold` = '$gold',
@@ -251,11 +257,17 @@ if ($token == privateHashing(gettodayShort())) {
                                                                 `bidang_studi` = '$bidang',
                                                                 `mulai_pelaksanaan`  = '$mulai',
                                                                 `akhir_pelaksanaan`  = '$akhir',
+                                                                `kisi` = '$kisi',
                                                                 `chat_group` = '$link',
                                                                 `atom` = '$price',
                                                                 `gold` = '$gold',
                                                                 `silver` = '$silver',
                                                                 `bronze` = '$bronze' WHERE Id_subjek = '$pos'");
+                // sekalian update ke tb kompetisi
+                mysqli_query($conn,"UPDATE tb_kompetisi SET mulai_pelaksanaan = '$mulai',
+                                                            akhir_pelaksanaan = '$akhir',
+                                                            `kisi` = '$kisi' WHERE Id_subjek = '$pos'");
+                
                 echo 'berhasil diedit';
             }
             break;
@@ -274,6 +286,148 @@ if ($token == privateHashing(gettodayShort())) {
             break;
         case 'saveOverlayJenjang':
             echo ResultDataJenjang($_POST);
+            break;
+        case 'getdaftarsoal':
+            $id_subjek = anti_Injection($_REQUEST['id_subjek']);
+            $res = mysqli_query($conn,"SELECT * FROM tb_soal WHERE Id_subjek = '$id_subjek'");
+            $disp = '<table class="responsive-table">
+                    <thead>
+                        <tr>
+                            <th data-field="id">No</th>
+                            <th data-field="month">Soal</th>
+                            <th data-field="month">Opt A</th>
+                            <th data-field="month">Opt B</th>
+                            <th data-field="month">Opt C</th>
+                            <th data-field="month">Opt D</th>
+                            <th data-field="month">Opt E</th>
+                            <th data-field="month">Jawaban</th>
+                            <th data-field="item-sold" class="right-align">Edit</th>
+                            <th data-field="item-sold" class="right-align">Hapus</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listHist">';
+            $nomor = 1;
+            while($r=mysqli_fetch_array($res)){
+                $contex = "Data Soal " . $row['sub_materi'];
+                $disp .='<tr>
+                            <td data-field="id">'.($nomor++).'</td>
+                            <td data-field="month">'.$r['soal'].'</td>
+                            <td data-field="month">'.$r['opt_a'].'</td>
+                            <td data-field="month">'.$r['opt_b'].'</td>
+                            <td data-field="month">'.$r['opt_c'].'</td>
+                            <td data-field="month">'.$r['opt_d'].'</td>
+                            <td data-field="month">'.$r['opt_e'].'</td>
+                            <td data-field="month">'.$r['answer'].'</td>
+                            <td data-field="item-sold" class="right-align">
+                                <a onclick="openinputSoal(\''.'.btninputSoal'.$r['Id_soal'].'\', \''.'Edit'.'\', \''.$r['Id_soal'].'\')" class="btninputSoal'.$r['Id_soal'].' mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                            </td>
+                            <td data-field="item-sold" class="right-align">
+                                <a style="cursor: pointer" meta-data="+ Delete entry"
+                                    onclick="openDeleteItem(\'' . 'Hapus' . '\',\'' . $r['Id_soal'] . '\',\'' . $contex . '\',\'' . 'saveSoal' . '\')"
+                                    class="invoice-action-edit btn btn-floating waves-effect waves-light pink accent-2 breadcrumbs-btn right">
+                                        <i class="material-icons">delete</i>
+                                </a>
+                            </td>
+                        </tr>';
+            }
+            echo $disp . '</tbody>
+            </table>';
+
+            break;
+        case 'saveSoal':
+            $materi = anti_Injection($_POST['materi']);
+            $submateri = anti_Injection($_POST['submateri']);
+            $jawaban = anti_Injection($_POST['jawaban']);
+            $scoreBenar = anti_Injection($_POST['scorebenar']);
+            $scoreSalah = anti_Injection($_POST['scoresalah']);
+            $kesulitan = anti_Injection($_POST['kesulitan']);
+            $pos = anti_Injection($_POST['pos']);
+            $status = anti_Injection($_POST['status']);
+
+            $soal = $_POST['soal'];
+            $opta = $_POST['opta'];
+            $optb = $_POST['optb'];
+            $optc = $_POST['optc'];
+            $optd = $_POST['optd'];
+            $opte = $_POST['opte'];
+
+            $pembahsan = $_POST['pembahasan'];
+            $rekomendasi= $_POST['rekomendasi'];
+
+            $id_subjek= $_POST['id_subjek'];
+
+            if($status == 'New'){
+                mysqli_query($conn,"INSERT INTO `tb_soal` SET `Id_subjek` = '$id_subjek',
+                                                              `materi` = '$materi',
+                                                              `sub_materi` = '$submateri',
+                                                              `soal` = '$soal',
+                                                              `opt_a` = '$opta',
+                                                              `opt_b` = '$optb',
+                                                              `opt_c` = '$optc',
+                                                              `opt_d` = '$optd',
+                                                              `opt_e` = '$opte',
+                                                              `pembahasan` = '$pembahsan',
+                                                              `answer` = '$jawaban',
+                                                              `score_benar` = '$scoreBenar',
+                                                              `score_salah` = '$scoreSalah',
+                                                              `tingkat_kesulitan` = '$kesulitan',
+                                                              `rekomendasi_belajar` = '$rekomendasi'");
+
+                echo 'berhasil ditambahkan';
+            } else if ($status == 'Edit'){
+                mysqli_query($conn,"UPDATE `tb_soal` SET `Id_subjek` = '$id_subjek',
+                                                                `materi` = '$materi',
+                                                                `sub_materi` = '$submateri',
+                                                                `soal` = '$soal',
+                                                                `opt_a` = '$opta',
+                                                                `opt_b` = '$optb',
+                                                                `opt_c` = '$optc',
+                                                                `opt_d` = '$optd',
+                                                                `opt_e` = '$opte',
+                                                                `pembahasan` = '$pembahsan',
+                                                                `answer` = '$jawaban',
+                                                                `score_benar` = '$scoreBenar',
+                                                                `score_salah` = '$scoreSalah',
+                                                                `tingkat_kesulitan` = '$kesulitan',
+                                                                `rekomendasi_belajar` = '$rekomendasi' WHERE Id_soal = '$pos'");
+
+                echo 'berhasil diedit';
+            } else if ($status == 'Hapus') {
+                $query = "DELETE FROM `tb_soal` WHERE `Id_soal` = '$pos'";
+
+                if (ProsesData($query) > 0) {
+                    echo "Data Berhasil Dihapus";
+                } else {
+                    echo "Proses Gagal";
+                }
+            }
+
+            break;
+        case 'getsoalno':
+                $id_soal = $_REQUEST['id_soal'];
+                $res = mysqli_query($conn,"SELECT * FROM tb_soal WHERE Id_soal = '$id_soal'");
+                $r = mysqli_fetch_assoc($res);
+                echo json_encode(array('materi'=>$r['materi'],
+                                       'submateri'=>$r['sub_materi'],
+                                       'soal'=>$r['soal'],
+                                       'opta'=>$r['opt_a'],
+                                       'optb'=>$r['opt_b'],
+                                       'optc'=>$r['opt_c'],
+                                       'optd'=>$r['opt_d'],
+                                       'opte'=>$r['opt_e'],
+                                       'opta'=>$r['opt_a'],
+                                       'pembahasan'=>$r['pembahasan'],
+                                       'jawaban'=>$r['answer'],
+                                       'benar'=>$r['score_benar'],
+                                       'salah'=>$r['score_salah'],
+                                       'kesukaran'=>$r['tingkat_kesulitan'],
+                                       'rekomendasi'=>$r['rekomendasi_belajar']
+                                    ));
+            break;
+        case 'getDataDetailHasilUjian':
+            echo ResultDataDetailHasilUjian($_REQUEST);
             break;
     }
 } else {

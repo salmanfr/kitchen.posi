@@ -10,15 +10,16 @@ if (CKEDITOR.env.ie && CKEDITOR.env.version < 9)
 
 // The trick to keep the editor in the sample quite small
 // unless user specified own height.
-CKEDITOR.config.height = 350;
+
 CKEDITOR.config.width = 'auto';
+CKEDITOR.config.height = 350;
 
 var initSample = (function() {
     var wysiwygareaAvailable = isWysiwygareaAvailable(),
         isBBCodeBuiltIn = !!CKEDITOR.plugins.get('bbcode');
 
-    return function() {
-        var editorElement = CKEDITOR.document.getById('deskripsi');
+    return function(domId, tinggi) {
+        var editorElement = CKEDITOR.document.getById(domId);
 
         // :(((
         if (isBBCodeBuiltIn) {
@@ -30,10 +31,10 @@ var initSample = (function() {
 
         // Depending on the wysiwygarea plugin availability initialize classic or inline editor.
         if (wysiwygareaAvailable) {
-            CKEDITOR.replace('deskripsi', {
+            CKEDITOR.replace(domId, {
                 extraPlugins: 'ckeditor_wiris,mathjax',
                 mathJaxLib: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML',
-                height: 320
+                height: tinggi
             });
 
             if (CKEDITOR.env.ie && CKEDITOR.env.version == 8) {
@@ -43,7 +44,7 @@ var initSample = (function() {
 
         } else {
             editorElement.setAttribute('contenteditable', 'true');
-            CKEDITOR.inline('deskripsi');
+            CKEDITOR.inline(domId);
 
             // TODO we can consider displaying some info box that
             // without wysiwygarea the classic editor may not work.

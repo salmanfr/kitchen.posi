@@ -110,7 +110,7 @@
                         <li class="divider"></li>
                         <li><a class="grey-text text-darken-1" href="user-lock-screen.html"><i
                                     class="material-icons">lock_outline</i> Lock</a></li>
-                        <li><a class="grey-text text-darken-1" href="user-login.html"><i
+                        <li><a class="grey-text text-darken-1" href="../exit.php"><i
                                     class="material-icons">keyboard_tab</i> Logout</a></li>
                     </ul>
                 </div>
@@ -1004,6 +1004,14 @@
                         <label for="bidang">Bidang Ujian</label>
                     </div>
                 </div>
+                <div class="row" id="silabusids">
+                    <div class="input-field col s12" id="silabusid">
+                        <i class="material-icons prefix">view_list</i>
+                        <input id="silabus" type="text" autocomplete="off">
+                        <label for="silabus">Silabus (Ketik lalu enter)</label>
+                    </div>
+                </div>
+                <div class="daftarSilabus"></div>
                 <div class="row">
                     <div class="input-field col m6 s6 tglev1" id="tglev1id">
                         <i class="material-icons prefix">today</i>
@@ -1139,7 +1147,151 @@
             </div>
         </div>
     </div>
+    <div class="overlaydaftarSoal">
+        <div class="form-daftarSoal">
+            <div class="form-header-daftarSoal">
+                <h5 id="judul">daftarSoal </h5>
+                <div class="btnclose" onclick="closedaftarSoal()">
+                    <i class="material-icons">close</i>
+                </div>
+            </div>
+            <div class="form-body-daftarSoal">
+
+            </div>
+            <div class="form-footer-daftarSoal">
+                <a class="mb-6 btn waves-effect waves-light gradient-45Deg-amber-amber btninputSoal" onclick="openinputSoal('.btninputSoal','New','', '')"> Tambah</a>
+            </div>
+        </div>
+    </div>
     <!-- END For Overlay Tombol Jenjang -->
+
+
+    <div class=" overlayinputSoal ">
+        <div class="form-inputSoal ">
+            <div class="form-header-inputSoal ">
+                <h5 id="judul"></h5>
+                <div class="btnclose " onclick="closeinputSoal() ">
+                    <i class="material-icons ">close</i>
+                </div>
+            </div>
+            <div class="form-body-inputSoal ">
+                <div class="row" id="materiids">
+                    <div class="input-field col s12" id="materiid">
+                        <i class="material-icons prefix">link</i>
+                        <input id="materi" type="text" autocomplete="off">
+                        <label for="materi">Materi</label>
+                    </div>
+                </div>
+                <div class="row" id="submateriids">
+                    <div class="input-field col s12" id="submateriid">
+                        <i class="material-icons prefix">link</i>
+                        <input id="submateri" type="text" autocomplete="off">
+                        <label for="submateri">Sub Materi</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="margin-left: 30px; margin-top:10px; font-weight: bold; color: #000;">SOAL</div>
+                    <div class="input-field col s12">
+                        <textarea id="soal" class="materialize-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="margin-left: 30px; margin-top:10px; font-weight: bold; color: #000;">OPTION A</div>
+                    <div class="input-field col s12">
+                        <textarea id="opta" class="materialize-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="margin-left: 30px; margin-top:10px; font-weight: bold; color: #000;">OPTION B</div>
+                    <div class="input-field col s12">
+                        <textarea id="optb" class="materialize-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="margin-left: 30px; margin-top:10px; font-weight: bold; color: #000;">OPTION C</div>
+                    <div class="input-field col s12">
+                        <textarea id="optc" class="materialize-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="margin-left: 30px; margin-top:10px; font-weight: bold; color: #000;">OPTION D</div>
+                    <div class="input-field col s12">
+                        <textarea id="optd" class="materialize-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="margin-left: 30px; margin-top:10px; font-weight: bold; color: #000;">OPTION E</div>
+                    <div class="input-field col s12">
+                        <textarea id="opte" class="materialize-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="margin-left: 30px; margin-top:10px; font-weight: bold; color: #000;">PEMBAHASAN</div>
+                    <div class="input-field col s12">
+                        <textarea id="pembahasan" class="materialize-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="row" id="jawabanids">
+                    <div class="input-field col s12" id="jawabanid">
+                        <i class="material-icons prefix">link</i>
+                        <input id="jawaban" type="text" autocomplete="off" readonly class="inpCombo" meta-data="jawaban">
+                        <label for="jawaban">Jawaban</label>
+                    </div>
+                </div>
+                <div class="row" id="scorebenarids">
+                    <div class="input-field col s12" id="scorebenarid">
+                        <i class="material-icons prefix">link</i>
+                        <input id="scorebenar" type="text" autocomplete="off">
+                        <label for="scorebenar">Score Benar</label>
+                    </div>
+                </div>
+                <div class="row" id="scoresalahids">
+                    <div class="input-field col s12" id="scoresalahid">
+                        <i class="material-icons prefix">link</i>
+                        <input id="scoresalah" type="text" autocomplete="off">
+                        <label for="scoresalah">Score Salah</label>
+                    </div>
+                </div>
+                <div class="row" id="kesulitanids">
+                    <div class="input-field col s12" id="kesulitanid">
+                        <i class="material-icons prefix">link</i>
+                        <input id="kesulitan" type="text" autocomplete="off" readonly class="inpCombo" meta-data="kesulitan">
+                        <label for="kesulitan">Tingkat Kesulitan</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="margin-left: 30px; margin-top:10px; font-weight: bold; color: #000;">REKOMENDASI BELAJAR</div>
+                    <div class="input-field col s12">
+                        <textarea id="rekomendasi" class="materialize-textarea"></textarea>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="form-footer-inputSoal ">
+                <a class="mb-6 btn waves-effect waves-light gradient-45Deg-amber-amber kanan " onclick="simpaninputSoal() "> Simpan</a>
+            </div>
+        </div>
+    </div>
+    <!-- For Overlay Tombol Detail Hasil Ujian -->
+
+    <div class="overlayDetailHasilUjian">
+        <div class="form-DetailHasilUjian">
+            <div class="form-header-DetailHasilUjian">
+                <h5 id="judul">DetailHasilUjian </h5>
+                <div class="btnclose" onclick="closeDetailHasilUjian()">
+                    <i class="material-icons">close</i>
+                </div>
+            </div>
+            <div class="form-body-DetailHasilUjian">
+                <!-- Any Thing Else -->
+            </div>
+            <div class="form-footer-DetailHasilUjian">
+                <a class="mb-6 btn waves-effect waves-light gradient-45Deg-amber-amber kanan" onclick="simpanDetailHasilUjian()"> Simpan</a>
+            </div>
+        </div>
+    </div>
+    <!-- END For Overlay Tombol Detail Hasil Ujian -->
 
     <script src="app-assets/js/vendors.min.js "></script>
     <!-- BEGIN VENDOR JS-->
@@ -1147,7 +1299,7 @@
 
     <script src="app-assets/vendors/sparkline/jquery.sparkline.min.js "></script>
     <script src="app-assets/vendors/chartjs/chart.min.js "></script>
-    <script type="text/javascript" src="app-assets/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript " src="app-assets/ckeditor/ckeditor.js "></script>
     <!-- END PAGE VENDOR JS-->
     <!-- BEGIN THEME  JS-->
 
@@ -1158,18 +1310,18 @@
     <!-- END THEME  JS-->
     <!-- BEGIN PAGE LEVEL JS-->
     <script src="app-assets/js/scripts/dashboard-analytics.min.js "></script>
-    <script src="app-assets/js/scripts/tambahan-event.js"></script>
+    <script src="app-assets/js/scripts/tambahan-event.js "></script>
     <script src="app-assets/js/event.js "></script>
     <script src="app-assets/js/setupTablePagination.js "></script>
-    <script src="app-assets/js/setckeditor.js"></script>
+    <script src="app-assets/js/setckeditor.js "></script>
 
-    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-MML-AM_CHTML"></script>
+    <script type="text/javascript " async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-MML-AM_CHTML "></script>
 
     <!-- END PAGE LEVEL JS-->
-    <div class="tooltips">
+    <div class="tooltips ">
         <span></span>
     </div>
-    <div class="loadUtama">
+    <div class="loadUtama ">
         <img src="app-assets/coolloading.gif ">
     </div>
 </body>

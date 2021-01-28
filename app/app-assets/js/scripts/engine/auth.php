@@ -9,7 +9,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $user = anti_Injection($_POST['user']);
         $pass = privateHashing(anti_Injection($_POST['pass']));
 
-        $res = mysqli_query($conn,"SELECT * FROM tb_member WHERE email = '$user' LIMIT 1");
+        $res = mysqli_query($conn,"SELECT * FROM tb_appbender WHERE email = '$user' LIMIT 1");
         $r = mysqli_fetch_assoc($res);
         $password = $r['password'];
         if($pass == $password && $user !=''){

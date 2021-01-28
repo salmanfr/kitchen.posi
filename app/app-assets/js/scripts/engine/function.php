@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 function gettoday()
 {
   $date = time();
@@ -364,11 +365,11 @@ function getJlhMemberKontext($conn, $kontext)
 }
 function getOriginalLink()
 {
-  return 'http://localhost/';
+  return 'http://kitchen.posi.id/';
 }
 function getAssetslLink()
 {
-  return 'http://localhost/';
+  return 'http://assets.folder.posi.id/';
 }
 function uploadMyImageString($name, $file)
 {
@@ -377,7 +378,7 @@ function uploadMyImageString($name, $file)
     'name' => $name,
     'file'   => $file,
   ];
-  $ch = curl_init(getAssetslLink() . '/posiassets/upl.php');
+  $ch = curl_init(getAssetslLink() . 'upl.php');
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
 
@@ -459,7 +460,12 @@ function getFollower($conn, $id_subjek)
   return $r['jlh'];
 }
 
-
+function getSoal($conn, $id_subjek)
+{
+  $res = mysqli_query($conn, "SELECT COUNT(Id_soal) as jlh FROM tb_soal WHERE Id_subjek = '$id_subjek'");
+  $r = mysqli_fetch_assoc($res);
+  return $r['jlh'];
+}
 
 function getDataByIdMember($conn, $id)
 {

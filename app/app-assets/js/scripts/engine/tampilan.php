@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 function dispDashboard($conn)
 {
     $guru  = getJlhMemberKontext($conn, 'Guru');
@@ -292,10 +293,8 @@ function timeLine($conn, $subjek, $tahun, $Id_member)
     $k = 0;
     $disp = "";
     while ($r = mysqli_fetch_array($res)) {
-        $subj = json_decode($r['subjek'], false);
-        if (in_array($subjek, $subj)) {
             $k++;
-            $banner = ($r['banner_type'] == 'video' ? 'https://img.youtube.com/vi/' . $r['banner'] . '/hqdefault.jpg' : getAssetslLink() . 'posiassets/fold/' . $r['banner']);
+            $banner = ($r['banner_type'] == 'video' ? 'https://img.youtube.com/vi/' . $r['banner'] . '/hqdefault.jpg' : getAssetslLink() . 'fold/' . $r['banner']);
             if ($k % 2 == 0) {
                 $disp .= '<li class="timeline-inverted">
                                 <div class="timeline-badge green">
@@ -358,7 +357,6 @@ function timeLine($conn, $subjek, $tahun, $Id_member)
                             </div>
                         </li>';
             }
-        }
     }
 
     return '<div class="breadcrumbs-inline pt-3 pb-1" id="breadcrumbs-wrapper">
@@ -743,14 +741,18 @@ function ResultDataListOfAllDataMember($data)
     while ($r = mysqli_fetch_array($res)) {
         $nomor++;
         $info =  getDataByIdMember($conn, $r['Id_member']);
-
         if ($nomor <= $gold) {
             $result .= '<tr>
                         <td width="5%">' . ($nomor) . '</td>
                         <td width="30%">' . $info['nama'] . '</td>
                         <td width="20%">' . $info['provinsi_sekolah'] . '</td>
                         <td width="30%">' . $info['sekolah'] . '</td>
-                        <td width="5%">' . $r['nilai'] . '</td>
+                        <td width="5%">
+                            <a onclick="openDetailHasilUjian(\'' . '.btnDetailHasilUjian' . $r["Id_kompetisi"] . '\',\'' . $r["Id_kompetisi"] . '\',\'' . $r["Id_subjek"] . '\',\'' . $r["Id_member"] . '\')"
+                            class="btnDetailHasilUjian' . $r["Id_kompetisi"] . ' mb-6 btn waves-effect waves-light gradient-45deg-green-teal">
+                            ' .  ($r['nilai']==''?'0':$r['nilai']) . '
+                            </a>
+                        </td>
                         <td width="5%"> Gold </td>
                         </td>
                     </tr>';
@@ -760,7 +762,10 @@ function ResultDataListOfAllDataMember($data)
                         <td width="30%">' . $info['nama'] . '</td>
                         <td width="20%">' . $info['provinsi_sekolah'] . '</td>
                         <td width="30%">' . $info['sekolah'] . '</td>
-                        <td width="5%">' . $r['nilai'] . '</td>
+                        <td width="5%"> <a onclick="openDetailHasilUjian(\'' . '.btnDetailHasilUjian' . $r["Id_kompetisi"] . '\',\'' . $r["Id_kompetisi"] . '\',\'' . $r["Id_subjek"] . '\',\'' . $r["Id_member"] . '\')"
+                        class="btnDetailHasilUjian' . $r["Id_kompetisi"] . ' mb-6 btn waves-effect waves-light gradient-45deg-green-teal">
+                        ' .  ($r['nilai']==''?'0':$r['nilai']) . '
+                        </a></td>
                         <td width="5%"> Silver </td>
                         </td>
                     </tr>';
@@ -770,7 +775,10 @@ function ResultDataListOfAllDataMember($data)
                         <td width="30%">' . $info['nama'] . '</td>
                         <td width="20%">' . $info['provinsi_sekolah'] . '</td>
                         <td width="30%">' . $info['sekolah'] . '</td>
-                        <td width="5%">' . $r['nilai'] . '</td>
+                        <td width="5%"> <a onclick="openDetailHasilUjian(\'' . '.btnDetailHasilUjian' . $r["Id_kompetisi"] . '\',\'' . $r["Id_kompetisi"] . '\',\'' . $r["Id_subjek"] . '\',\'' . $r["Id_member"] . '\')"
+                        class="btnDetailHasilUjian' . $r["Id_kompetisi"] . ' mb-6 btn waves-effect waves-light gradient-45deg-green-teal">
+                        ' .  ($r['nilai']==''?'0':$r['nilai']) . '
+                        </a></td>
                         <td width="5%"> Bronze </td>
                         </td>
                     </tr>';
@@ -780,7 +788,10 @@ function ResultDataListOfAllDataMember($data)
                             <td width="30%">' . $info['nama'] . '</td>
                             <td width="20%">' . $info['provinsi_sekolah'] . '</td>
                             <td width="30%">' . $info['sekolah'] . '</td>
-                            <td width="5%">' . $r['nilai'] . '</td>
+                            <td width="5%"> <a onclick="openDetailHasilUjian(\'' . '.btnDetailHasilUjian' . $r["Id_kompetisi"] . '\',\'' . $r["Id_kompetisi"] . '\',\'' . $r["Id_subjek"] . '\',\'' . $r["Id_member"] . '\')"
+                            class="btnDetailHasilUjian' . $r["Id_kompetisi"] . ' mb-6 btn waves-effect waves-light gradient-45deg-green-teal">
+                            ' .  ($r['nilai']==''?'0':$r['nilai']) . '
+                            </a></td>
                             <td width="5%"> </td>
                             </td>
                         </tr>';
@@ -1022,3 +1033,177 @@ function Jenjang()
             </div>';
 }
 
+function ResultDataDetailHasilUjian($data)
+{
+    $idKompetisi = anti_Injection($data["idKompetisi"]);
+    $idSubject = anti_Injection($data["idSubject"]);
+    $idMember = anti_Injection($data["idMember"]);
+    $nomor = 1;
+    $result = '';
+
+    $arrOriginal = [
+        [
+            "soal" => 1,
+            "jawaban" => "A",
+            "benar" => 4,
+            "salah" => -1
+        ],
+        [
+            "soal" => 2,
+            "jawaban" => "B",
+            "benar" => 4,
+            "salah" => -1
+        ],
+        [
+            "soal" => 3,
+            "jawaban" => "C",
+            "benar" => 4,
+            "salah" => -1
+        ],
+        [
+            "soal" => 4,
+            "jawaban" => "E",
+            "benar" => 4,
+            "salah" => -1
+        ],
+        [
+            "soal" => 5,
+            "jawaban" => "A",
+            "benar" => 4,
+            "salah" => -1
+        ],
+        [
+            "soal" => 6,
+            "jawaban" => "D",
+            "benar" => 4,
+            "salah" => -1
+        ],
+        [
+            "soal" => 7,
+            "jawaban" => "C",
+            "benar" => 4,
+            "salah" => -1
+        ],
+        [
+            "soal" => 8,
+            "jawaban" => "C",
+            "benar" => 4,
+            "salah" => -1
+        ],
+        [
+            "soal" => 9,
+            "jawaban" => "D",
+            "benar" => 4,
+            "salah" => -1
+        ],
+        [
+            "soal" => 10,
+            "jawaban" => "B",
+            "benar" => 4,
+            "salah" => -1
+        ]
+    ];
+
+    $arrPeserta = [
+        [
+            "soal" => 1,
+            "jawaban" => "A"
+        ],
+        [
+            "soal" => 2,
+            "jawaban" => "B"
+        ],
+        [
+            "soal" => 3,
+            "jawaban" => "C"
+        ],
+        [
+            "soal" => 4,
+            "jawaban" => "A"
+        ],
+        [
+            "soal" => 5,
+            "jawaban" => "B"
+        ],
+        [
+            "soal" => 6,
+            "jawaban" => "D"
+        ],
+        [
+            "soal" => 7,
+            "jawaban" => "D"
+        ],
+        [
+            "soal" => 8,
+            "jawaban" => "E"
+        ],
+        [
+            "soal" => 9,
+            "jawaban" => "D"
+        ],
+        [
+            "soal" => 10,
+            "jawaban" => "B"
+        ]
+    ];
+
+    $arrOriginal = json_encode($arrOriginal);
+    $arrPeserta = json_encode($arrPeserta);
+
+    // $query = "UPDATE `tb_kompetisi` SET
+    //          `original` = '$arrOriginal',
+    //          `jawaban_peserta` = '$arrPeserta'
+    //           WHERE `Id_kompetisi` = '19976'
+    //          ";
+    // ProsesData($query);
+
+
+    $DetailHasilUjian = query("SELECT `original`, `jawaban_peserta` FROM `tb_kompetisi` WHERE `Id_kompetisi` = '$idKompetisi' AND `Id_subjek` = '$idSubject' AND `Id_member` = '$idMember'")[0];
+    $isSoal = $DetailHasilUjian["original"];
+    $isSoal = json_decode($isSoal, true);
+    $isJawaban = $DetailHasilUjian["jawaban_peserta"];
+    $isJawaban = json_decode($isJawaban, true);
+
+    $skor = 0;
+    if (!empty($isJawaban) && !empty($isSoal)) {
+
+        foreach ($isJawaban as $j => $value) {
+            foreach ($isSoal as $i => $item) {
+                if ($value["soal"] == $item["soal"]) {
+                    if ($value["jawaban"] == $item["jawaban"]) {
+                        $skor += $item["benar"];
+                    } else {
+                        $skor += $item["salah"];
+                    }
+                    $result .= '<tr>
+                                    <td> Soal ' . $item['soal'] . '</td>
+                                    <td>' . $item['jawaban'] . '</td>
+                                    <td>' . $value['jawaban'] . '</td>
+                                    <td>' . $item["benar"] . '</td>
+                                    <td>' . $item["salah"] . '</td>
+                                    <td>' . $skor . '</td>
+                                    </tr>';
+                }
+            }
+        }
+    }
+
+
+    return '<table class="responsive-table display striped centered bordered">
+                <thead>
+                    <tr>
+                        <th>Soal</th>
+                        <th>Jawaban Benar</th>
+                        <th>Jawaban Siswa</th>
+                        <th>Skor Benar</th>
+                        <th>Skor Salah</th>
+                        <th>Nilai Skor</th>
+                    </tr>
+                </thead>
+                <tbody id="listHist">
+                    ' . $result . '
+                </tbody>
+            </table>
+            <p style="float: right; margin-right: 93px;"> Total Skor : ' . $skor . '</p>
+            ';
+}
