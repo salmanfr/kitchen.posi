@@ -146,7 +146,7 @@ if ($token == privateHashing(gettodayShort())) {
                         </thead>
                         <tbody id="listHist">';
             $no = 1;
-            
+
             while ($r = mysqli_fetch_array($res)) {
                 $isSubject = '';
                 $dataSubject = json_decode($r["jenjang"], false);
@@ -155,7 +155,7 @@ if ($token == privateHashing(gettodayShort())) {
                 }
                 $mulai = explode(' ', $r['mulai_pelaksanaan']);
                 $akhir = explode(' ', $r['akhir_pelaksanaan']);
-                $modal = array($r['subjek'], $r['bidang_studi'], $mulai[0], $mulai[1], $akhir[0], $akhir[1], $r['chat_group'], $r['atom'], $r['gold'], $r['silver'], $r['bronze'], str_replace('"', 'KMA', str_replace('[', 'FLG', str_replace(']', "FRG", $r['jenjang']))), str_replace('"', 'KMA', str_replace('[', 'FLG', str_replace(']', "FRG", $r['kisi']))));
+                // $modal = array($r['subjek'], $r['bidang_studi'], $mulai[0], $mulai[1], $akhir[0], $akhir[1], $r['chat_group'], $r['atom'], $r['gold'], $r['silver'], $r['bronze'], str_replace('"', 'KMA', str_replace('[', 'FLG', str_replace(']', "FRG", $r['jenjang']))), str_replace('"', 'KMA', str_replace('[', 'FLG', str_replace(']', "FRG", $r['kisi']))));
                 $disp .= '<tr>
                             <td>' . ($no++) . '</td>
                             <td>' . $r['subjek'] . '</td>
@@ -167,14 +167,16 @@ if ($token == privateHashing(gettodayShort())) {
                             <a onclick="opendaftarSoal(\'' . '.btndaftarSoal' . $r['Id_subjek'] . '\',\'' . $r['Id_subjek'] . '\',\'' . $r['bidang_studi'] . '\',\'' . $r['subjek'] . '\',\'' . $isSubject . '\')" class="btndaftarSoal' . $r['Id_subjek'] . ' mb-6 btn waves-effect waves-light gradient-45deg-light-blue-cyan">' . getSoal($conn, $r['Id_subjek']) . '</a>
                             </td>
                             <td class="right-align">
-                            <a onclick="openoverlayListOfAllDataMember(\'' . '.BtnListOfAllMember' . $r["Id_subjek"] . '\',\'' . $r["Id_subjek"] . '\',\'' . $Id_event . '\')"
-                                class="BtnListOfAllMember' . $r["Id_subjek"] . ' mb-6 btn waves-effect waves-light gradient-45deg-green-teal">' . getFollower($conn, $r['Id_subjek']) . '</a>
+                                <a onclick="openoverlayListOfAllDataMember(\'' . '.BtnListOfAllMember' . $r["Id_subjek"] . '\',\'' . $r["Id_subjek"] . '\',\'' . $Id_event . '\')"
+                                    class="BtnListOfAllMember' . $r["Id_subjek"] . ' mb-6 btn waves-effect waves-light gradient-45deg-green-teal">' . getFollower($conn, $r['Id_subjek']) . '
+                                </a>
                             </td>
-                            <td class="right-align">';
-                // <a class="mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber btnformBidang'.$r['Id_subjek'].'" onclick="openformBidang(\''.'.btnformBidang'.$r['Id_subjek'].'\',\''.'Edit'.'\',\''.$r['Id_subjek'].'\',\''.murnikanJson($modal).'\')">
-                //     <i class="material-icons">edit</i>
-                // </a>
-                $disp .= '</td>
+                            <td class="right-align">
+                                <a class="mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber btnformBidang' . $r['Id_subjek'] . '" 
+                                    onclick="openformBidang(\'' . '.btnformBidang' . $r['Id_subjek'] . '\',\'' . 'Edit' . '\',\'' . $r['Id_subjek'] . '\')">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                            </td>
                             <td class="right-align">
                                 <a class="mb-6 btn-floating waves-effect waves-light gradient-45deg-purple-deep-orange">
                                     <i class="material-icons">delete</i>
@@ -228,6 +230,18 @@ if ($token == privateHashing(gettodayShort())) {
             echo json_encode($arrResp);
 
             break;
+
+
+
+        case 'getDataFormBidangForEdit':
+            echo myDataFormBidangForEdit($_REQUEST);
+            break;
+
+
+
+
+
+
         case 'saveformBidang':
             $subjek = anti_Injection($_POST['subjbidang']);
             $bidang = anti_Injection($_POST['bidang']);

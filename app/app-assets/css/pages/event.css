@@ -236,6 +236,7 @@
 }
 
 @media only screen and (max-width: 765px) {
+
     .overlayVoucher .vouch1,
     .vouch2,
     .vouch3,
@@ -330,9 +331,11 @@
         margin-left: 0;
         top: 5%;
     }
+
     .overlayVoucher .invoiceTransfer .logoposiinv {
         height: 30px;
     }
+
     .overlayVoucher .invoiceClose {
         position: absolute;
         width: 20px;
@@ -676,6 +679,7 @@
         top: 8px;
         left: 50px;
     }
+
     .logoposis .imglogo {
         width: 80px;
         height: 40px;
@@ -1044,13 +1048,9 @@
     margin-right: 10px;
 }
 
-<<<<<<< HEAD
-/* For CSS Overlay Tombol Subject / Verifikasi */
-
-=======
 /* For CSS Overlay Tombol Subject */
 
->>>>>>>b44abc332603895a08f2f7efe1c7069a90390e2c .overlaySubjectEvent {
+.overlaySubjectEvent {
     position: fixed;
     z-index: 100000;
     top: 0;
@@ -1152,7 +1152,7 @@
 }
 
 .overlayformBidang .form-formBidang {
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
     border-radius: 5px;
     background: #fafbfc;
     transition: 0.3s;
@@ -1170,7 +1170,7 @@
 .overlayformBidang .form-formBidang .form-header-formBidang {
     width: 100%;
     height: 60px;
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1) !important;
     display: none;
 }
 
@@ -1625,7 +1625,7 @@
 }
 
 .overlaydaftarSoal .form-daftarSoal {
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
     border-radius: 5px;
     background: #fafbfc;
     transition: 0.3s;
@@ -1643,7 +1643,7 @@
 .overlaydaftarSoal .form-daftarSoal .form-header-daftarSoal {
     width: 100%;
     height: 60px;
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1) !important;
     display: none;
 }
 
@@ -1712,7 +1712,7 @@
 }
 
 .overlayinputSoal .form-inputSoal {
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .12), 0 5px 14px 0 rgba(0, 0, 0, .2) !important;
     border-radius: 5px;
     background: #fafbfc;
     transition: 0.3s;
@@ -1730,7 +1730,7 @@
 .overlayinputSoal .form-inputSoal .form-header-inputSoal {
     width: 100%;
     height: 60px;
-    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1)!important;
+    box-shadow: 0 10px 47px 0 rgba(0, 0, 0, .05), 0 5px 14px 0 rgba(0, 0, 0, .1) !important;
     display: none;
 }
 

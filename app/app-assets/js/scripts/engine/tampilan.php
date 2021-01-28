@@ -293,10 +293,10 @@ function timeLine($conn, $subjek, $tahun, $Id_member)
     $k = 0;
     $disp = "";
     while ($r = mysqli_fetch_array($res)) {
-            $k++;
-            $banner = ($r['banner_type'] == 'video' ? 'https://img.youtube.com/vi/' . $r['banner'] . '/hqdefault.jpg' : getAssetslLink() . 'fold/' . $r['banner']);
-            if ($k % 2 == 0) {
-                $disp .= '<li class="timeline-inverted">
+        $k++;
+        $banner = ($r['banner_type'] == 'video' ? 'https://img.youtube.com/vi/' . $r['banner'] . '/hqdefault.jpg' : getAssetslLink() . 'fold/' . $r['banner']);
+        if ($k % 2 == 0) {
+            $disp .= '<li class="timeline-inverted">
                                 <div class="timeline-badge green">
                                     <a class="tooltipped" data-position="top" data-tooltip="Aug 19 2019"> <i class="material-icons white-text">event</i></a>
                                 </div>
@@ -325,9 +325,9 @@ function timeLine($conn, $subjek, $tahun, $Id_member)
                                     </div>
                                 </div>
                             </li>';
-            } else {
+        } else {
 
-                $disp .= ' <li>
+            $disp .= ' <li>
                             <div class="timeline-badge yellow">
                                 <a class="tooltipped" data-position="top" data-tooltip="May 10 2019"><i class="material-icons white-text">event</i></a>
                             </div>
@@ -356,7 +356,7 @@ function timeLine($conn, $subjek, $tahun, $Id_member)
                                 </div>
                             </div>
                         </li>';
-            }
+        }
     }
 
     return '<div class="breadcrumbs-inline pt-3 pb-1" id="breadcrumbs-wrapper">
@@ -750,7 +750,7 @@ function ResultDataListOfAllDataMember($data)
                         <td width="5%">
                             <a onclick="openDetailHasilUjian(\'' . '.btnDetailHasilUjian' . $r["Id_kompetisi"] . '\',\'' . $r["Id_kompetisi"] . '\',\'' . $r["Id_subjek"] . '\',\'' . $r["Id_member"] . '\')"
                             class="btnDetailHasilUjian' . $r["Id_kompetisi"] . ' mb-6 btn waves-effect waves-light gradient-45deg-green-teal">
-                            ' .  ($r['nilai']==''?'0':$r['nilai']) . '
+                            ' .  ($r['nilai'] == '' ? '0' : $r['nilai']) . '
                             </a>
                         </td>
                         <td width="5%"> Gold </td>
@@ -764,7 +764,7 @@ function ResultDataListOfAllDataMember($data)
                         <td width="30%">' . $info['sekolah'] . '</td>
                         <td width="5%"> <a onclick="openDetailHasilUjian(\'' . '.btnDetailHasilUjian' . $r["Id_kompetisi"] . '\',\'' . $r["Id_kompetisi"] . '\',\'' . $r["Id_subjek"] . '\',\'' . $r["Id_member"] . '\')"
                         class="btnDetailHasilUjian' . $r["Id_kompetisi"] . ' mb-6 btn waves-effect waves-light gradient-45deg-green-teal">
-                        ' .  ($r['nilai']==''?'0':$r['nilai']) . '
+                        ' .  ($r['nilai'] == '' ? '0' : $r['nilai']) . '
                         </a></td>
                         <td width="5%"> Silver </td>
                         </td>
@@ -777,7 +777,7 @@ function ResultDataListOfAllDataMember($data)
                         <td width="30%">' . $info['sekolah'] . '</td>
                         <td width="5%"> <a onclick="openDetailHasilUjian(\'' . '.btnDetailHasilUjian' . $r["Id_kompetisi"] . '\',\'' . $r["Id_kompetisi"] . '\',\'' . $r["Id_subjek"] . '\',\'' . $r["Id_member"] . '\')"
                         class="btnDetailHasilUjian' . $r["Id_kompetisi"] . ' mb-6 btn waves-effect waves-light gradient-45deg-green-teal">
-                        ' .  ($r['nilai']==''?'0':$r['nilai']) . '
+                        ' .  ($r['nilai'] == '' ? '0' : $r['nilai']) . '
                         </a></td>
                         <td width="5%"> Bronze </td>
                         </td>
@@ -790,7 +790,7 @@ function ResultDataListOfAllDataMember($data)
                             <td width="30%">' . $info['sekolah'] . '</td>
                             <td width="5%"> <a onclick="openDetailHasilUjian(\'' . '.btnDetailHasilUjian' . $r["Id_kompetisi"] . '\',\'' . $r["Id_kompetisi"] . '\',\'' . $r["Id_subjek"] . '\',\'' . $r["Id_member"] . '\')"
                             class="btnDetailHasilUjian' . $r["Id_kompetisi"] . ' mb-6 btn waves-effect waves-light gradient-45deg-green-teal">
-                            ' .  ($r['nilai']==''?'0':$r['nilai']) . '
+                            ' .  ($r['nilai'] == '' ? '0' : $r['nilai']) . '
                             </a></td>
                             <td width="5%"> </td>
                             </td>

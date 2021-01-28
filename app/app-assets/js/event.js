@@ -19,7 +19,7 @@ var boolMedia = false,
     tinggkatKesulitan = ['Sangat Mudah', 'Mudah', 'Sulit', 'Sangat Sulit'],
     arr_silabus = [],
     arr_materi = [];
-$(document).ready(function(e) {
+$(document).ready(function (e) {
     selectMenu('menu0');
     initSample('deskripsi', 350);
     initSample('soal', 350);
@@ -30,20 +30,20 @@ $(document).ready(function(e) {
     initSample('opte', 100);
     initSample('pembahasan', 350);
     initSample('rekomendasi', 350);
-    $('.genCombos').hover(function() {
+    $('.genCombos').hover(function () {
         mouse_combos = true
-    }, function() {
+    }, function () {
         mouse_combos = false;
     });
 
-    $('body').mouseup(function() {
+    $('body').mouseup(function () {
         if (!mouse_combos) {
             $('.genCombos').hide();
         }
     });
 
     $('body').on({
-        mouseenter: function() {
+        mouseenter: function () {
             $('.tooltips').show();
             var kontextLabel = $(this).attr('meta-data');
             $('.tooltips').html(kontextLabel);
@@ -55,14 +55,14 @@ $(document).ready(function(e) {
             });
 
         },
-        mouseleave: function() {
+        mouseleave: function () {
             $('.tooltips').hide(100);
         }
     }, '.addbtn');
 
     //.header-search-input 
     //#search
-    $('.header-search-input, #search').on('keyup', function(e) {
+    $('.header-search-input, #search').on('keyup', function (e) {
         if (e.key === 'Enter' || e.keyCode === 13) {
             var targ = $(this).val();
             if (fungsiPencarian == 'tabel') {
@@ -73,7 +73,7 @@ $(document).ready(function(e) {
         }
     });
 
-    $('#silabus').on('keyup', function(e) {
+    $('#silabus').on('keyup', function (e) {
         if (e.key === 'Enter' || e.keyCode === 13) {
             var targ = $(this).val();
             if (!in_array(targ, arr_silabus)) {
@@ -89,7 +89,7 @@ $(document).ready(function(e) {
     });
 
 
-    $('.header-search-input, #search').on('input', function() {
+    $('.header-search-input, #search').on('input', function () {
         var targ = $(this).val();
 
         if (fungsiPencarian == 'tabel') {
@@ -99,7 +99,7 @@ $(document).ready(function(e) {
         }
     });
 
-    $('#inputmedia').on('input', function(e) {
+    $('#inputmedia').on('input', function (e) {
         var arrLink = $(this).val().split('v='),
             link = arrLink[1];
         // cek apakah didalam link ada &=
@@ -123,7 +123,7 @@ $(document).ready(function(e) {
         $('.frameVideo').html('<iframe style="width:100%; height:100%;" src="https://www.youtube.com/embed/' + targlink + '" allow="autoplay; encrypted-media" allowfullscreen="" frameborder="0"></iframe>')
     });
 
-    $('#browsemedia').on('change', function() {
+    $('#browsemedia').on('change', function () {
         boolMedia = false;
         $('.frameVideo').html('<canvas id="canvas"></canvas>');
         console.log($(this)[0].files[0]);
@@ -133,7 +133,7 @@ $(document).ready(function(e) {
 
         var meta = $(this).attr('meta-data');
         var img = new Image();
-        img.onload = function() {
+        img.onload = function () {
             var canvas = document.getElementById('canvas'),
 
                 width = $('.frameVideo').width(),
@@ -148,13 +148,13 @@ $(document).ready(function(e) {
             typeBanner = 'image';
 
         }
-        img.onerror = function() {
+        img.onerror = function () {
             console.error("The provided file couldn't be loaded as an Image media");
         }
         img.src = URL.createObjectURL(this.files[0]);
     });
 
-    $('#subjek, #statusevent, #subjbidang, #jjgbidang, #bidang, #namaJenjang, #jawaban, #kesulitan').on('click', function() {
+    $('#subjek, #statusevent, #subjbidang, #jjgbidang, #bidang, #namaJenjang, #jawaban, #kesulitan').on('click', function () {
         var tinggi = $(this).height();
         var atas = $(this).offset().top - $(document).scrollTop() + tinggi;
         var kiri = $(this).offset().left;
@@ -237,23 +237,23 @@ $(document).ready(function(e) {
 
 
     //This For Ovelay Moore
-    $('.btntutup').on('click', function() {
+    $('.btntutup').on('click', function () {
         clsMe();
     });
 
-    $('.btnedit').click(function() {
+    $('.btnedit').click(function () {
         getDataEvent(IdGlobal);
     });
 
-    $('.btnhapus').click(function() {
+    $('.btnhapus').click(function () {
         // openDeleteItem('Hapus', IdGlobal, 'Data Event Berikut', 'saveformEvent');
     });
 
-    $('.btnnilai').click(function() {
+    $('.btnnilai').click(function () {
         opendispSubjek('.btnnilai', IdGlobal);
     });
 
-    $('#btnUbah').click(function() {
+    $('#btnUbah').click(function () {
         var formData = new FormData();
         var palang = false;
         if ($('#pass1').val() == $('#pass2').val() && $('#pass1').val() != "") {
@@ -270,14 +270,14 @@ $(document).ready(function(e) {
                 data: formData,
                 processData: false,
                 contentType: false,
-                beforeSend: function() {
+                beforeSend: function () {
                     showLoad();
                 },
-                success: function(response) {
+                success: function (response) {
                     showToast(response);
                     setMyProfile();
                 },
-                error: function(xhr, ajaxOptions, thrownError) {
+                error: function (xhr, ajaxOptions, thrownError) {
 
                 }
             });
@@ -291,7 +291,7 @@ $(document).ready(function(e) {
 function setToListBody(daftarArr) {
     // alert(daftarArr);
     $('.bodyCombos').html('');
-    daftarArr.forEach(function(item, i) {
+    daftarArr.forEach(function (item, i) {
         $('.bodyCombos').append('<div class="listItem" onclick="setItemCombos(\'' + item + '\')">' + item.toUpperCase() + '</div>');
     });
     $('.bodyCombos').animate({
@@ -355,7 +355,7 @@ function setItemCombos(item) {
 function Unlateral(arrLat) {
     var q = JSON.parse(arrLat);
     var str = '';
-    q.forEach(function(item, i) {
+    q.forEach(function (item, i) {
         if (i == (q.length - 1)) {
             str = str + item
         } else {
@@ -388,7 +388,7 @@ function cariCombos(val, ev) {
     var prediksi = '',
         byk = 0;
     if (val.length > 1) {
-        listArr.forEach(function(item, i) {
+        listArr.forEach(function (item, i) {
             if (item.toUpperCase().indexOf(val.toUpperCase()) != -1) {
                 byk++;
                 if (byk == 1) {
@@ -398,7 +398,7 @@ function cariCombos(val, ev) {
             }
         });
     } else if (val == '') {
-        listArr.forEach(function(item, i) {
+        listArr.forEach(function (item, i) {
             byk++;
             if (byk == 1) {
                 prediksi = item;
@@ -425,26 +425,26 @@ function in_array(nilai, arr) {
 
 function searchDataTable(targ) {
     $('#paginattable').html('');
-    dataTabel.forEach(function(item, i) {
+    dataTabel.forEach(function (item, i) {
         if (item.toUpperCase().indexOf(targ.toUpperCase()) != -1) {
             // item = item.replace(targ, '<span style="color:red">' + targ + '</span>');
             $('#paginattable').append('<tr>' + item + '</tr>')
         }
     });
-    setTimeout(function() {
+    setTimeout(function () {
         setupTablePagination(rowtabledisp.value);
     }, 200)
 }
 
 function searchDataDiv(targ) {
     $('#paginattable').html('');
-    dataTabel.forEach(function(item, i) {
+    dataTabel.forEach(function (item, i) {
         if (item.toUpperCase().indexOf(targ.toUpperCase()) != -1) {
             // item = item.replace(targ, '<span style="color:red">' + targ + '</span>');
             $('#paginattable').append('<div class="col s12 m6 l4 card-width">' + item + '</div>')
         }
     });
-    setTimeout(function() {
+    setTimeout(function () {
         setupDivPagination(rowtabledisp.value);
     }, 200)
 }
@@ -452,7 +452,7 @@ function searchDataDiv(targ) {
 function dispDashboard() {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             $('.dispUtama').html(xmlhttp.responseText);
             var $el = $('.math-tex')
@@ -471,7 +471,7 @@ function dispDashboard() {
 function dispTimeline() {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             $('.dispUtama').html(xmlhttp.responseText);
             hideLoad();
@@ -484,7 +484,7 @@ function dispTimeline() {
 
 function showLoad() {
     $('.loadUtama').show();
-    setTimeout(function() {
+    setTimeout(function () {
         $('.loadUtama img').css({
             'transform': 'scale(1.0)'
         });
@@ -495,7 +495,7 @@ function hideLoad() {
     $('.loadUtama img').css({
         'transform': 'scale(0.0)'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.loadUtama').hide();
     }, 310);
 }
@@ -581,7 +581,7 @@ function openPreview(types, banner, idevent) {
         'border-radius': '10px',
         'display': 'block'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         if (layar > 762) {
             $('.form-View').css({
                 'margin-left': '-350px',
@@ -641,7 +641,7 @@ function closeView() {
         'left': kiri + 'px',
         'border-radius': '5px'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.overlayPreview').hide();
         $('.form-View').hide();
     }, 400);
@@ -651,7 +651,7 @@ function closeView() {
 function getDataEvent(Id_event) {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var modals = xmlhttp.responseText;
             hideLoad();
@@ -692,7 +692,7 @@ function openformEvent(dom, status, pos, modal) {
         'border-radius': '100%',
         'display': 'block'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         if (layar > 762) {
             $('.form-formEvent').css({
                 'margin-left': '-460px',
@@ -716,7 +716,7 @@ function openformEvent(dom, status, pos, modal) {
             });
         }
     }, 200);
-    setTimeout(function() {
+    setTimeout(function () {
         $('body').css({
             'overflow-y': 'hidden'
         });
@@ -731,7 +731,7 @@ function openformEvent(dom, status, pos, modal) {
             'height': hBody + 'px'
         });
     }, 600);
-    setTimeout(function() {
+    setTimeout(function () {
         // var lbrCanvas = $('.frameVideo').width(),
         //     tggCanvas = parseInt(lbrCanvas / 1.6);
         // $('.frameVideo').css({
@@ -747,7 +747,7 @@ function openformEvent(dom, status, pos, modal) {
 
     $('#tanggaleventid label').addClass('active');
     $('#statuseventid label').addClass('active');
-    setTimeout(function() {
+    setTimeout(function () {
         $('.form-body-formEvent').animate({
             scrollTop: 0
         }, 200);
@@ -792,7 +792,7 @@ function openformEvent(dom, status, pos, modal) {
         }
         $('.form-body-formEvent .daftarAkses').html('');
         arr_daftar_subjek = JSON.parse(modals.subjek);
-        arr_daftar_subjek.forEach(function(item, i) {
+        arr_daftar_subjek.forEach(function (item, i) {
             $('.form-body-formEvent .daftarAkses').prepend('<div class="listAkses" id="' + item.split(' ').join('').replace('(', '').replace(')', '').replace('.', '') + '">\
                                             <span>' + item + '</span>\
                                             <i class="material-icons" onclick="delAkses(\'' + item + '\') ">close</i>\
@@ -835,7 +835,7 @@ function closeformEvent() {
         'left': kiri + 'px',
         'border-radius': '100%'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.overlayformEvent').hide();
         $('.form-formEvent').hide();
         clsMe();
@@ -846,7 +846,7 @@ function simpanformEvent() {
     var formData = new FormData();
     var palang = true;
 
-    formEventElementArr.forEach(function(item, i) {
+    formEventElementArr.forEach(function (item, i) {
         if ($('#' + item).val() == "") {
             palang = false;
         }
@@ -872,16 +872,16 @@ function simpanformEvent() {
             data: formData,
             processData: false,
             contentType: false,
-            beforeSend: function() {
+            beforeSend: function () {
                 showLoad();
                 closeformEvent();
             },
-            success: function(response) {
+            success: function (response) {
                 showToast(response);
                 hideLoad();
                 dispTimeline();
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
 
             }
         });
@@ -921,7 +921,7 @@ function openMore(idVideo) {
     });
 
     $('.overlayMore').show();
-    setTimeout(function() {
+    setTimeout(function () {
         $('.btnedit').css({
             'top': atas - 50 + 'px',
             'left': kiri + 'px',
@@ -975,11 +975,11 @@ function verifikasiDelete() {
         data: formData,
         processData: false,
         contentType: false,
-        beforeSend: function() {
+        beforeSend: function () {
             $('.overlayVerifikasi').hide();
             showLoad();
         },
-        success: function(response) {
+        success: function (response) {
             // console.log(response);
             showToast(response);
             if (forSubjectDelete == 'saveformEvent') {
@@ -994,7 +994,7 @@ function verifikasiDelete() {
 
             hideLoad();
         },
-        error: function(xhr, ajaxOptions, thrownError) {}
+        error: function (xhr, ajaxOptions, thrownError) {}
     });
 }
 
@@ -1022,7 +1022,7 @@ function opendispSubjek(dom, id_event) {
         'border-radius': '100%',
         'display': 'block'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         if (layar > 762) {
             $('.form-dispSubjek').css({
                 'margin-left': '-500px',
@@ -1046,7 +1046,7 @@ function opendispSubjek(dom, id_event) {
             });
         }
     }, 200);
-    setTimeout(function() {
+    setTimeout(function () {
         $('body').css({
             'overflow-y': 'hidden'
         });
@@ -1070,7 +1070,7 @@ function opendispSubjek(dom, id_event) {
 function getDataKompetisi(id_event) {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             hideLoad();
             var json = JSON.parse(xmlhttp.responseText);
@@ -1083,7 +1083,7 @@ function getDataKompetisi(id_event) {
             var arrJenjang = json[1].jenjang;
             jjgEvent = [];
             jjgSubjek = [];
-            arrJenjang.forEach(function(item, i) {
+            arrJenjang.forEach(function (item, i) {
                 jjgEvent.push(item.jenjang);
                 jjgSubjek.push(item.subjek);
             });
@@ -1099,7 +1099,7 @@ function getDataKompetisi(id_event) {
 function getDataSubjekBidang(Id_event) {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             $('.form-body-dispSubjek').html(xmlhttp.responseText);
             hideLoad();
@@ -1132,7 +1132,7 @@ function closedispSubjek() {
         'left': kiri + 'px',
         'border-radius': '100%'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.overlaydispSubjek').hide();
         $('.form-dispSubjek').hide();
         clsMe();
@@ -1143,7 +1143,7 @@ function closedispSubjek() {
 function simpandispSubjek() {
     var formData = new FormData();
     var palang = true;
-    dispSubjekElementArr.forEach(function(item, i) {
+    dispSubjekElementArr.forEach(function (item, i) {
         if ($('#' + item).val() == "") {
             palang = false;
         }
@@ -1158,15 +1158,15 @@ function simpandispSubjek() {
             data: formData,
             processData: false,
             contentType: false,
-            beforeSend: function() {
+            beforeSend: function () {
                 showLoad();
                 closedispSubjek();
             },
-            success: function(response) {
+            success: function (response) {
                 showToast(response);
                 hideLoad();
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
 
             }
         });
@@ -1184,7 +1184,7 @@ function simpandispSubjek() {
 function dispSubject() {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             $('.dispUtama').html(xmlhttp.responseText);
             hideLoad();
@@ -1230,7 +1230,7 @@ function openSubjectEvent(dom, status, pos, modal) {
         'border-radius': '100%',
         'display': 'block'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         if (layar > 762) {
             $('.form-SubjectEvent').css({
                 'margin-left': '-300px',
@@ -1254,7 +1254,7 @@ function openSubjectEvent(dom, status, pos, modal) {
             });
         }
     }, 200);
-    setTimeout(function() {
+    setTimeout(function () {
         $('body').css({
             'overflow-y': 'hidden'
         });
@@ -1303,7 +1303,7 @@ function closeSubjectEvent() {
         'left': kiri + 'px',
         'border-radius': '100%'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.overlaySubjectEvent').hide();
         $('.form-SubjectEvent').hide();
     }, 400);
@@ -1313,7 +1313,7 @@ function closeSubjectEvent() {
 function simpanSubjectEvent() {
     var formData = new FormData();
     var palang = true;
-    SubjectEventElementArr.forEach(function(item, i) {
+    SubjectEventElementArr.forEach(function (item, i) {
         if ($('#' + item).val() == "") {
             palang = false;
         }
@@ -1328,16 +1328,16 @@ function simpanSubjectEvent() {
             data: formData,
             processData: false,
             contentType: false,
-            beforeSend: function() {
+            beforeSend: function () {
                 showLoad();
                 closeSubjectEvent();
             },
-            success: function(response) {
+            success: function (response) {
                 showToast(response);
                 dispSubject();
                 hideLoad();
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
 
             }
         });
@@ -1354,7 +1354,7 @@ var btnformBidang = '',
     posformBidang = '',
     formBidangElementArr = ['subjbidang', 'bidang', 'tglev1', 'jammulai', 'tglev2', 'jamakhir', 'linktg', 'price', 'gold', 'silver', 'bronze'];
 
-function openformBidang(dom, status, pos, modal) {
+function openformBidang(dom, status, pos) {
     btnformBidang = dom;
     $('.form-header-formBidang #judul').html(status + " " + ' Bidang Ujian');
     var atas = $(dom).offset().top - $(document).scrollTop();
@@ -1375,7 +1375,7 @@ function openformBidang(dom, status, pos, modal) {
         'border-radius': (status == 'New' ? '3px' : '100%'),
         'display': 'block'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         if (layar > 762) {
             $('.form-formBidang').css({
                 'margin-left': '-400px',
@@ -1399,7 +1399,7 @@ function openformBidang(dom, status, pos, modal) {
             });
         }
     }, 200);
-    setTimeout(function() {
+    setTimeout(function () {
         $('body').css({
             'overflow-y': 'hidden'
         });
@@ -1414,7 +1414,7 @@ function openformBidang(dom, status, pos, modal) {
             'height': hBody + 'px'
         });
     }, 600);
-    setTimeout(function() {
+    setTimeout(function () {
         $('.form-body-formBidang').animate({
             scrollTop: 0
         }, 200);
@@ -1438,38 +1438,95 @@ function openformBidang(dom, status, pos, modal) {
         $('.daftarSilabus').html('');
     } else {
         posformBidang = pos;
-        var isiDom = JSON.parse(rekontruksiJson(modal));
-        jjgterpilih = [];
-        for (var i = 0; i < jjgSubjek.length; i++) {
-            if (isiDom[0] == jjgSubjek[i]) {
-                jjgterpilih.push(Unlateral(jjgEvent[i]));
-            }
-        }
-        $('.form-body-formBidang .daftarAkses').html('');
-        arr_daftar_subjek = JSON.parse(rekontruksiSiku(isiDom[11]));
-        for (var i = 0; i < arr_daftar_subjek.length; i++) {
-            $('.form-body-formBidang .daftarAkses').prepend('<div class="listAkses" id="' + arr_daftar_subjek[i].split(' ').join('').replace('(', '').replace(')', '').replace('.', '') + '">\
-                                                <span>' + arr_daftar_subjek[i] + '</span>\
-                                                <i class="material-icons" onclick="delAkses(\'' + arr_daftar_subjek[i] + '\') ">close</i>\
-                                            </div>');
-        }
+        getDataFormBidangForEdit(pos);
+        // var isiDom = JSON.parse(rekontruksiJson(modal));
+        // jjgterpilih = [];
+        // for (var i = 0; i < jjgSubjek.length; i++) {
+        //     if (isiDom[0] == jjgSubjek[i]) {
+        //         jjgterpilih.push(Unlateral(jjgEvent[i]));
+        //     }
+        // }
+        // $('.form-body-formBidang .daftarAkses').html('');
+        // arr_daftar_subjek = JSON.parse(rekontruksiSiku(isiDom[11]));
+        // for (var i = 0; i < arr_daftar_subjek.length; i++) {
+        //     $('.form-body-formBidang .daftarAkses').prepend('<div class="listAkses" id="' + arr_daftar_subjek[i].split(' ').join('').replace('(', '').replace(')', '').replace('.', '') + '">\
+        //                                         <span>' + arr_daftar_subjek[i] + '</span>\
+        //                                         <i class="material-icons" onclick="delAkses(\'' + arr_daftar_subjek[i] + '\') ">close</i>\
+        //                                     </div>');
+        // }
 
-        $('.daftarSilabus').html('');
-        arr_silabus = JSON.parse(rekontruksiSiku(isiDom[12]));
-        console.log(arr_silabus);
-        for (var i = 0; i < arr_silabus.length; i++) {
-            $('.daftarSilabus').prepend('<div class="listAkses" id="' + arr_silabus[i].split(' ').join('').replace('(', '').replace(')', '').replace('.', '') + '">\
-                                                <span>' + arr_silabus[i] + '</span>\
-                                                <i class="material-icons" onclick="delSilabus(\'' + arr_silabus[i] + '\') ">close</i>\
-                                            </div>');
-        }
+        // $('.daftarSilabus').html('');
+        // arr_silabus = JSON.parse(rekontruksiSiku(isiDom[12]));
+        // console.log(arr_silabus);
+        // for (var i = 0; i < arr_silabus.length; i++) {
+        //     $('.daftarSilabus').prepend('<div class="listAkses" id="' + arr_silabus[i].split(' ').join('').replace('(', '').replace(')', '').replace('.', '') + '">\
+        //                                         <span>' + arr_silabus[i] + '</span>\
+        //                                         <i class="material-icons" onclick="delSilabus(\'' + arr_silabus[i] + '\') ">close</i>\
+        //                                     </div>');
+        // }
 
 
-        setValueDom(formBidangElementArr, isiDom);
+        // setValueDom(formBidangElementArr, isiDom);
     }
 
 }
 
+function getDataFormBidangForEdit(isIdSubjek) {
+    showLoad();
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var isiDom = JSON.parse(xmlhttp.responseText);
+            console.log(isiDom);
+
+            jjgterpilih = [];
+            for (var i = 0; i < jjgSubjek.length; i++) {
+                if (isiDom.subjek == jjgSubjek[i]) {
+                    jjgterpilih.push(Unlateral(jjgEvent[i]));
+                }
+            }
+
+            $('.form-body-formBidang .daftarAkses').html('');
+            arr_daftar_subjek = JSON.parse(isiDom.jenjang);
+            for (var i = 0; i < arr_daftar_subjek.length; i++) {
+                $('.form-body-formBidang .daftarAkses').prepend('<div class="listAkses" id="' + arr_daftar_subjek[i].split(' ').join('').replace('(', '').replace(')', '').replace('.', '') + '">\
+                                                    <span>' + arr_daftar_subjek[i] + '</span>\
+                                                    <i class="material-icons" onclick="delAkses(\'' + arr_daftar_subjek[i] + '\') ">close</i>\
+                                                </div>');
+            }
+
+            $('.daftarSilabus').html('');
+            arr_silabus = JSON.parse(isiDom.kisi);
+            console.log(arr_silabus);
+            for (var i = 0; i < arr_silabus.length; i++) {
+                $('.daftarSilabus').prepend('<div class="listAkses" id="' + arr_silabus[i].split(' ').join('').replace('(', '').replace(')', '').replace('.', '') + '">\
+                                                    <span>' + arr_silabus[i] + '</span>\
+                                                    <i class="material-icons" onclick="delSilabus(\'' + arr_silabus[i] + '\') ">close</i>\
+                                                </div>');
+            }
+
+
+            // setValueDom(formBidangElementArr, isiDom);
+            //Assingment Ulang
+            var pelaksanaan = isiDom.mulai_pelaksanaan.split(" ");
+            var penutupan = isiDom.akhir_pelaksanaan.split(" ");
+            $("#subjbidang").val(isiDom.subjek);
+            $("#bidang").val(isiDom.bidang_studi);
+            $("#tglev1").val(pelaksanaan[0]);
+            $("#jammulai").val(pelaksanaan[1]);
+            $("#tglev2").val(penutupan[0]);
+            $("#jamakhir").val(penutupan[1]);
+            $("#linktg").val(isiDom.chat_group);
+            $("#price").val(isiDom.atom);
+            $("#gold").val(isiDom.gold);
+            $("#silver").val(isiDom.silver);
+            $("#bronze").val(isiDom.bronze);
+            hideLoad();
+        }
+    }
+    xmlhttp.open('GET', 'app-assets/js/scripts/engine/override.php?order=getDataFormBidangForEdit&idsubjek=' + isIdSubjek);
+    xmlhttp.send();
+}
 
 function closeformBidang() {
     var dom = btnformBidang;
@@ -1492,7 +1549,7 @@ function closeformBidang() {
         'left': kiri + 'px',
         'border-radius': (statusformBidang == 'New' ? '3px' : '100%')
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.overlayformBidang').hide();
         $('.form-formBidang').hide();
     }, 400);
@@ -1501,7 +1558,7 @@ function closeformBidang() {
 function simpanformBidang() {
     var formData = new FormData();
     var palang = true;
-    formBidangElementArr.forEach(function(item, i) {
+    formBidangElementArr.forEach(function (item, i) {
         if ($('#' + item).val() == "") {
             palang = false;
         }
@@ -1522,17 +1579,17 @@ function simpanformBidang() {
             data: formData,
             processData: false,
             contentType: false,
-            beforeSend: function() {
+            beforeSend: function () {
                 showLoad();
                 closeformBidang();
 
             },
-            success: function(response) {
+            success: function (response) {
                 showToast(response);
                 hideLoad();
                 getDataSubjekBidang(IdGlobal);
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
 
             }
         });
@@ -1577,7 +1634,7 @@ function openoverlayListOfAllDataMember(dom, IdSubject, IdEvent) {
         'left': kiri + 'px',
         'display': 'block'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         if (layar > 762) {
             $('.form-overlayListOfAllDataMember').css({
                 'margin-left': '-600px',
@@ -1599,7 +1656,7 @@ function openoverlayListOfAllDataMember(dom, IdSubject, IdEvent) {
             });
         }
     }, 200);
-    setTimeout(function() {
+    setTimeout(function () {
         $('body').css({
             'overflow-y': 'hidden'
         });
@@ -1639,7 +1696,7 @@ function closeoverlayListOfAllDataMember() {
         'top': atas + 'px',
         'left': kiri + 'px'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.overlayoverlayListOfAllDataMember').hide();
         $('.form-overlayListOfAllDataMember').hide();
     }, 400);
@@ -1652,7 +1709,7 @@ function closeoverlayListOfAllDataMember() {
 function ListAllDataOfMember(isIdSubject, isIdEvent) {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             $('.form-body-overlayListOfAllDataMember').html(xmlhttp.responseText);
             hideLoad();
@@ -1666,7 +1723,7 @@ function ListAllDataOfMember(isIdSubject, isIdEvent) {
 function dispBidang() {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             $('.dispUtama').html(xmlhttp.responseText);
             hideLoad();
@@ -1712,7 +1769,7 @@ function openoverlayBidangEvent(dom, status, pos, modal) {
         'border-radius': '100%',
         'display': 'block'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         if (layar > 762) {
             $('.form-overlayBidangEvent').css({
                 'margin-left': '-300px',
@@ -1736,7 +1793,7 @@ function openoverlayBidangEvent(dom, status, pos, modal) {
             });
         }
     }, 200);
-    setTimeout(function() {
+    setTimeout(function () {
         $('body').css({
             'overflow-y': 'hidden'
         });
@@ -1785,7 +1842,7 @@ function closeoverlayBidangEvent() {
         'left': kiri + 'px',
         'border-radius': '100%'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.overlayoverlayBidangEvent').hide();
         $('.form-overlayBidangEvent').hide();
     }, 400);
@@ -1795,7 +1852,7 @@ function closeoverlayBidangEvent() {
 function simpanoverlayBidangEvent() {
     var formData = new FormData();
     var palang = true;
-    overlayBidangEventElementArr.forEach(function(item, i) {
+    overlayBidangEventElementArr.forEach(function (item, i) {
         if ($('#' + item).val() == "") {
             palang = false;
         }
@@ -1810,16 +1867,16 @@ function simpanoverlayBidangEvent() {
             data: formData,
             processData: false,
             contentType: false,
-            beforeSend: function() {
+            beforeSend: function () {
                 showLoad();
                 closeoverlayBidangEvent();
             },
-            success: function(response) {
+            success: function (response) {
                 showToast(response);
                 dispBidang();
                 hideLoad();
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
 
             }
         });
@@ -1838,7 +1895,7 @@ function simpanoverlayBidangEvent() {
 function dispJenjang() {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             $('.dispUtama').html(xmlhttp.responseText);
             hideLoad();
@@ -1884,7 +1941,7 @@ function openOverlayJenjang(dom, status, pos, modal) {
         'border-radius': '100%',
         'display': 'block'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         if (layar > 762) {
             $('.form-OverlayJenjang').css({
                 'margin-left': '-300px',
@@ -1908,7 +1965,7 @@ function openOverlayJenjang(dom, status, pos, modal) {
             });
         }
     }, 200);
-    setTimeout(function() {
+    setTimeout(function () {
         $('body').css({
             'overflow-y': 'hidden'
         });
@@ -1930,7 +1987,7 @@ function openOverlayJenjang(dom, status, pos, modal) {
         posOverlayJenjang = pos;
         $('.daftarAksesJenjang').html('');
         arr_daftar_subjek = JSON.parse(modal);
-        arr_daftar_subjek.forEach(function(item, i) {
+        arr_daftar_subjek.forEach(function (item, i) {
             $('.daftarAksesJenjang').prepend('<div class="listAkses" id="' + item.split(' ').join('').replace('(', '').replace(')', '').replace('.', '') + '">\
                                             <span>' + item + '</span>\
                                             <i class="material-icons" onclick="delAkses(\'' + item + '\') ">close</i>\
@@ -1962,7 +2019,7 @@ function closeOverlayJenjang() {
         'left': kiri + 'px',
         'border-radius': '100%'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.overlayOverlayJenjang').hide();
         $('.form-OverlayJenjang').hide();
     }, 400);
@@ -1972,7 +2029,7 @@ function closeOverlayJenjang() {
 function simpanOverlayJenjang() {
     var formData = new FormData();
     var palang = true;
-    OverlayJenjangElementArr.forEach(function(item, i) {
+    OverlayJenjangElementArr.forEach(function (item, i) {
         if ($('#' + item).val() == "") {
             palang = false;
         }
@@ -1991,16 +2048,16 @@ function simpanOverlayJenjang() {
             data: formData,
             processData: false,
             contentType: false,
-            beforeSend: function() {
+            beforeSend: function () {
                 showLoad();
                 closeOverlayJenjang();
             },
-            success: function(response) {
+            success: function (response) {
                 showToast(response);
                 dispJenjang();
                 hideLoad();
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
 
             }
         });
@@ -2041,7 +2098,7 @@ function opendaftarSoal(dom, id_subjek, isBidang, isSubject, jenjangSubject) {
         'border-radius': '1px',
         'display': 'block'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         if (layar > 762) {
             $('.form-daftarSoal').css({
                 'margin-left': (lebarLayar < 1400 ? -lebarLayar / 2 + 'px' : '-650px'),
@@ -2065,7 +2122,7 @@ function opendaftarSoal(dom, id_subjek, isBidang, isSubject, jenjangSubject) {
             });
         }
     }, 200);
-    setTimeout(function() {
+    setTimeout(function () {
         $('body').css({
             'overflow-y': 'hidden'
         });
@@ -2088,7 +2145,7 @@ function opendaftarSoal(dom, id_subjek, isBidang, isSubject, jenjangSubject) {
 function getDaftarSoal(id_subjek) {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             hideLoad();
             $('.form-body-daftarSoal').html(xmlhttp.responseText);
@@ -2121,7 +2178,7 @@ function closedaftarSoal() {
         'left': kiri + 'px',
         'border-radius': '3px'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.overlaydaftarSoal').hide();
         $('.form-daftarSoal').hide();
     }, 400);
@@ -2155,7 +2212,7 @@ function openinputSoal(dom, status, pos) {
         'border-radius': (status == 'New' ? '3px' : '100%'),
         'display': 'block'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         if (layar > 762) {
             $('.form-inputSoal').css({
                 'margin-left': '-400px',
@@ -2179,7 +2236,7 @@ function openinputSoal(dom, status, pos) {
             });
         }
     }, 200);
-    setTimeout(function() {
+    setTimeout(function () {
         $('body').css({
             'overflow-y': 'hidden'
         });
@@ -2217,7 +2274,7 @@ function openinputSoal(dom, status, pos) {
 function getSoalNo(pos) {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             hideLoad();
             var json = JSON.parse(xmlhttp.responseText);
@@ -2275,7 +2332,7 @@ function closeinputSoal() {
         'left': kiri + 'px',
         'border-radius': (statusinputSoal == 'New' ? '3px' : '100%')
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.overlayinputSoal').hide();
         $('.form-inputSoal').hide();
     }, 400);
@@ -2286,7 +2343,7 @@ var inputSoalElementArr = ['materi', 'submateri', 'jawaban', 'scorebenar', 'scor
 function simpaninputSoal() {
     var formData = new FormData();
     var palang = true;
-    inputSoalElementArr.forEach(function(item, i) {
+    inputSoalElementArr.forEach(function (item, i) {
         formData.append(item, $('#' + item).val());
     });
     formData.append('soal', CKEDITOR.instances.soal.getData());
@@ -2307,16 +2364,16 @@ function simpaninputSoal() {
             data: formData,
             processData: false,
             contentType: false,
-            beforeSend: function() {
+            beforeSend: function () {
                 showLoad();
                 closeinputSoal();
             },
-            success: function(response) {
+            success: function (response) {
                 showToast(response);
                 hideLoad();
                 getDaftarSoal(IdGlobalSubjek);
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
 
             }
         });
@@ -2353,7 +2410,7 @@ function openDetailHasilUjian(dom, IdKompetisi, IdSubject, IdEvent) {
         'left': kiri + 'px',
         'display': 'block'
     });
-    setTimeout(function() {
+    setTimeout(function () {
         if (layar > 762) {
             $('.form-DetailHasilUjian').css({
                 'margin-left': '-600px',
@@ -2375,7 +2432,7 @@ function openDetailHasilUjian(dom, IdKompetisi, IdSubject, IdEvent) {
             });
         }
     }, 200);
-    setTimeout(function() {
+    setTimeout(function () {
         $('body').css({
             'overflow-y': 'hidden'
         });
@@ -2414,7 +2471,7 @@ function closeDetailHasilUjian() {
         'top': atas + 'px',
         'left': kiri + 'px',
     });
-    setTimeout(function() {
+    setTimeout(function () {
         $('.overlayDetailHasilUjian').hide();
         $('.form-DetailHasilUjian').hide();
     }, 400);
@@ -2427,7 +2484,7 @@ function closeDetailHasilUjian() {
 function getDetailDataHasilUjian(isIdKompetisi, isIdSubject, isIdMember) {
     showLoad();
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             $('.form-body-DetailHasilUjian').html(xmlhttp.responseText);
             hideLoad();

@@ -473,3 +473,14 @@ function getDataByIdMember($conn, $id)
   $r = mysqli_fetch_assoc($res);
   return $r;
 }
+
+
+
+function myDataFormBidangForEdit($data)
+{
+  $IdSubjek = anti_Injection($data['idsubjek']);
+  $dataFormSubjek = query("SELECT * FROM `tb_subjek` WHERE `Id_subjek` = '$IdSubjek'")[0];
+  $dataFormSubjek = json_encode($dataFormSubjek);
+
+  return $dataFormSubjek;
+}
