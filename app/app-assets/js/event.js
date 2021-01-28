@@ -2127,7 +2127,7 @@ function openinputSoal(dom, status, pos) {
     $('.form-header-inputSoal #judul').html(status + " " + ' Soal');
     var atas = $(dom).offset().top - $(document).scrollTop();
     var kiri = $(dom).offset().left;
-    var lebar = $(dom).width() + 56;
+    var lebar = $(dom).width() + (status == 'New' ? 56 : 0);
     var tinggi = $(dom).height();
     var layar = $('body').width();
     var tinggiLayar = $('body').height() - 20;
@@ -2140,7 +2140,7 @@ function openinputSoal(dom, status, pos) {
         'height': tinggi + 'px',
         'top': atas + 'px',
         'left': kiri + 'px',
-        'border-radius': '3px',
+        'border-radius': (status == 'New' ? '3px' : '100%'),
         'display': 'block'
     });
     setTimeout(function() {
@@ -2179,7 +2179,7 @@ function openinputSoal(dom, status, pos) {
         $('.form-body-inputSoal').css({
             'height': hBody + 'px'
         });
-    }, 600);
+    }, 1000);
     statusinputSoal = status;
     if (status == 'New') {
         var isiDom = ['', '', '', '', '', ''];
@@ -2243,7 +2243,7 @@ function closeinputSoal() {
     $('body').css({ 'overflow-y': 'auto' });
     var atas = $(dom).offset().top - $(document).scrollTop();
     var kiri = $(dom).offset().left;
-    var lebar = $(dom).width() + 56;
+    var lebar = $(dom).width() + (statusinputSoal == 'New' ? 56 : 0);
     var tinggi = $(dom).height();
     $('.form-header-inputSoal').hide();
     $('.form-body-inputSoal').hide();
@@ -2255,7 +2255,7 @@ function closeinputSoal() {
         'height': tinggi + 'px',
         'top': atas + 'px',
         'left': kiri + 'px',
-        'border-radius': '3px'
+        'border-radius': (statusinputSoal == 'New' ? '3px' : '100%')
     });
     setTimeout(function() {
         $('.overlayinputSoal').hide();
