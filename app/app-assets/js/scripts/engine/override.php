@@ -303,17 +303,14 @@ if ($token == privateHashing(gettodayShort())) {
             $nomor = 1;
             while($r=mysqli_fetch_array($res)){
                 $contex = "Data Soal " . $row['sub_materi'];
-               
-               
-
                 $disp .='<tr>
                             <td data-field="id" style="vertical-align:top"><p>'.($nomor++).'</p></td>
                             <td data-field="month" style="vertical-align:top">'.$r['soal'].'<br/>
-                               <span style="display:inline-flex; width:100%"> <p>A. </p> '.$r['opt_a'].'</span></br>
-                               <span style="display:inline-flex; width:100%"> <p>B. </p> '.$r['opt_b'].'</span></br>
-                               <span style="display:inline-flex; width:100%"> <p>C. </p> '.$r['opt_c'].'</span></br>
-                               <span style="display:inline-flex; width:100%"> <p>D. </p> '.$r['opt_d'].'</span></br>
-                               <span style="display:inline-flex; width:100%"> <p>E. </p> '.$r['opt_e'].'</span>
+                               <span style="display:inline-flex; width:100%"> <p style="margin-right:10px;">A. </p> '.$r['opt_a'].'</span></br>
+                               <span style="display:inline-flex; width:100%"> <p style="margin-right:10px;">B. </p> '.$r['opt_b'].'</span></br>
+                               <span style="display:inline-flex; width:100%"> <p style="margin-right:10px;">C. </p> '.$r['opt_c'].'</span></br>
+                               <span style="display:inline-flex; width:100%"> <p style="margin-right:10px;">D. </p> '.$r['opt_d'].'</span></br>
+                               '.($r['opt_e']==''?'':'<span style="display:inline-flex; width:100%"> <p style="margin-right:10px;">E. </p> '.$r['opt_e'].'</span>').'
                             </td>
                             <td data-field="item-sold" class="right-align">
                                 <a onclick="openinputSoal(\''.'.btninputSoal'.$r['Id_soal'].'\', \''.'Edit'.'\', \''.$r['Id_soal'].'\')" class="btninputSoal'.$r['Id_soal'].' mb-6 btn-floating waves-effect waves-light gradient-45deg-amber-amber">
